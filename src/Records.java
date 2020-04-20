@@ -14,7 +14,7 @@ public class Records {
 
 
     private Records(){
-        
+
         records = new ArrayList<>();
         active = new HashSet<>();
 
