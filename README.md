@@ -2,6 +2,18 @@
 This is our group's project of DA in 2020S1.
 
 
+## version 1.1
+- Fix some algorithm bugs
+- Deal with primary key conflict
+- Alter printing in Server
+
+### TODO
+- add a select operation to show the real data in the database (data not yet committed should not be visible), should show same results for every client
+- add a gui for client and/or server (possibly?)
+- deadlock handling
+- something else...
+
+___
 
 ## version 1.0
 - Add TCP connection between client and server

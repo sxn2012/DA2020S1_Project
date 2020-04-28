@@ -33,7 +33,7 @@ public class CommandThread extends Thread{
 				DataInputStream is=new DataInputStream(client.getInputStream());
 				DataOutputStream os=new DataOutputStream(client.getOutputStream());
 				String command=is.readUTF();
-				System.out.println("command:'"+command+"' received");
+				System.out.println("command:'"+command+"' from "+client.getInetAddress().getHostAddress()+" received on"+client.getLocalPort());
 				if(command.equals("exit"))
 				{
 					if(login) {
@@ -76,12 +76,12 @@ public class CommandThread extends Thread{
 					if(str.equals("add"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
-						else if(strarr.length!=3) os.writeUTF("Failure: Invalid Input");
+						else if(strarr.length!=3) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
 						else{
 							String id=strarr[1];
 							String name=strarr[2];
 							Pattern pattern =Pattern.compile("[0-9]*");
-							if(!pattern.matcher(id).matches()) os.writeUTF("Failure: Invalid Input");
+							if(!pattern.matcher(id).matches()) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
 							else {
 								os.writeUTF(t.add(new Person(Integer.parseInt(id), name)));
 							}
@@ -92,11 +92,11 @@ public class CommandThread extends Thread{
 					else if(str.equals("delete"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
-						else if(strarr.length!=2) os.writeUTF("Failure: Invalid Input");
+						else if(strarr.length!=2) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
 						else{
 							String id=strarr[1];
 							Pattern pattern =Pattern.compile("[0-9]*");
-							if(!pattern.matcher(id).matches()) os.writeUTF("Failure: Invalid Input");
+							if(!pattern.matcher(id).matches()) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
 							else {
 								os.writeUTF(t.delete(Integer.parseInt(id)));
 							}
@@ -106,12 +106,12 @@ public class CommandThread extends Thread{
 					else if(str.equals("update"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
-						else if(strarr.length!=3) os.writeUTF("Failure: Invalid Input");
+						else if(strarr.length!=3) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
 						else{
 							String id=strarr[1];
 							String name=strarr[2];
 							Pattern pattern =Pattern.compile("[0-9]*");
-							if(!pattern.matcher(id).matches()) os.writeUTF("Failure: Invalid Input");
+							if(!pattern.matcher(id).matches()) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
 							else {
 								os.writeUTF(t.update(Integer.parseInt(id), name));
 							}
@@ -120,20 +120,27 @@ public class CommandThread extends Thread{
 					else if(str.equals("view"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
-						else if(strarr.length!=1) os.writeUTF("Failure: Invalid Input");
+						else if(strarr.length!=1) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
 						else os.writeUTF(t.view());
 					}
 					else if(str.equals("commit"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
-						else if(strarr.length!=1) os.writeUTF("Failure: Invalid Input");
-						else os.writeUTF(t.commit());this.t = newTransaction();
+						else if(strarr.length!=1) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
+						else {
+							os.writeUTF(t.commit());
+							this.t = newTransaction();
+						}
 					}
 					else if(str.equals("rollback"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
-						else if(strarr.length!=1) os.writeUTF("Failure: Invalid Input");
-						else os.writeUTF(t.rollback());this.t = newTransaction();
+						else if(strarr.length!=1) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
+						else 
+							{
+								os.writeUTF(t.rollback());
+								this.t = newTransaction();
+							}
 						
 					}
 					else if(str.equals("help"))

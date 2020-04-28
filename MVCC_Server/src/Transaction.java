@@ -22,6 +22,13 @@ public class Transaction {
     }
 
     public String add(Person p){
+    	for (int i = 0; i < Records.instance().records.size(); i++) {
+    		Person pi = Records.instance().records.get(i);
+    		 if(visible(pi)&&p.getpid() == pi.getpid())
+    		 {
+    			 return "Failure: id already exists";
+    		 }
+    	}
         p.setcreated_tid(this.tid);
         p.setexpired_tid(0);
         HashMap<String,String> map = new HashMap<>(){
@@ -123,14 +130,14 @@ public class Transaction {
     }
 
     public String commit(){
-
+    	if(this.rollback.isEmpty()) return "Failure: Nothing to commit";
         Records.instance().active.remove(this.tid);
         return "Success";
     }
 
 
     public String rollback(){
-
+    	if(this.rollback.isEmpty()) return "Failure: Nothing to rollback";
         Collections.reverse(this.rollback);
         for (HashMap<String,String> action: this.rollback) {
             if (action.get("action") == "add"){
