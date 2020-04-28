@@ -102,6 +102,7 @@ public class CommandThread extends Thread{
 							}
 						}
 					}
+					
 					else if(str.equals("update"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
@@ -126,7 +127,7 @@ public class CommandThread extends Thread{
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");
 						else if(strarr.length!=1) os.writeUTF("Failure: Invalid Input");
-						else os.writeUTF(t.commit());
+						else os.writeUTF(t.commit());this.t = newTransaction();
 					}
 					else if(str.equals("rollback"))
 					{
