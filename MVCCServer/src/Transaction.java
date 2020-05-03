@@ -25,9 +25,14 @@ public class Transaction {
     public String add(Person p){
     	for (int i = 0; i < Records.instance().records.size(); i++) {
     		Person pi = Records.instance().records.get(i);
-    		 if(visible(pi)&&p.getpid().equals(pi.getpid()))
+    		 if(p.getpid().equals(pi.getpid()))
     		 {
-    			 return "Failure: id already exists";
+    		     if (visible(pi)){
+                     return "Failure: id already exists";
+                 }else{
+    		         return "Failure: another transaction attempt to create this item";
+                 }
+
     		 }
     	}
         p.setcreated_tid(this.tid);
@@ -178,6 +183,7 @@ public class Transaction {
     }
 
     public String commit(){
+
     	if(this.rollback.isEmpty()) return "Failure: Nothing to commit";
         Records.instance().active.remove(this.tid);
         return "Success";
