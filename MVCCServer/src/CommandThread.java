@@ -103,6 +103,20 @@ public class CommandThread extends Thread{
 						}
 					}
 
+					else if(str.equals("select"))
+					{
+						if(!login) os.writeUTF("Failure: Not Logged in");
+						else if(strarr.length!=2) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
+						else{
+							String id=strarr[1];
+							Pattern pattern =Pattern.compile("[0-9]*");
+							if(!pattern.matcher(id).matches()) os.writeUTF("Failure: Invalid Input\n\r\t    For instructions, type 'help'");
+							else {
+								os.writeUTF(t.select(Integer.parseInt(id)));
+							}
+						}
+					}
+
 					else if(str.equals("update"))
 					{
 						if(!login) os.writeUTF("Failure: Not Logged in");

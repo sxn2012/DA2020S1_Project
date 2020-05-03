@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -24,7 +25,7 @@ public class Transaction {
     public String add(Person p){
     	for (int i = 0; i < Records.instance().records.size(); i++) {
     		Person pi = Records.instance().records.get(i);
-    		 if(visible(pi)&&p.getpid() == pi.getpid())
+    		 if(visible(pi)&&p.getpid().equals(pi.getpid()))
     		 {
     			 return "Failure: id already exists";
     		 }
@@ -50,7 +51,7 @@ public class Transaction {
 
             Person p = Records.instance().records.get(i);
 
-            if(visible(p)&&p.getpid() == pid){
+            if(visible(p)&&p.getpid().equals(pid)){
 
                 if (rowLocked(p)){
 
@@ -84,6 +85,42 @@ public class Transaction {
 
     }
 
+
+    public String binarySearch(Integer pid,int start,int end,ArrayList<Person> dataSource){
+        if(dataSource.isEmpty()){
+            return "Database doesn't have any value";
+        }
+        if(start<=end){
+
+            int middle = (start+end)/2;
+
+            Person p = dataSource.get(middle);
+
+
+            if (pid.intValue() == p.getpid().intValue()){
+                return p.getstr();
+
+            } else if (pid.intValue() < p.getpid().intValue()) {
+
+                return binarySearch(pid,start,middle-1,dataSource);
+            } else {
+
+                return binarySearch(pid,middle+1,end,dataSource);
+            }
+        }else{
+
+            return "No such row";
+        }
+
+    }
+
+    public String select(Integer pid){
+
+        ArrayList<Person> dataSource = this.fetch();
+
+        return binarySearch(pid,0,dataSource.size()-1,dataSource);
+    }
+
     public String view() {
     	String output="";
     	for (Person p:this.fetch())
@@ -95,11 +132,11 @@ public class Transaction {
     }
     public boolean visible(Person p){
 
-        if (Records.instance().active.contains(p.getcreated_tid())&& p.getcreated_tid()!=this.tid){
+        if (Records.instance().active.contains(p.getcreated_tid())&& !p.getcreated_tid().equals(this.tid)){
             return false;
         }
 
-        if (p.getexpired_tid() !=0 && (!Records.instance().active.contains(p.getexpired_tid())||p.getexpired_tid()==this.tid)){
+        if (p.getexpired_tid().intValue() !=0 && (!Records.instance().active.contains(p.getexpired_tid())||p.getexpired_tid()==this.tid)){
             return false;
         }
 
@@ -109,7 +146,7 @@ public class Transaction {
 
     public boolean rowLocked(Person p){
 
-        return p.getexpired_tid() !=0 && Records.instance().active.contains(p.getexpired_tid());
+        return p.getexpired_tid().intValue() !=0 && Records.instance().active.contains(p.getexpired_tid());
 
     }
 
@@ -118,13 +155,24 @@ public class Transaction {
         
         ArrayList<Person> result = new ArrayList<>();
 
+
         for (Person p:Records.instance().records) {
             if (visible(p)){
                 result.add(p);
             }
             
         }
+        Comparator<Person> c = new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                if(o1.getpid()>o2.getpid()){
+                    return 1;
+                }
+                return -1;
+            }
+        };
 
+        result.sort(c);
         return result;
 
     }
