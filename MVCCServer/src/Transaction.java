@@ -221,7 +221,7 @@ public class Transaction {
 
                 String response = binarySearch(p.getpid(),0,filteredTable.size()-1,filteredTable);
 
-                if (!(response.equals("No such row")||response.equals("Database doesn't have any value"))){
+                if (!response.contains("Failure:")){
 
                     rollback();
                     return "Failure: Person "+ p.getpid() + " already exists, rollback automatically";
