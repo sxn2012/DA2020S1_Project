@@ -165,7 +165,6 @@ public class Transaction {
 
         for (Person p:Records.instance().records) {
             if (visible(p)){
-                p.setLastRead_timestamp();
                 result.add(p);
             }
             
