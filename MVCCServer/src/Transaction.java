@@ -28,6 +28,7 @@ public class Transaction {
 
     		 }
     	}
+
         p.setcreated_tid(this.tid);
         p.setexpired_tid(0);
         HashMap<String,String> map = new HashMap<>(){
@@ -35,7 +36,9 @@ public class Transaction {
                 put("action","delete");
                 put("order",String.valueOf(Records.instance().records.size()));
             }
+
         };
+
         this.rollback.add(map);
         Records.instance().records.add(p);
         

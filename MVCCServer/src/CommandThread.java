@@ -14,9 +14,11 @@ public class CommandThread extends Thread{
 	boolean login;
 	Transaction t;
 	public CommandThread(Socket client) {
+
 		// TODO Auto-generated constructor stub
 		this.client=client;
 		login=false;
+
 	}
 	public static Transaction newTransaction(){
 
