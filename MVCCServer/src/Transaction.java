@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * @Author: XIGUANG LI <xiguangl@student.unimelb.edu.au>
@@ -25,13 +22,9 @@ public class Transaction {
     public String add(Person p){
     	for (int i = 0; i < Records.instance().records.size(); i++) {
     		Person pi = Records.instance().records.get(i);
-    		 if(p.getpid().equals(pi.getpid()))
+    		 if(visible(pi)&&p.getpid().equals(pi.getpid()))
     		 {
-    		     if (visible(pi)){
-                     return "Failure: id already exists";
-                 }else if(Records.instance().active.contains(pi.getcreated_tid())){
-    		         return "Failure: another transaction attempt to create this item";
-                 }
+    		     return "Failure: id already exists";
 
     		 }
     	}
@@ -92,8 +85,10 @@ public class Transaction {
     }
 
 
+
     public String binarySearch(Integer pid,int start,int end,ArrayList<Person> dataSource){
         if(dataSource.isEmpty()){
+
             return "Database doesn't have any value";
         }
         if(start<=end){
@@ -158,17 +153,8 @@ public class Transaction {
     }
 
 
-    public ArrayList<Person> fetch(){
-        
-        ArrayList<Person> result = new ArrayList<>();
+    public ArrayList<Person> sortTable(ArrayList<Person> table){
 
-
-        for (Person p:Records.instance().records) {
-            if (visible(p)){
-                result.add(p);
-            }
-            
-        }
         Comparator<Person> c = new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
@@ -179,21 +165,69 @@ public class Transaction {
             }
         };
 
-        result.sort(c);
-        return result;
+        table.sort(c);
+
+        return table;
+    }
+
+
+    public ArrayList<Person> fetch(){
+
+
+        return filter(Records.instance().records);
+    }
+
+    public ArrayList<Person> filter(ArrayList<Person> table){
+        
+        ArrayList<Person> result = new ArrayList<>();
+
+
+        for (Person p:table) {
+            if (visible(p)){
+                result.add(p);
+            }
+            
+        }
+
+        return sortTable(result);
 
     }
+
+
 
     public String commit(){
 
     	if(this.rollback.isEmpty()) return "Failure: Nothing to commit";
         for (HashMap<String,String> action: this.rollback){
+
             int index = Integer.parseInt(action.get("order"));
             Person p = Records.instance().records.get(index);
-            if (p.getLastRead_timestamp()>=p.getLastWrite_timestamp()){
-                rollback();
-                return "Commit fails, rollback automatically";
+            if (action.get("action") == "add"){
+
+
+                if (p.getLastRead_timestamp()>=p.getLastWrite_timestamp()){
+                    rollback();
+                    return "Failure: Commit fails, rollback automatically";
+                }
+
+            }else if(action.get("action") == "delete"){
+
+                ArrayList<Person> table = new ArrayList<>(Records.instance().records);
+                table.remove(index);
+                ArrayList<Person> filteredTable = filter(table);
+
+                String response = binarySearch(p.getpid(),0,filteredTable.size()-1,filteredTable);
+
+                if (!(response.equals("No such row")||response.equals("Database doesn't have any value"))){
+
+                    rollback();
+                    return "Failure: Person "+ p.getpid() + " already exists, rollback automatically";
+                }
+
+
             }
+
+
         }
         Records.instance().active.remove(this.tid);
         return "Success";
