@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * @Author: XIGUANG LI <xiguangl@student.unimelb.edu.au>
  * @Purpose: XIGUANGL
@@ -10,10 +12,19 @@ public class Person {
     private String name;
     private Integer created_tid;
     private Integer expired_tid;
+    private long lastWrite_timestamp;
+    private long lastRead_timestamp;
     Person(Integer pid,String name){
         this.pid = pid;
         this.name = name;
+        this.lastRead_timestamp = new Date().getTime();
+        this.lastWrite_timestamp = this.lastRead_timestamp+1;
+
     }
+    public void setLastWrite_timestamp(){ this.lastWrite_timestamp = new Date().getTime(); }
+    public void setLastRead_timestamp(){ this.lastRead_timestamp = new Date().getTime();}
+    public long getLastWrite_timestamp(){return this.lastWrite_timestamp;}
+    public long getLastRead_timestamp(){return this.lastRead_timestamp;}
     public void setpid(Integer pid) {
     	this.pid=pid;
     }
@@ -39,6 +50,6 @@ public class Person {
     	return this.expired_tid;
     }
     public String getstr() {
-    	return "Person ID:"+pid.toString()+" Name:"+name;
+    	return "Person ID:"+pid.toString()+" Name:"+name + " LastRead:" + this.lastRead_timestamp;
     }
 }

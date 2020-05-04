@@ -29,7 +29,7 @@ public class Transaction {
     		 {
     		     if (visible(pi)){
                      return "Failure: id already exists";
-                 }else{
+                 }else if(Records.instance().active.contains(pi.getcreated_tid())){
     		         return "Failure: another transaction attempt to create this item";
                  }
 
@@ -63,6 +63,7 @@ public class Transaction {
                     return "Failure: Row is locked by another transaction";
                 }else{
 
+                    p.setLastWrite_timestamp();
                     p.setexpired_tid(this.tid);
                     HashMap<String,String> map = new HashMap<>();
                     map.put("action","add");
@@ -103,6 +104,7 @@ public class Transaction {
 
 
             if (pid.intValue() == p.getpid().intValue()){
+                p.setLastRead_timestamp();
                 return p.getstr();
 
             } else if (pid.intValue() < p.getpid().intValue()) {
@@ -163,6 +165,7 @@ public class Transaction {
 
         for (Person p:Records.instance().records) {
             if (visible(p)){
+                p.setLastRead_timestamp();
                 result.add(p);
             }
             
@@ -185,6 +188,14 @@ public class Transaction {
     public String commit(){
 
     	if(this.rollback.isEmpty()) return "Failure: Nothing to commit";
+        for (HashMap<String,String> action: this.rollback){
+            int index = Integer.parseInt(action.get("order"));
+            Person p = Records.instance().records.get(index);
+            if (p.getLastRead_timestamp()>=p.getLastWrite_timestamp()){
+                rollback();
+                return "Commit fails, rollback automatically";
+            }
+        }
         Records.instance().active.remove(this.tid);
         return "Success";
     }
