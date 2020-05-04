@@ -89,7 +89,7 @@ public class Transaction {
     public String binarySearch(Integer pid,int start,int end,ArrayList<Person> dataSource){
         if(dataSource.isEmpty()){
 
-            return "Database doesn't have any value";
+            return "Failure: Database doesn't have any value";
         }
         if(start<=end){
 
@@ -111,7 +111,7 @@ public class Transaction {
             }
         }else{
 
-            return "No such row";
+            return "Failure: No such row";
         }
 
     }
@@ -127,9 +127,9 @@ public class Transaction {
     	String output="";
     	for (Person p:this.fetch())
         {
-        	output=output+p.getstr()+"\n\r\t   ";
+        	output=output+p.getstr()+"\n\r   ";
         }
-    	if(output.equals("")) return "No data";
+    	if(output.equals("")) return "Failure: Database doesn't have any value";
     	else return output;
     }
     public boolean visible(Person p){
