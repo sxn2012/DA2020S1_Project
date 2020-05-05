@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 public class CommandThread extends Thread{
 	Socket client;
 	boolean login;
@@ -169,9 +171,6 @@ public class CommandThread extends Thread{
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 							}
 						}
-
-
-
 					}
 
 					else if(str.equals("update"))
@@ -220,8 +219,6 @@ public class CommandThread extends Thread{
 							else
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
-
-
 					}
 					else if(str.equals("commit"))
 					{
@@ -275,9 +272,11 @@ public class CommandThread extends Thread{
 		}
 		catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			//JOptionPane.showMessageDialog(window.frame, e.getClass().toString(),"Error", JOptionPane.ERROR_MESSAGE);
+			//System.exit(1);
 			this.t.rollback();
 			Records.instance().active.remove(this.t.tid);
+            window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getClass().toString()+").");
 
 
 

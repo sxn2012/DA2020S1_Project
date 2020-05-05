@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 
 
 
+
+
 public class TCPThread extends Thread{
 	Socket client;
 	String command;
@@ -32,12 +34,15 @@ public class TCPThread extends Thread{
 	}
 	public void run()
 	{
+		boolean flag=false;
 		try {
 			//Scanner s=new Scanner(System.in);
 			DataInputStream is=new DataInputStream(client.getInputStream());
 			DataOutputStream os=new DataOutputStream(client.getOutputStream());
 			//System.out.print("$");
 			//String command=s.nextLine();
+			if(command.equals("exit"))
+				flag=true;
 			os.writeUTF(command);
 			String str=is.readUTF();
 			//System.out.println("\t>>>>"+str);
@@ -56,7 +61,9 @@ public class TCPThread extends Thread{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(frame, "There might be some errors in the connection ("+e.getClass().toString()+").","Error", JOptionPane.ERROR_MESSAGE);
+			if(flag)
+				System.exit(1);
 		}
 		
 		
