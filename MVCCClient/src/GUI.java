@@ -35,24 +35,28 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("MVCC Client");
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				int response=JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
 				if(response==JOptionPane.NO_OPTION)
 					return;
-				super.windowClosing(e);
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("exit");
-				thread.start();
+				else if(response==JOptionPane.YES_OPTION)
+				{
+					super.windowClosing(e);
+					TCPThread thread=new TCPThread(client);
+					thread.Setframe(frame);
+					thread.Setcommand("exit");
+					thread.start();
+				}
+				
 			}
 		});
 		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setResizable(false);
 		
 		
 		JButton btnLogin = new JButton("Login");

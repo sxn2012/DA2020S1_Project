@@ -5,7 +5,10 @@
  * 
  */
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.TextArea;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,13 +21,14 @@ import javax.swing.JTextPane;
 
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 public class GUI {
 
 	JFrame frame;
 	JTextArea textArea;
-	
+	private int num_logs;
 	
 
 	/**
@@ -32,6 +36,7 @@ public class GUI {
 	 */
 	public GUI() {
 		initialize();
+		num_logs=0;
 	}
 	
 	public void setContent(String str) {
@@ -41,16 +46,40 @@ public class GUI {
 			textArea.setText(sdf.format(new Date())+"\t"+str);
 		else
 			textArea.setText(textArea.getText()+"\n\r"+sdf.format(new Date())+"\t"+str);
+		if(num_logs>=500)
+		{
+			textArea.setText("");
+			num_logs=0;
+			setContent("Screen has been cleared.");
+		}
+		textArea.paintImmediately(textArea.getBounds());
+		frame.setExtendedState(Frame.NORMAL);
+		num_logs++;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("MVCC Server");
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int response=JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
+				if(response==JOptionPane.NO_OPTION)
+					return;
+				else if(response==JOptionPane.YES_OPTION)
+				{
+					super.windowClosing(e);
+					System.exit(0);
+				}
+				
+			}
+		});
 		frame.setBounds(100, 100, 600, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
 		
 		textArea = new JTextArea();
 		textArea.setEditable(false);
