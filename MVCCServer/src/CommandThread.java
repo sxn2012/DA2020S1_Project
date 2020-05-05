@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 public class CommandThread extends Thread{
 	Socket client;
 	boolean login;
@@ -270,7 +272,9 @@ public class CommandThread extends Thread{
 		}
 		catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			//JOptionPane.showMessageDialog(window.frame, e.getClass().toString(),"Error", JOptionPane.ERROR_MESSAGE); 
+			//System.exit(1);
+			window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getClass().toString()+").");
 		}
 	}
 }
