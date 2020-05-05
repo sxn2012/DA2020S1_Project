@@ -41,17 +41,14 @@ public class Records {
         ArrayList<Person> cleanedRecord = new ArrayList<>();
 
         for (Person p : t) {
-            if (p.getexpired_tid()==0||(p.getexpired_tid()!=0&&instance().active.contains(p.getexpired_tid()))){
+            if (p.getexpired_tid() == 0 || (p.getexpired_tid() != 0 && instance().active.contains(p.getexpired_tid()))) {
                 cleanedRecord.add(p);
             }
 
         }
-
-
-
+        
         instance().records = cleanedRecord;
 
-        System.out.println("Cleaned");
 
 
 
