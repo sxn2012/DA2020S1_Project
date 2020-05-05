@@ -75,7 +75,6 @@ public class Main {
 		Thread thread = new Thread(runnable);
 		thread.start();
 
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

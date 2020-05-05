@@ -261,7 +261,6 @@ public class Transaction {
                 records.get(index).setexpired_tid(this.tid);
             }
         }
-
         Records.instance().active.remove(this.tid);
         return "Success";
 

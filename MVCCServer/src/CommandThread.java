@@ -278,8 +278,6 @@ public class CommandThread extends Thread{
 			Records.instance().active.remove(this.t.tid);
             window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getClass().toString()+").");
 
-
-
 		}
 	}
 }

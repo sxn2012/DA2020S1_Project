@@ -46,11 +46,8 @@ public class Records {
             }
 
         }
-        
+
         instance().records = cleanedRecord;
-
-
-
 
     }
 
