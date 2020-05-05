@@ -54,7 +54,29 @@ public class Main {
         }
         System.out.println();
 		*/
-    	EventQueue.invokeLater(new Runnable() {
+
+ 		final long timeInterval = 15*60*1000;
+ 		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				while (true){
+
+					try {
+						Records.garbageClean();
+						Thread.sleep(timeInterval);
+
+					}catch (InterruptedException e){
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+
+		Thread thread = new Thread(runnable);
+		thread.start();
+
+
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GUI window = new GUI();

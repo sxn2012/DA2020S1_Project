@@ -24,7 +24,7 @@ public class CommandThread extends Thread{
 		this.window=window;
 		this.idl=id;
 	}
-	public static Transaction newTransaction(){
+	public static synchronized Transaction newTransaction(){
 
         TCPThread.transaction_id++;
         Records.instance().active.add(TCPThread.transaction_id);
@@ -169,6 +169,9 @@ public class CommandThread extends Thread{
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 							}
 						}
+
+
+
 					}
 
 					else if(str.equals("update"))
@@ -217,6 +220,8 @@ public class CommandThread extends Thread{
 							else
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
+
+
 					}
 					else if(str.equals("commit"))
 					{
@@ -271,6 +276,11 @@ public class CommandThread extends Thread{
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			this.t.rollback();
+			Records.instance().active.remove(this.t.tid);
+
+
+
 		}
 	}
 }

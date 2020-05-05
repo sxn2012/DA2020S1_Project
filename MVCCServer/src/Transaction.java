@@ -19,9 +19,14 @@ public class Transaction {
 
     }
 
+
+
+
     public String add(Person p){
-    	for (int i = 0; i < Records.instance().records.size(); i++) {
-    		Person pi = Records.instance().records.get(i);
+        ArrayList<Person> records = new ArrayList<>(Records.instance().records);
+
+        for (int i = 0; i < records.size(); i++) {
+    		Person pi = records.get(i);
     		 if(visible(pi)&&p.getpid().equals(pi.getpid()))
     		 {
     		     return "Failure: id already exists";
@@ -29,28 +34,31 @@ public class Transaction {
     		 }
     	}
 
+
+        int order = Records.addItemToRecords(p);
+
         p.setcreated_tid(this.tid);
         p.setexpired_tid(0);
         HashMap<String,String> map = new HashMap<>(){
             {
                 put("action","delete");
-                put("order",String.valueOf(Records.instance().records.size()));
+                put("order",String.valueOf(order));
             }
 
         };
 
         this.rollback.add(map);
-        Records.instance().records.add(p);
-        
+
         return "Success";
     }
 
 
     public String delete(Integer pid) {
 
-        for (int i = 0; i < Records.instance().records.size(); i++) {
+        ArrayList<Person> records = new ArrayList<>(Records.instance().records);
+        for (int i = 0; i < records.size(); i++) {
 
-            Person p = Records.instance().records.get(i);
+            Person p = records.get(i);
 
             if(visible(p)&&p.getpid().equals(pid)){
 
@@ -127,6 +135,8 @@ public class Transaction {
     }
 
     public String view() {
+
+
     	String output="";
     	for (Person p:this.fetch())
         {
@@ -175,7 +185,6 @@ public class Transaction {
 
 
     public ArrayList<Person> fetch(){
-
 
         return filter(Records.instance().records);
     }
@@ -238,16 +247,18 @@ public class Transaction {
 
 
     public String rollback(){
+
     	if(this.rollback.isEmpty()) return "Failure: Nothing to rollback";
         Collections.reverse(this.rollback);
+        ArrayList<Person> records = new ArrayList<>(Records.instance().records);
         for (HashMap<String,String> action: this.rollback) {
             if (action.get("action") == "add"){
 
                 int index = Integer.parseInt(action.get("order"));
-                Records.instance().records.get(index).setexpired_tid(0);
+                records.get(index).setexpired_tid(0);
             }else if(action.get("action") == "delete"){
                 int index = Integer.parseInt(action.get("order"));
-                Records.instance().records.get(index).setexpired_tid(this.tid);
+                records.get(index).setexpired_tid(this.tid);
             }
         }
 

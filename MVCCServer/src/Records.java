@@ -27,4 +27,36 @@ public class Records {
     private static class instanceHolder {
         private static final Records instance = new Records();
     }
+
+    public static synchronized int addItemToRecords(Person p){
+
+        instance().records.add(p);
+        return instance().records.size()-1;
+
+    }
+
+    public static void garbageClean(){
+
+        ArrayList<Person> t = new ArrayList<>(instance().records);
+        ArrayList<Person> cleanedRecord = new ArrayList<>();
+
+        for (Person p : t) {
+            if (p.getexpired_tid()==0||(p.getexpired_tid()!=0&&instance().active.contains(p.getexpired_tid()))){
+                cleanedRecord.add(p);
+            }
+
+        }
+
+
+
+        instance().records = cleanedRecord;
+
+        System.out.println("Cleaned");
+
+
+
+    }
+
+
+
 }
