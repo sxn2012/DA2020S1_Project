@@ -2,7 +2,7 @@
 This is our group's project of DA in 2020S1.
 
 ## version 2.0
-- Add GUI to client
+- Add GUI to client and server
 ___
 
 ## version 1.1

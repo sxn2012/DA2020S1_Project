@@ -1,3 +1,4 @@
+import java.awt.EventQueue;
 import java.lang.reflect.Array;
 import java.util.HashSet;
 
@@ -53,10 +54,20 @@ public class Main {
         }
         System.out.println();
 		*/
-    	System.out.println("Server start");
-    	TCPThread thread=new TCPThread(7777);
-    	thread.start();
-
+    	EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI window = new GUI();
+					window.frame.setVisible(true);
+					window.setContent("Server Start");
+			    	TCPThread thread=new TCPThread(7777,window);
+			    	thread.start();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+    	
 
 
     }

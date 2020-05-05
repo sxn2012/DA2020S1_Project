@@ -41,16 +41,16 @@ public class TCPThread extends Thread{
 			os.writeUTF(command);
 			String str=is.readUTF();
 			//System.out.println("\t>>>>"+str);
-			if(str.contains("Failure"))
+			if(str.contains("Failure:"))
 				JOptionPane.showMessageDialog(frame, str,"Error", JOptionPane.ERROR_MESSAGE); 
 			else
 			JOptionPane.showMessageDialog(frame, str,"information", JOptionPane.INFORMATION_MESSAGE); 
-			if(command.equals("exit"))
+			if(str.equals("Bye"))
 			{
 				is.close();
 				os.close();
 				client.close();
-				
+				System.exit(0);
 			}
 			//System.out.print("$");
 			

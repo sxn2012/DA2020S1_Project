@@ -1,3 +1,9 @@
+/*
+ * Author: Xinnan SHEN
+ * Email: xinnan.shen@student.unimelb.edu.au
+ * Date: 05/05/2020
+ * 
+ */
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,6 +13,8 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.Socket;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GUI {
 
@@ -28,8 +36,21 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int response=JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
+				if(response==JOptionPane.NO_OPTION)
+					return;
+				super.windowClosing(e);
+				TCPThread thread=new TCPThread(client);
+				thread.Setframe(frame);
+				thread.Setcommand("exit");
+				thread.start();
+			}
+		});
 		frame.setBounds(100, 100, 500, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		
