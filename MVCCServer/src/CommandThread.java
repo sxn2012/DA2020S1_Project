@@ -16,13 +16,13 @@ public class CommandThread extends Thread{
 	boolean login;
 	Transaction t;
 	GUI window;
-	//long id;
-	public CommandThread(Socket client,GUI window) {
+	long idl;
+	public CommandThread(Socket client,GUI window,long id) {
 		// TODO Auto-generated constructor stub
 		this.client=client;
 		login=false;
 		this.window=window;
-		//this.id=id;
+		this.idl=id;
 	}
 	public static Transaction newTransaction(){
 
@@ -51,7 +51,7 @@ public class CommandThread extends Thread{
 					is.close();
 					os.close();
 					client.close();
-					window.setContent(client.getInetAddress().getHostAddress()+" has exited.");
+					window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has exited.");
 					break;
 				}
 				else if (command.equals("login"))
@@ -61,11 +61,11 @@ public class CommandThread extends Thread{
 						t=newTransaction();
 						login=true;
 						os.writeUTF("Login Success");
-						window.setContent(client.getInetAddress().getHostAddress()+" has successfully logged in.");
+						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully logged in.");
 					}
 					else {
 						os.writeUTF("Failure: Already Logged in. No need to re-login");
-						window.setContent(client.getInetAddress().getHostAddress()+" has not successfully logged in.");
+						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully logged in.");
 					}
 				}
 				else if(command.equals("logout"))
@@ -75,11 +75,11 @@ public class CommandThread extends Thread{
 						t=null;
 						login=false;
 						os.writeUTF("Logout Success");
-						window.setContent(client.getInetAddress().getHostAddress()+" has successfully logged out.");
+						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully logged out.");
 					}
 					else {
 						os.writeUTF("Failure: Not Logged in");
-						window.setContent(client.getInetAddress().getHostAddress()+" has not successfully logged out.");
+						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully logged out.");
 					}
 				}
 				else {
@@ -89,11 +89,11 @@ public class CommandThread extends Thread{
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 						}
 						else if(strarr.length!=3) {
 							os.writeUTF("Failure: Invalid Operation");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 						}
 						else{
 							String id=strarr[1];
@@ -101,15 +101,15 @@ public class CommandThread extends Thread{
 							Pattern pattern =Pattern.compile("[0-9]*");
 							if(!pattern.matcher(id).matches()) {
 								os.writeUTF("Failure: Invalid Operation");
-								window.setContent(client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 							}
 							else {
 								String status=t.add(new Person(Integer.parseInt(id), name));
 								os.writeUTF(status);
 								if(!status.contains("Failure:"))
-									window.setContent(client.getInetAddress().getHostAddress()+" has successfully inserted data ("+id+" ,"+name+").");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully inserted data ("+id+" ,"+name+").");
 								else
-									window.setContent(client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 							}
 						}
 						
@@ -119,26 +119,26 @@ public class CommandThread extends Thread{
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 						}
 						else if(strarr.length!=2) {
 							os.writeUTF("Failure: Invalid Operation");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 						}
 						else{
 							String id=strarr[1];
 							Pattern pattern =Pattern.compile("[0-9]*");
 							if(!pattern.matcher(id).matches()) {
 								os.writeUTF("Failure: Invalid Operation");
-								window.setContent(client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 							}
 							else {
 								String status=t.delete(Integer.parseInt(id));
 								os.writeUTF(status);
 								if(!status.contains("Failure:"))
-									window.setContent(client.getInetAddress().getHostAddress()+" has successfully deleted data No."+id+".");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully deleted data No."+id+".");
 								else
-									window.setContent(client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 							}
 						}
 					}
@@ -147,26 +147,26 @@ public class CommandThread extends Thread{
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully selected data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 						}
 						else if(strarr.length!=2) {
 							os.writeUTF("Failure: Invalid Operation");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully selected data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 						}
 						else{
 							String id=strarr[1];
 							Pattern pattern =Pattern.compile("[0-9]*");
 							if(!pattern.matcher(id).matches()) {
 								os.writeUTF("Failure: Invalid Operation");
-								window.setContent(client.getInetAddress().getHostAddress()+" has not successfully selected data.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 							}
 							else {
 								String status=t.select(Integer.parseInt(id));
 								os.writeUTF(status);
 								if(!status.contains("Failure:"))
-									window.setContent(client.getInetAddress().getHostAddress()+" has successfully selected data No."+id+".");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully selected data No."+id+".");
 								else
-									window.setContent(client.getInetAddress().getHostAddress()+" has not successfully selected data.");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 							}
 						}
 					}
@@ -175,11 +175,11 @@ public class CommandThread extends Thread{
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully updated data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 						}
 						else if(strarr.length!=3) {
 							os.writeUTF("Failure: Invalid Operation");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully updated data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 						}
 						else{
 							String id=strarr[1];
@@ -187,15 +187,15 @@ public class CommandThread extends Thread{
 							Pattern pattern =Pattern.compile("[0-9]*");
 							if(!pattern.matcher(id).matches()) {
 								os.writeUTF("Failure: Invalid Operation");
-								window.setContent(client.getInetAddress().getHostAddress()+" has not successfully updated data.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 							}
 							else {
 								String status=t.update(Integer.parseInt(id), name);
 								os.writeUTF(status);
 								if(!status.contains("Failure"))
-									window.setContent(client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
 								else
-									window.setContent(client.getInetAddress().getHostAddress()+" has not successfully updated data.");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 							}
 						}
 					}
@@ -203,38 +203,38 @@ public class CommandThread extends Thread{
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 						else if(strarr.length!=1) {
 							os.writeUTF("Failure: Invalid Operation");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 						else {
 							String status=t.view();
 							os.writeUTF(status);
 							if(!status.contains("Failure:"))
-								window.setContent(client.getInetAddress().getHostAddress()+" has successfully viewed data.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully viewed data.");
 							else
-								window.setContent(client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 					}
 					else if(str.equals("commit"))
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully committed.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully committed.");
 						}
 						else if(strarr.length!=1) {
 							os.writeUTF("Failure: Invalid Operation");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully committed.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully committed.");
 						}
 						else {
 							String status=t.commit();
 							os.writeUTF(status);
 							if(!status.contains("Failure:"))
-								window.setContent(client.getInetAddress().getHostAddress()+" has successfully committed.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully committed.");
 							else
-								window.setContent(client.getInetAddress().getHostAddress()+" has not successfully committed.");
+								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully committed.");
 							this.t = newTransaction();
 							
 						}
@@ -243,27 +243,27 @@ public class CommandThread extends Thread{
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
 						}
 						else if(strarr.length!=1) {
 							os.writeUTF("Failure: Invalid Operation");
-							window.setContent(client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
+							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
 						}
 						else 
 							{
 								String status=t.rollback();
 								os.writeUTF(status);
 								if(!status.contains("Failure:"))
-									window.setContent(client.getInetAddress().getHostAddress()+" has successfully rolled back.");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully rolled back.");
 								else
-									window.setContent(client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
+									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
 								this.t = newTransaction();
 							}
 						
 					}
 					else {
 						os.writeUTF("Failure: Invalid Operation");
-						window.setContent(client.getInetAddress().getHostAddress()+" has made an invalid operation.");
+						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has made an invalid operation.");
 					}
 				}
 			}

@@ -48,7 +48,7 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 500, 300);
+		frame.setBounds(100, 100, 600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -60,7 +60,7 @@ public class GUI {
 		JScrollPane scrollPane=new JScrollPane(textArea);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);  
-		scrollPane.setBounds(12, 24, 476, 238);
+		scrollPane.setBounds(12, 24, 563, 527);
 		frame.getContentPane().add(scrollPane);
 		
 		JLabel lblSystemOutput = new JLabel("System Output:");
