@@ -35,7 +35,7 @@ public class Transaction {
     	}
 
 
-        int order = Records.addItemToRecords(p);
+        int order = Records.addItemToRecords(p,null);
 
         p.setcreated_tid(this.tid);
         p.setexpired_tid(0);

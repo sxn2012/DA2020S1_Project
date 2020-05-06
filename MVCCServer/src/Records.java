@@ -28,15 +28,26 @@ public class Records {
         private static final Records instance = new Records();
     }
 
-    public static synchronized int addItemToRecords(Person p){
+    public static synchronized int addItemToRecords(Person p,ArrayList<Person> cleanedRecord){
+        if (p == null){
+            instance().records = cleanedRecord;
+            return 0;
+        }else {
+            instance().records.add(p);
+            return instance().records.size() - 1;
+        }
 
-        instance().records.add(p);
-        return instance().records.size()-1;
 
     }
 
+
     public static void garbageClean(){
 
+        if(!instance().active.isEmpty()){
+
+            return;
+        }
+        int initialCount = instance().records.size();
         ArrayList<Person> t = new ArrayList<>(instance().records);
         ArrayList<Person> cleanedRecord = new ArrayList<>();
 
@@ -47,7 +58,10 @@ public class Records {
 
         }
 
-        instance().records = cleanedRecord;
+        if (initialCount == instance().records.size()){
+            return;
+        }
+        addItemToRecords(null,cleanedRecord);
 
     }
 
