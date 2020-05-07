@@ -74,6 +74,7 @@ public class CommandThread extends Thread{
 				{
 					if(login)
 					{
+						t.rollback();//rollback uncommitted changes
 						t=null;
 						login=false;
 						os.writeUTF("Logout Success");

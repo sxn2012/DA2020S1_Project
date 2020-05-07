@@ -27,7 +27,7 @@ public class TCPThread extends Thread{
 			{
 				Socket client=server.accept();
 				long id=new Date().getTime();
-				System.out.println(id);
+				//System.out.println(id);
 				CommandThread dealthread=new CommandThread(client,window,id);
 				dealthread.start();
 			}

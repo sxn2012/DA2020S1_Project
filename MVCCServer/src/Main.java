@@ -56,7 +56,7 @@ public class Main {
 		*/
 
  		final long timeInterval = 15*60*1000;
- 		Runnable runnable = new Runnable() {
+ 		Runnable gc = new Runnable() {
 			@Override
 			public void run() {
 				while (true){
@@ -72,7 +72,7 @@ public class Main {
 			}
 		};
 
-		Thread thread = new Thread(runnable);
+		Thread thread = new Thread(gc);
 		thread.start();
 
 		EventQueue.invokeLater(new Runnable() {
