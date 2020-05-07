@@ -4,6 +4,7 @@
   ## version 2.1
 
   - Improve GUI (prevent situation that client cannot exit the system)
+  - Dealing with timeout in client
 
   ___
 
