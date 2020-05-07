@@ -112,13 +112,19 @@ public class CommandThread extends Thread{
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 						}
-						else if(strarr.length!=3) {
+						else if(strarr.length<3) {
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 						}
 						else{
 							String id=strarr[1];
-							String name=strarr[2];
+							String name="";
+							for(int i=2;i<strarr.length;i++)
+							{
+								name=name+strarr[i];
+								if(i+1<strarr.length)
+									name=name+" ";
+							}
 							Pattern pattern =Pattern.compile("[0-9]*");
 							if(!pattern.matcher(id).matches()) {
 								os.writeUTF("Failure: Invalid Operation");
@@ -198,13 +204,19 @@ public class CommandThread extends Thread{
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 						}
-						else if(strarr.length!=3) {
+						else if(strarr.length<3) {
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 						}
 						else{
 							String id=strarr[1];
-							String name=strarr[2];
+							String name="";
+							for(int i=2;i<strarr.length;i++)
+							{
+								name=name+strarr[i];
+								if(i+1<strarr.length)
+									name=name+" ";
+							}
 							Pattern pattern =Pattern.compile("[0-9]*");
 							if(!pattern.matcher(id).matches()) {
 								os.writeUTF("Failure: Invalid Operation");

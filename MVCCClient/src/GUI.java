@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.Socket;
+import java.util.regex.Pattern;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -120,6 +121,12 @@ public class GUI {
 				{
 					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert");
 					String insert_name=JOptionPane.showInputDialog("Please input the name you want to insert");
+					Pattern pattern =Pattern.compile("[0-9]*");
+					if(!pattern.matcher(insert_id).matches())
+					{
+						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					String insert = insert_id+" "+insert_name;
 					//JOptionPane.showInputDialog("Please input a value you want to insert (id name)");
 					TCPThread thread=new TCPThread(client,temp);
@@ -141,6 +148,12 @@ public class GUI {
 				if(btnSelect.isEnabled())
 				{
 					String select = JOptionPane.showInputDialog("Please input the id you want to select");
+					Pattern pattern =Pattern.compile("[0-9]*");
+					if(!pattern.matcher(select).matches())
+					{
+						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
@@ -161,6 +174,12 @@ public class GUI {
 				{
 					String update_id=JOptionPane.showInputDialog("Please input the id you want to update");
 					String update_name=JOptionPane.showInputDialog("Please input the name you want to update");
+					Pattern pattern =Pattern.compile("[0-9]*");
+					if(!pattern.matcher(update_id).matches())
+					{
+						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					String update = update_id+" "+update_name;
 					//JOptionPane.showInputDialog("Please input a value you want to update (id name)");
 					TCPThread thread=new TCPThread(client,temp);
@@ -182,6 +201,12 @@ public class GUI {
 				if(btnDelete.isEnabled())
 				{
 					String delete = JOptionPane.showInputDialog("Please input the id you want to delete");
+					Pattern pattern =Pattern.compile("[0-9]*");
+					if(!pattern.matcher(delete).matches())
+					{
+						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
