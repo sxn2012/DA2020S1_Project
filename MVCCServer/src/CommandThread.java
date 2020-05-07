@@ -19,6 +19,8 @@ public class CommandThread extends Thread{
 	Transaction t;
 	GUI window;
 	long idl;
+	DataInputStream is;
+	DataOutputStream os;
 	public CommandThread(Socket client,GUI window,long id) {
 		// TODO Auto-generated constructor stub
 		this.client=client;
@@ -37,10 +39,26 @@ public class CommandThread extends Thread{
 	{
 		try
 		{
+			TimeoutThread timeoutThread=new TimeoutThread();
+			timeoutThread.renewcount();
+			timeoutThread.start();
+			DetectTimeout dTimeout=new DetectTimeout(timeoutThread,this);
+			dTimeout.start();
 			while(true) {
-				DataInputStream is=new DataInputStream(client.getInputStream());
-				DataOutputStream os=new DataOutputStream(client.getOutputStream());
+				if(client==null) break;
+				is=new DataInputStream(client.getInputStream());
+				os=new DataOutputStream(client.getOutputStream());
 				String command=is.readUTF();
+				
+				if(timeoutThread.getcount()>15*60) {
+					login=false;
+					//window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has timed out.");
+					is.close();
+					os.close();
+					client.close();
+					break;
+				}
+				timeoutThread.renewcount();
 				//window.setContent("command:'"+command+"' from "+client.getInetAddress().getHostAddress()+" received on port "+client.getLocalPort());
 				//System.out.println("command:'"+command+"' from "+client.getInetAddress().getHostAddress()+" received on port "+client.getLocalPort());
 				if(command.equals("exit"))
@@ -276,10 +294,16 @@ public class CommandThread extends Thread{
 			// TODO: handle exception
 			//JOptionPane.showMessageDialog(window.frame, e.getClass().toString(),"Error", JOptionPane.ERROR_MESSAGE);
 			//System.exit(1);
-			this.t.rollback();
-			Records.instance().active.remove(this.t.tid);
+			if(t!=null)
+			{
+				this.t.rollback();
+				Records.instance().active.remove(this.t.tid);
+			}
+			
             window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getMessage()+").");
 
 		}
 	}
+	
+	
 }

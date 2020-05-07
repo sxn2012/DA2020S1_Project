@@ -52,6 +52,14 @@ public class TCPThread extends Thread{
 				flag=true;
 			os.writeUTF(command);
 			String str=is.readUTF();
+			if(str.equals("Failure: Operation Timeout"))
+			{
+				is.close();
+				os.close();
+				client.close();
+				window.frame.setVisible(false);
+				welcomeframe.setVisible(true);
+			}
 			//System.out.println("\t>>>>"+str);
 			if(str.contains("Failure:"))
 				JOptionPane.showMessageDialog(window.frame, str,"Error", JOptionPane.ERROR_MESSAGE); 
