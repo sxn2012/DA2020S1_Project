@@ -29,14 +29,17 @@ public class GUI {
 	JFrame frame;
 	JTextArea textArea;
 	private int num_logs;
+	JFrame welcomeframe;
 	
-
 	/**
 	 * Create the application.
 	 */
-	public GUI() {
+	public GUI(JFrame welcomeframe) {
+		
 		initialize();
 		num_logs=0;
+		this.welcomeframe=welcomeframe;
+		
 	}
 	
 	public void setContent(String str) {
@@ -72,6 +75,9 @@ public class GUI {
 				{
 					super.windowClosing(e);
 					System.exit(0);
+					//frame.setVisible(false);
+					//welcomeframe.setVisible(true);
+					
 				}
 				
 			}

@@ -37,7 +37,7 @@ public class CommandThread extends Thread{
 	{
 		try
 		{
-			while(true) {		
+			while(true) {
 				DataInputStream is=new DataInputStream(client.getInputStream());
 				DataOutputStream os=new DataOutputStream(client.getOutputStream());
 				String command=is.readUTF();
@@ -74,6 +74,7 @@ public class CommandThread extends Thread{
 				{
 					if(login)
 					{
+						t.rollback();//rollback uncommitted changes
 						t=null;
 						login=false;
 						os.writeUTF("Logout Success");
@@ -268,6 +269,7 @@ public class CommandThread extends Thread{
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has made an invalid operation.");
 					}
 				}
+				
 			}
 		}
 		catch (Exception e) {
@@ -276,7 +278,7 @@ public class CommandThread extends Thread{
 			//System.exit(1);
 			this.t.rollback();
 			Records.instance().active.remove(this.t.tid);
-            window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getClass().toString()+").");
+            window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getMessage()+").");
 
 		}
 	}

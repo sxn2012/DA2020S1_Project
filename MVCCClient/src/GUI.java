@@ -21,12 +21,22 @@ public class GUI {
 	JFrame frame;
 	TCPThread thread;
 	Socket client;
-
+	JFrame welcomeframe;
+	JButton btnLogin;
+	JButton btnLogout;
+	JButton btnInsert;
+	JButton btnSelect;
+	JButton btnUpdate;
+	JButton btnDelete;
+	JButton btnView;
+	JButton btnCommit;
+	JButton btnRollback;
 	/**
 	 * Create the application.
 	 */
-	public GUI(Socket client) {
+	public GUI(Socket client,JFrame welcomeframe) {
 		this.client=client;
+		this.welcomeframe=welcomeframe;
 		initialize();
 		
 	}
@@ -36,6 +46,7 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame("MVCC Client");
+		GUI temp=this;
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -44,11 +55,18 @@ public class GUI {
 					return;
 				else if(response==JOptionPane.YES_OPTION)
 				{
-					super.windowClosing(e);
-					TCPThread thread=new TCPThread(client);
-					thread.Setframe(frame);
-					thread.Setcommand("exit");
-					thread.start();
+					if(btnLogin.isEnabled())
+					{
+						super.windowClosing(e);
+						TCPThread thread=new TCPThread(client,temp);
+						thread.SetWelcomeframe(welcomeframe);
+						//thread.Setframe(frame);
+						thread.Setcommand("exit");
+						thread.start();
+					}
+					else {
+						JOptionPane.showMessageDialog(frame, "Please Log out of the system first!","Warning", JOptionPane.WARNING_MESSAGE); 
+					}
 				}
 				
 			}
@@ -59,125 +77,196 @@ public class GUI {
 		frame.setResizable(false);
 		
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("login");
-				thread.start();
+				if(btnLogin.isEnabled())
+				{
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("login");
+					thread.start();
+				}
 			}
 		});
 		btnLogin.setBounds(30, 42, 105, 28);
 		frame.getContentPane().add(btnLogin);
 		
-		JButton btnLogout = new JButton("Logout");
+		btnLogout = new JButton("Logout");
 		btnLogout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("logout");
-				thread.start();
+				if(btnLogout.isEnabled())
+				{
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("logout");
+					thread.start();
+				}
+				
 			}
 		});
 		btnLogout.setBounds(30, 116, 105, 28);
 		frame.getContentPane().add(btnLogout);
 		
-		JButton btnInsert = new JButton("Insert");
+		btnInsert = new JButton("Insert");
 		btnInsert.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String insert = JOptionPane.showInputDialog("Please input a value you want to insert (id name)");
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("add "+insert);
-				thread.start();
+				if(btnInsert.isEnabled())
+				{
+					String insert = JOptionPane.showInputDialog("Please input a value you want to insert (id name)");
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("add "+insert);
+					thread.start();
+				}
+				
 			}
 		});
 		btnInsert.setBounds(193, 42, 105, 28);
 		frame.getContentPane().add(btnInsert);
 		
-		JButton btnSelect = new JButton("Select");
+		btnSelect = new JButton("Select");
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String select = JOptionPane.showInputDialog("Please input the id you want to select");
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("select "+select);
-				thread.start();
+				if(btnSelect.isEnabled())
+				{
+					String select = JOptionPane.showInputDialog("Please input the id you want to select");
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("select "+select);
+					thread.start();
+				}
+				
 			}
 		});
 		btnSelect.setBounds(193, 116, 105, 28);
 		frame.getContentPane().add(btnSelect);
 		
-		JButton btnUpdate = new JButton("Update");
+		btnUpdate = new JButton("Update");
 		btnUpdate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String update = JOptionPane.showInputDialog("Please input a value you want to update (id name)");
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("update "+update);
-				thread.start();
+				if(btnUpdate.isEnabled())
+				{
+					String update = JOptionPane.showInputDialog("Please input a value you want to update (id name)");
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("update "+update);
+					thread.start();
+				}
+				
 			}
 		});
 		btnUpdate.setBounds(333, 42, 105, 28);
 		frame.getContentPane().add(btnUpdate);
 		
-		JButton btnDelete = new JButton("Delete");
+		btnDelete = new JButton("Delete");
 		btnDelete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String delete = JOptionPane.showInputDialog("Please input the id you want to delete");
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("delete "+delete);
-				thread.start();
+				if(btnDelete.isEnabled())
+				{
+					String delete = JOptionPane.showInputDialog("Please input the id you want to delete");
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("delete "+delete);
+					thread.start();
+				}
+				
 			}
 		});
 		btnDelete.setBounds(333, 116, 105, 28);
 		frame.getContentPane().add(btnDelete);
 		
-		JButton btnView = new JButton("View");
+		btnView = new JButton("View");
 		btnView.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("view");
-				thread.start();
+				if(btnView.isEnabled())
+				{
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("view");
+					thread.start();
+				}
+				
 			}
 		});
 		btnView.setBounds(30, 189, 105, 28);
 		frame.getContentPane().add(btnView);
 		
-		JButton btnCommit = new JButton("Commit");
+		btnCommit = new JButton("Commit");
 		btnCommit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("commit");
-				thread.start();
+				if(btnCommit.isEnabled())
+				{
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("commit");
+					thread.start();
+				}
+				
 			}
 		});
 		btnCommit.setBounds(193, 189, 105, 28);
 		frame.getContentPane().add(btnCommit);
 		
-		JButton btnRollback = new JButton("Rollback");
+		btnRollback = new JButton("Rollback");
 		btnRollback.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TCPThread thread=new TCPThread(client);
-				thread.Setframe(frame);
-				thread.Setcommand("rollback");
-				thread.start();
+				if(btnRollback.isEnabled())
+				{
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+					//thread.Setframe(frame);
+					thread.Setcommand("rollback");
+					thread.start();
+				}
+				
 			}
 		});
 		btnRollback.setBounds(333, 189, 105, 28);
 		frame.getContentPane().add(btnRollback);
+		this.SetDisableBtn();
+	}
+	
+	public void SetDisableBtn() 
+	{
+		btnLogin.setEnabled(true);
+		btnLogout.setEnabled(false);
+		btnInsert.setEnabled(false);
+		btnSelect.setEnabled(false);
+		btnUpdate.setEnabled(false);
+		btnDelete.setEnabled(false);
+		btnView.setEnabled(false);
+		btnCommit.setEnabled(false);
+		btnRollback.setEnabled(false);
+	}
+	
+	public void SetEnableBtn() 
+	{
+		btnLogin.setEnabled(false);
+		btnLogout.setEnabled(true);
+		btnInsert.setEnabled(true);
+		btnSelect.setEnabled(true);
+		btnUpdate.setEnabled(true);
+		btnDelete.setEnabled(true);
+		btnView.setEnabled(true);
+		btnCommit.setEnabled(true);
+		btnRollback.setEnabled(true);
 	}
 }

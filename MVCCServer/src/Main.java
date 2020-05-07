@@ -7,7 +7,7 @@ public class Main {
     static Integer transaction_id = 1;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
     	/*
         Transaction one = newTransaction();
         one.add(new Person(1,"name1"));
@@ -56,7 +56,7 @@ public class Main {
 		*/
 
  		final long timeInterval = 15*60*1000;
- 		Runnable runnable = new Runnable() {
+ 		Runnable gc = new Runnable() {
 			@Override
 			public void run() {
 				while (true){
@@ -72,17 +72,14 @@ public class Main {
 			}
 		};
 
-		Thread thread = new Thread(runnable);
+		Thread thread = new Thread(gc);
 		thread.start();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI window = new GUI();
+					Welcome window = new Welcome();
 					window.frame.setVisible(true);
-					window.setContent("Server Start");
-			    	TCPThread thread=new TCPThread(7777,window);
-			    	thread.start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

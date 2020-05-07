@@ -15,19 +15,19 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		//System.out.println("Login first");
-		Socket client=new Socket("127.0.0.1", 7777);
 		
-		//thread.start();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI window = new GUI(client);
+					Welcome window = new Welcome();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		//thread.start();
+		
 		}
 		
 	
