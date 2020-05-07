@@ -54,7 +54,7 @@ public class Main {
         }
         System.out.println();
 		*/
-
+    	
  		final long timeInterval = 15*60*1000;
  		Runnable gc = new Runnable() {
 			@Override
@@ -74,12 +74,17 @@ public class Main {
 
 		Thread thread = new Thread(gc);
 		thread.start();
-
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Welcome window = new Welcome();
 					window.frame.setVisible(true);
+					ReadBackup rBackup=new ReadBackup(window);
+					rBackup.start();
+					Backup backupthread=new Backup();
+					backupthread.start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

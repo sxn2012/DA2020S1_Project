@@ -21,6 +21,14 @@ public class Person {
         this.lastWrite_timestamp = this.lastRead_timestamp+1;
 
     }
+    Person(Integer pid,String name,Integer created_tid,Integer expired_tid,long lastWrite_timestamp,long lastRead_timestamp){
+        this.pid = pid;
+        this.name = name;
+        this.created_tid=created_tid;
+        this.expired_tid=expired_tid;
+        this.lastRead_timestamp=lastRead_timestamp;
+        this.lastWrite_timestamp=lastWrite_timestamp;
+    }
     public void setLastWrite_timestamp(){ this.lastWrite_timestamp = new Date().getTime(); }
     public void setLastRead_timestamp(){ this.lastRead_timestamp = new Date().getTime();}
     public long getLastWrite_timestamp(){return this.lastWrite_timestamp;}

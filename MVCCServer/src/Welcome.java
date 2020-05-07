@@ -22,7 +22,7 @@ public class Welcome {
 
 	JFrame frame;
 	private JTextField textPort;
-
+	JButton btnConfirm;
 	
 	/**
 	 * Create the application.
@@ -52,11 +52,14 @@ public class Welcome {
 		lblServerPort.setBounds(12, 54, 87, 18);
 		frame.getContentPane().add(lblServerPort);
 		
-		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm = new JButton("Waiting...");
+		btnConfirm.setEnabled(false);
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				EventQueue.invokeLater(new Runnable() {
+				if(btnConfirm.isEnabled())
+				{
+					EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
 							GUI window = new GUI(frame);
@@ -71,6 +74,7 @@ public class Welcome {
 						}
 					}
 				});
+				}
 				
 			}
 		});
