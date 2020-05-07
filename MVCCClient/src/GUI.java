@@ -118,7 +118,10 @@ public class GUI {
 			public void mouseClicked(MouseEvent e) {
 				if(btnInsert.isEnabled())
 				{
-					String insert = JOptionPane.showInputDialog("Please input a value you want to insert (id name)");
+					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert");
+					String insert_name=JOptionPane.showInputDialog("Please input the name you want to insert");
+					String insert = insert_id+" "+insert_name;
+					//JOptionPane.showInputDialog("Please input a value you want to insert (id name)");
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
@@ -156,7 +159,10 @@ public class GUI {
 			public void mouseClicked(MouseEvent e) {
 				if(btnUpdate.isEnabled())
 				{
-					String update = JOptionPane.showInputDialog("Please input a value you want to update (id name)");
+					String update_id=JOptionPane.showInputDialog("Please input the id you want to update");
+					String update_name=JOptionPane.showInputDialog("Please input the name you want to update");
+					String update = update_id+" "+update_name;
+					//JOptionPane.showInputDialog("Please input a value you want to update (id name)");
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
