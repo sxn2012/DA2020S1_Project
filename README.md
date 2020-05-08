@@ -3,6 +3,12 @@
 
 **Please load the jar libraries first before running the system!!!**
 
+Jar Files are available in: 
+
+- org-json.jar https://jar-download.com/artifacts/org.json
+
+- com.google.code.gson.jar https://search.maven.org/artifact/com.google.code.gson/gson/2.8.6/jar
+
 ## version 2.1
 
   - Improve GUI (prevent situation that client cannot exit the system)
