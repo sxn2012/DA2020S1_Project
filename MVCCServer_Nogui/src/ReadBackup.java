@@ -32,11 +32,12 @@ public class ReadBackup extends Thread {
 		if(!path.exists())
 		{
 			//lock=false;
-			//notifyAll();
-			//window.btnConfirm.setText("Confirm");
-			//window.btnConfirm.setEnabled(true);
-			ConnectInfo ci=new ConnectInfo();
-			ci.start();
+			synchronized (lock) {
+				lock.notifyAll();
+				ConnectInfo ci=new ConnectInfo();
+				ci.start();
+			}
+			
 			return;
 		}
 		String filepath=mydir+fileSeperator+"MVCCdata.json";
@@ -45,10 +46,11 @@ public class ReadBackup extends Thread {
 		{
 			//lock=false;
 			//notifyAll();
-			//window.btnConfirm.setText("Confirm");
-			//window.btnConfirm.setEnabled(true);
-			ConnectInfo ci=new ConnectInfo();
-			ci.start();
+			synchronized (lock) {
+				lock.notifyAll();
+				ConnectInfo ci=new ConnectInfo();
+				ci.start();
+			}
 			return;
 		}
 		synchronized (lock) {

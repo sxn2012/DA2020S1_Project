@@ -42,7 +42,7 @@ public class TCPThread extends Thread{
 			// TODO: handle exception
 			e.printStackTrace();
 			//JOptionPane.showMessageDialog(window.frame, "Connection Failed! ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
-
+			System.exit(1);
 		}
 	}
 }

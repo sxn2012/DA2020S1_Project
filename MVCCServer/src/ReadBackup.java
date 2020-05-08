@@ -32,9 +32,12 @@ public class ReadBackup extends Thread {
 		if(!path.exists())
 		{
 			//lock=false;
-			//notifyAll();
-			window.btnConfirm.setText("Confirm");
-			window.btnConfirm.setEnabled(true);
+			synchronized (lock) {
+				lock.notifyAll();
+				window.btnConfirm.setText("Confirm");
+				window.btnConfirm.setEnabled(true);
+			}
+			
 			return;
 		}
 		String filepath=mydir+fileSeperator+"MVCCdata.json";
@@ -42,9 +45,11 @@ public class ReadBackup extends Thread {
 		if(!backupfile.exists())
 		{
 			//lock=false;
-			//notifyAll();
-			window.btnConfirm.setText("Confirm");
-			window.btnConfirm.setEnabled(true);
+			synchronized (lock) {
+				lock.notifyAll();
+				window.btnConfirm.setText("Confirm");
+				window.btnConfirm.setEnabled(true);
+			}
 			return;
 		}
 		synchronized (lock) {
