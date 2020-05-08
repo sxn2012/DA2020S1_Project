@@ -14,3 +14,12 @@ Jar Files are available in:
 Java version: 1.8 or higher
 
 System Requirements: Windows, Linux or Mac OS 64 bit
+
+## CopyRight
+
+Copyright © 2020, Xinnan SHEN, Xiguang Li, Chaoxian Zhou, Huidu Lu, released under the [GPL-3.0 License](https://github.com/sxn2012/DA2020S1_Project/blob/master/LICENSE).
+
+
+
+
+
