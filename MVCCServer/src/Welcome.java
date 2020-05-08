@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.regex.Pattern;
 
 public class Welcome {
 
@@ -59,6 +60,12 @@ public class Welcome {
 			public void mouseClicked(MouseEvent e) {
 				if(btnConfirm.isEnabled())
 				{
+					Pattern pattern=Pattern.compile("[0-9]*");
+					if(textPort==null||textPort.getText().trim().equals("")||!pattern.matcher(textPort.getText().trim()).matches()||Integer.parseInt(textPort.getText().trim())>65535)
+					{
+						JOptionPane.showMessageDialog(frame, "Input Invalid!","Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
