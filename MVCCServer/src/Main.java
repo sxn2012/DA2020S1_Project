@@ -2,6 +2,8 @@ import java.awt.EventQueue;
 import java.lang.reflect.Array;
 import java.util.HashSet;
 
+
+
 public class Main {
 
     static Integer transaction_id = 1;
@@ -75,16 +77,18 @@ public class Main {
 		Thread thread = new Thread(gc);
 		thread.start();
 		
+		Object lock=new Object();
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Welcome window = new Welcome();
 					window.frame.setVisible(true);
-					ReadBackup rBackup=new ReadBackup(window);
-					rBackup.start();
-					Backup backupthread=new Backup();
+					Backup backupthread=new Backup(window,lock);
 					backupthread.start();
+					ReadBackup rBackup=new ReadBackup(window,lock);
+					rBackup.start();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
