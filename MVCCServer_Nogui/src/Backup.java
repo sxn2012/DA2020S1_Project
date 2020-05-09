@@ -11,13 +11,13 @@ public class Backup extends Thread {
 	private String current_dir;
 	private String fileSeperator;
 	private Object lock;
-	private Welcome window;
-	public Backup(Welcome window,Object lock) {
+	//private Welcome window;
+	public Backup(Object lock) {
 		// TODO Auto-generated constructor stub
 		this.current_dir=System.getProperty("user.dir");
 		this.fileSeperator=File.separator;
 		this.lock=lock;
-		this.window=window;
+		
 	}
 	
 	
@@ -31,14 +31,16 @@ public class Backup extends Thread {
 		synchronized (lock) 
 		{
 			try {
-				Print.println("Backup waiting...");
+				Print.println("Backup Writer waiting...");
 				lock.wait();
-				Print.println("Backup Continue running");
-				window.btnConfirm.setText("Confirm");
-				window.btnConfirm.setEnabled(true);
+				Print.println("Backup Writer Continue running");
+				//window.btnConfirm.setText("Confirm");
+				//window.btnConfirm.setEnabled(true);
+				String filepath=mydir+fileSeperator+"MVCCdata.json";
+				Print.println("The backup is stored in:"+filepath);
 				while(Main.flag)
 				{
-					String filepath=mydir+fileSeperator+"MVCCdata.json";
+					
 					/*while(ReadBackup.lock) {
 						Thread.sleep(5000);
 					}
@@ -71,7 +73,6 @@ public class Backup extends Thread {
 			catch (Exception e) 
 			{
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
 					//System.out.println(e.getMessage());
 					return;
 			}

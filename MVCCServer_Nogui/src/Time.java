@@ -25,9 +25,6 @@ public class Time implements Runnable{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			//e.printStackTrace();
-			//System.out.println(e.getMessage());
-			return;
 		}
 	}
 }

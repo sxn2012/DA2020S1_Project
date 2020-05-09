@@ -26,7 +26,7 @@ public class DetectTimeout extends Thread {
 						c.t.rollback();
 						c.t=null;
 					}
-					c.window.setContent(c.idl+" --- "+c.client.getInetAddress().getHostAddress()+" has timed out.");
+					c.setContent(c.idl+" --- "+c.client.getInetAddress().getHostAddress()+" has timed out.");
 					istimeout=true;
 				}
 				if(Main.flag)
@@ -34,9 +34,6 @@ public class DetectTimeout extends Thread {
 			}
 			catch (Exception e) {
 				// TODO: handle exception
-				//e.printStackTrace();
-				//System.out.println(e.getMessage());
-				return;
 			}
 		}
 	}

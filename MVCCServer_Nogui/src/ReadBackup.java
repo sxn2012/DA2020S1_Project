@@ -16,11 +16,11 @@ import com.google.gson.reflect.TypeToken;
 
 public class ReadBackup extends Thread {
 	//public static boolean lock=false;
-	private Welcome window;
+	//private Welcome window;
 	private Object lock;
-	public ReadBackup(Welcome window,Object lock) {
+	public ReadBackup(Object lock) {
 		// TODO Auto-generated constructor stub
-		this.window=window;
+		//this.window=window;
 		this.lock=lock;
 	}
 	public void run() {
@@ -34,8 +34,9 @@ public class ReadBackup extends Thread {
 			//lock=false;
 			synchronized (lock) {
 				lock.notifyAll();
-				window.btnConfirm.setText("Confirm");
-				window.btnConfirm.setEnabled(true);
+				ConnectInfo ci=new ConnectInfo();
+				//ci.start();
+				Main.threadpool.execute(ci);
 			}
 			
 			return;
@@ -45,15 +46,17 @@ public class ReadBackup extends Thread {
 		if(!backupfile.exists())
 		{
 			//lock=false;
+			//notifyAll();
 			synchronized (lock) {
 				lock.notifyAll();
-				window.btnConfirm.setText("Confirm");
-				window.btnConfirm.setEnabled(true);
+				ConnectInfo ci=new ConnectInfo();
+				//ci.start();
+				Main.threadpool.execute(ci);
 			}
 			return;
 		}
 		synchronized (lock) {
-			Print.println("Read Starting running...");
+			Print.println("Backup Reading...");
 			try {
 				Thread.sleep(500);
 				InputStream is = new FileInputStream(filepath);
@@ -85,14 +88,16 @@ public class ReadBackup extends Thread {
 				reader.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				JOptionPane.showMessageDialog(window.frame, "There might be some errors in the initial process ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
+				//System.out.println(e.getMessage());
+				//JOptionPane.showMessageDialog(window.frame, "There might be some errors in the initial process ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
 			}
 			finally {
 				//lock=false;
 				lock.notifyAll();
-				Print.println("Read Running Completed");
-				
+				Print.println("Backup has been read.");
+				ConnectInfo ci=new ConnectInfo();
+				//ci.start();
+				Main.threadpool.execute(ci);
 			}
 		}
 		

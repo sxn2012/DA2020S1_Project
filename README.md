@@ -1,37 +1,46 @@
-# DA2020S1_Project
-  This is our group's project of DA in 2020S1.
+# MVCC Demo
+  This is our group's project of DA in 2020S1,  which implements the MVCC algorithms in Java, allowing different clients to access the data stored in server simultaneously without leading to inconsistent state. The operation of clients is quite similar to the real database system, including:
 
-**Please load the jar libraries first before running the system!!!**
+- Insert data
 
-Jar Files are available in: 
+- Update data
 
-- org-json.jar https://jar-download.com/artifacts/org.json
+- Select data
 
-- com.google.code.gson.jar https://search.maven.org/artifact/com.google.code.gson/gson/2.8.6/jar
+- Delete data
 
-## version 2.1
+- Commit
 
-  - Improve GUI (prevent situation that client cannot exit the system)
-  - Dealing with timeout in client
-  - Dealing with failure of client and server
-  - Solved the bug of space in name
-___
+- Rollback
 
-## version 2.0
+The data format is (Student ID, Student Name), where Student ID, primary key, is an integer and Student Name is a string.
 
-  - Add GUI to client and server
-  - Solve the issue of connection loss
-___
+## Note
 
-## version 1.1
+1. **Please load the jar libraries first before running the system**
 
-  - Fix some algorithm bugs
-  - Deal with primary key conflict
-  - Alter printing in Server
+   Jar Files are available in:
 
-___
+- [org-json.jar](https://jar-download.com/artifacts/org.json)
 
-## version 1.0
+- [com.google.code.gson.jar](https://search.maven.org/artifact/com.google.code.gson/gson/2.8.6/jar)
 
-  - Add TCP connection between client and server
-  - Alter feedback of command to send them back to clients
+2. **After starting the server, remember to bind a port number where clients are able to connect.**
+
+3. **After starting the client, remember to set the IP address and port number of the server to which the client will connect.**
+
+4. **When connected to server, the client needs to login first before making any transactions.**
+
+5. **Before leaving the system, the client needs to logout.**
+
+## Running Environment
+
+- Java version: 1.8 or higher
+
+- System Requirements: Windows, Linux or Mac OS 64 bit
+
+- Use `java -jar <jar package name>` to start the system
+
+## CopyRight
+
+Copyright © 2020, [Xinnan SHEN](https://github.com/sxn2012), [Xiguang Li](https://github.com/lixiguang), [Chaoxian Zhou](https://github.com/CcAnL), [Huidu Lu](https://github.com/Huidul), released under the [GPL-3.0 License](https://github.com/sxn2012/DA2020S1_Project/blob/master/LICENSE).

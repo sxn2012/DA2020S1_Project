@@ -17,6 +17,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.regex.Pattern;
 
 public class Welcome {
 
@@ -68,23 +70,18 @@ public class Welcome {
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					Socket client=new Socket(textIP.getText().trim(), Integer.parseInt(textPort.getText().trim()));
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							try {
-								GUI window = new GUI(client,frame);
-								window.frame.setVisible(true);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					});
-					frame.setVisible(false);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(frame, "Connection Failed! ("+e1.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
+				if(btnConfirm.isEnabled()) {
+					
+					Object isconnected=new Object();
+					BtnTextChange bc=new BtnTextChange(isconnected, btnConfirm);
+					Main.threadpool.execute(bc);
+					ConnectThread ct=new ConnectThread(isconnected, frame,textIP,textPort);
+					Main.threadpool.execute(ct);
 				}
+					
+				
+				
+				
 			}
 		});
 		btnConfirm.setBounds(119, 159, 105, 28);

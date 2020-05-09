@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.regex.Pattern;
 
 public class Welcome {
 
@@ -59,18 +60,25 @@ public class Welcome {
 			public void mouseClicked(MouseEvent e) {
 				if(btnConfirm.isEnabled())
 				{
-					EventQueue.invokeLater(new Runnable() {
+					Pattern pattern=Pattern.compile("[0-9]*");
+					if(textPort==null||textPort.getText().trim().equals("")||!pattern.matcher(textPort.getText().trim()).matches()||Integer.parseInt(textPort.getText().trim())>65535)
+					{
+						JOptionPane.showMessageDialog(frame, "Input Invalid!","Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					Main.threadpool.execute(new Runnable() {
 					public void run() {
 						try {
 							GUI window = new GUI(frame);
 							window.frame.setVisible(true);
 							window.setContent("Server Start");
 					    	TCPThread thread=new TCPThread(Integer.parseInt(textPort.getText().trim()),window);
-					    	thread.start();
+					    	//thread.start();
+					    	Main.threadpool.execute(thread);
 					    	frame.setVisible(false);
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(frame, "Server Starting Failure ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
-							
+							//e.printStackTrace();
 						}
 					}
 				});

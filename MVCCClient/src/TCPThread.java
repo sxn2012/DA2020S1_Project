@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,6 +20,8 @@ import javax.swing.JOptionPane;
 public class TCPThread extends Thread{
 	Socket client;
 	String command;
+	DataInputStream is;
+	DataOutputStream os;
 	//JFrame frame;
 	GUI window;
 	JFrame welcomeframe;
@@ -27,6 +30,20 @@ public class TCPThread extends Thread{
 		this.client=client;
 		this.command="";
 		this.window=window;
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+		    public void run() { 
+		    	try{
+		    		if(is!=null) is.close();
+		    		if(os!=null) os.close();
+		    		if(TCPThread.this.client!=null) TCPThread.this.client.close();
+		    		//System.out.println("IOStream and Connection closed.");
+		    		}
+		    	catch (Exception e) {
+					// TODO: handle exception
+		    		Print.println("IOStream/Connection closing failed: "+e.getMessage());
+				}
+		    }
+		 });
 	}
 	public void Setcommand(String command) {
 		this.command=command;
@@ -44,8 +61,8 @@ public class TCPThread extends Thread{
 		boolean flag=false;
 		try {
 			//Scanner s=new Scanner(System.in);
-			DataInputStream is=new DataInputStream(client.getInputStream());
-			DataOutputStream os=new DataOutputStream(client.getOutputStream());
+			is=new DataInputStream(client.getInputStream());
+			os=new DataOutputStream(client.getOutputStream());
 			//System.out.print("$");
 			//String command=s.nextLine();
 			if(command.equals("exit")||command.equals("logout"))
@@ -89,7 +106,8 @@ public class TCPThread extends Thread{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(window.frame, "There might be some errors in the connection ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(window.frame, "There might be some errors in the connection","Error", JOptionPane.ERROR_MESSAGE);
+			//e.printStackTrace();
 			if(flag)
 			{
 				//System.exit(1);

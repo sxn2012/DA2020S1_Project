@@ -63,7 +63,8 @@ public class GUI {
 						thread.SetWelcomeframe(welcomeframe);
 						//thread.Setframe(frame);
 						thread.Setcommand("exit");
-						thread.start();
+						//thread.start();
+						Main.threadpool.execute(thread);
 					}
 					else {
 						JOptionPane.showMessageDialog(frame, "Please Log out of the system first!","Warning", JOptionPane.WARNING_MESSAGE); 
@@ -88,7 +89,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("login");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 			}
 		});
@@ -105,7 +107,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("logout");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -122,9 +125,9 @@ public class GUI {
 					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert");
 					String insert_name=JOptionPane.showInputDialog("Please input the name you want to insert");
 					Pattern pattern =Pattern.compile("[0-9]*");
-					if(!pattern.matcher(insert_id).matches())
+					if(insert_id==null||insert_name==null||insert_id.equals("")||insert_name.equals("")||!pattern.matcher(insert_id).matches())
 					{
-						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "Input is not valid","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					String insert = insert_id+" "+insert_name;
@@ -133,7 +136,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("add "+insert);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -149,7 +153,7 @@ public class GUI {
 				{
 					String select = JOptionPane.showInputDialog("Please input the id you want to select");
 					Pattern pattern =Pattern.compile("[0-9]*");
-					if(!pattern.matcher(select).matches())
+					if(select==null||select.equals("")||!pattern.matcher(select).matches())
 					{
 						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
 						return;
@@ -158,7 +162,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("select "+select);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -175,9 +180,9 @@ public class GUI {
 					String update_id=JOptionPane.showInputDialog("Please input the id you want to update");
 					String update_name=JOptionPane.showInputDialog("Please input the name you want to update");
 					Pattern pattern =Pattern.compile("[0-9]*");
-					if(!pattern.matcher(update_id).matches())
+					if(update_id==null||update_name==null||update_id.equals("")||update_name.equals("")||!pattern.matcher(update_id).matches())
 					{
-						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "Input is not valid","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					String update = update_id+" "+update_name;
@@ -186,7 +191,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("update "+update);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -202,7 +208,7 @@ public class GUI {
 				{
 					String delete = JOptionPane.showInputDialog("Please input the id you want to delete");
 					Pattern pattern =Pattern.compile("[0-9]*");
-					if(!pattern.matcher(delete).matches())
+					if(delete==null||delete.equals("")||!pattern.matcher(delete).matches())
 					{
 						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
 						return;
@@ -211,7 +217,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("delete "+delete);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -229,7 +236,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("view");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -247,7 +255,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("commit");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -265,7 +274,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("rollback");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}

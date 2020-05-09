@@ -1,7 +1,6 @@
 import java.awt.EventQueue;
 import java.lang.reflect.Array;
 import java.util.HashSet;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -14,6 +13,7 @@ public class Main {
     static Integer transaction_id = 1;
     static volatile boolean flag = true;
     static ExecutorService threadpool;
+
     public static void main(String[] args) throws Exception{
     	/*
         Transaction one = newTransaction();
@@ -61,8 +61,8 @@ public class Main {
         }
         System.out.println();
 		*/
+    	System.out.println("Initializing the system...");
     	threadpool=Executors.newCachedThreadPool();
-    	
  		final long timeInterval = 15*60*1000;
  		Runnable gc = new Runnable() {
 			@Override
@@ -75,9 +75,7 @@ public class Main {
 							Thread.sleep(timeInterval);
 
 					}catch (Exception e){
-						//e.printStackTrace();
 						//System.out.println(e.getMessage());
-						return;
 					}
 				}
 			}
@@ -88,41 +86,44 @@ public class Main {
 		threadpool.execute(thread);
 		
 		Object lock=new Object();
+		Backup backupthread=new Backup(lock);
+		threadpool.execute(backupthread);
+		//backupthread.start();
+		ReadBackup rBackup=new ReadBackup(lock);
+		threadpool.execute(rBackup);
 		
-		threadpool.execute(new Runnable() {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+		    public void run() { 
+		    	try{
+		    		Main.flag=false;
+		    		threadpool.shutdownNow();
+		    		threadpool.awaitTermination(1, TimeUnit.SECONDS);
+		    		//ThreadPoolExecutor executor = (ThreadPoolExecutor) threadpool;
+		    		Print.println("Server terminated.");
+		    		}
+		    	catch (Exception e) {
+					// TODO: handle exception
+		    		Print.println("failed:"+e.getMessage());
+				}
+		    }
+		 });
+		//rBackup.start();
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Welcome window = new Welcome();
 					window.frame.setVisible(true);
 					Backup backupthread=new Backup(window,lock);
-					threadpool.execute(backupthread);
-					//backupthread.start();
+					backupthread.start();
 					ReadBackup rBackup=new ReadBackup(window,lock);
-					//rBackup.start();
-					threadpool.execute(rBackup);
-					Runtime.getRuntime().addShutdownHook(new Thread() {
-					    public void run() { 
-					    	try{
-					    		Main.flag=false;
-					    		window.frame.setVisible(false);
-					    		threadpool.shutdownNow();
-					    		threadpool.awaitTermination(1, TimeUnit.SECONDS);
-					    		//ThreadPoolExecutor executor = (ThreadPoolExecutor) threadpool;
-					    		Print.println("Server terminated.");
-					    		}
-					    	catch (Exception e) {
-								// TODO: handle exception
-					    		Print.println("failed:"+e.getMessage());
-							}
-					    }
-					 });
+					rBackup.start();
 					
 				} catch (Exception e) {
-					Print.println("Error: "+e.getMessage());
+					e.printStackTrace();
 				}
 			}
 		});
-    	
+    	*/
 
 
     }

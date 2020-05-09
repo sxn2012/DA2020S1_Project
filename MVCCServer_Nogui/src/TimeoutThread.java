@@ -20,13 +20,11 @@ public class TimeoutThread extends Thread {
 		while(Main.flag) {
 			count++;
 			try {
-				if(Main.flag)
-					Thread.sleep(1000);
+				Thread.sleep(1000);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				//System.out.println(e.getMessage());
-				return;
 			}
 		}
 	}
