@@ -84,7 +84,7 @@ public class Welcome {
 								GUI window = new GUI(client,frame);
 								window.frame.setVisible(true);
 							} catch (Exception e) {
-								System.out.println("Error: "+e.getMessage());
+								Print.println("Error: "+e.getMessage());
 							}
 						}
 					});

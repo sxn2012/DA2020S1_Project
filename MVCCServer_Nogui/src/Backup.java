@@ -31,13 +31,13 @@ public class Backup extends Thread {
 		synchronized (lock) 
 		{
 			try {
-				System.out.println("Backup Writer waiting...");
+				Print.println("Backup Writer waiting...");
 				lock.wait();
-				System.out.println("Backup Writer Continue running");
+				Print.println("Backup Writer Continue running");
 				//window.btnConfirm.setText("Confirm");
 				//window.btnConfirm.setEnabled(true);
 				String filepath=mydir+fileSeperator+"MVCCdata.json";
-				System.out.println("The backup is stored in:"+filepath);
+				Print.println("The backup is stored in:"+filepath);
 				while(Main.flag)
 				{
 					

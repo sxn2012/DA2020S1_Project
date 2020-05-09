@@ -42,7 +42,7 @@ public class GUI {
 		
 	}
 	
-	public void setContent(String str) {
+	public synchronized void setContent(String str) {
 		SimpleDateFormat sdf=new SimpleDateFormat();
 		sdf.applyPattern("dd-MM-yyyy HH:mm:ss");
 		if(textArea.getText().equals(""))

@@ -39,11 +39,11 @@ public class CommandThread extends Thread{
 		    		if(os!=null) os.close();
 		    		if(CommandThread.this.client!=null) CommandThread.this.client.close();
 		    		if(CommandThread.this.server!=null) CommandThread.this.server.close();
-		    		System.out.println("IOStream and Connection closed.");
+		    		Print.println("IOStream and Connection closed.");
 		    		}
 		    	catch (Exception e) {
 					// TODO: handle exception
-		    		System.out.println("IOStream/Connection closing failed: "+e.getMessage());
+		    		Print.println("IOStream/Connection closing failed: "+e.getMessage());
 				}
 		    }
 		 });
@@ -51,7 +51,7 @@ public class CommandThread extends Thread{
 	public static synchronized void setContent(String str) {
 		SimpleDateFormat sdf=new SimpleDateFormat();
 		sdf.applyPattern("dd-MM-yyyy HH:mm:ss");
-		System.out.println(sdf.format(new Date())+"\t"+str);
+		Print.println(sdf.format(new Date())+"\t"+str);
 		
 	}
 	public static synchronized Transaction newTransaction(){

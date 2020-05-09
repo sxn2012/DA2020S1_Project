@@ -99,11 +99,11 @@ public class Main {
 		    		threadpool.shutdownNow();
 		    		threadpool.awaitTermination(1, TimeUnit.SECONDS);
 		    		//ThreadPoolExecutor executor = (ThreadPoolExecutor) threadpool;
-		    		System.out.println("Server terminated.");
+		    		Print.println("Server terminated.");
 		    		}
 		    	catch (Exception e) {
 					// TODO: handle exception
-		    		System.out.println("failed:"+e.getMessage());
+		    		Print.println("failed:"+e.getMessage());
 				}
 		    }
 		 });

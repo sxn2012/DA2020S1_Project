@@ -53,7 +53,7 @@ public class ReadBackup extends Thread {
 			return;
 		}
 		synchronized (lock) {
-			System.out.println("Read Starting running...");
+			Print.println("Read Starting running...");
 			try {
 				Thread.sleep(500);
 				InputStream is = new FileInputStream(filepath);
@@ -91,7 +91,7 @@ public class ReadBackup extends Thread {
 			finally {
 				//lock=false;
 				lock.notifyAll();
-				System.out.println("Read Running Completed");
+				Print.println("Read Running Completed");
 				
 			}
 		}

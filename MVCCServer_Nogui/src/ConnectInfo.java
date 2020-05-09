@@ -11,15 +11,15 @@ public class ConnectInfo extends Thread {
 		return port;
 	}
 	public void run() {
-		System.out.println("\n\r\n\r\n\r-----------Initializing completed.-----------");
+		Print.println("\n\r\n\r\n\r-----------Initializing completed.-----------");
 		Scanner sc=new Scanner(System.in);
-		System.out.print("Please input the port number:");
+		Print.print("Please input the port number:");
 		//ipaddr=sc.nextLine();
 		port=sc.nextInt();
 		while(port<0||port>65535)
 		{
-			System.out.println("Invalid Input!");
-			System.out.print("Please input the port number:");
+			Print.println("Invalid Input!");
+			Print.print("Please input the port number:");
 			port=sc.nextInt();
 		}
 		CommandThread.setContent("Server Start");

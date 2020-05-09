@@ -56,7 +56,7 @@ public class ReadBackup extends Thread {
 			return;
 		}
 		synchronized (lock) {
-			System.out.println("Backup Reading...");
+			Print.println("Backup Reading...");
 			try {
 				Thread.sleep(500);
 				InputStream is = new FileInputStream(filepath);
@@ -94,7 +94,7 @@ public class ReadBackup extends Thread {
 			finally {
 				//lock=false;
 				lock.notifyAll();
-				System.out.println("Backup has been read.");
+				Print.println("Backup has been read.");
 				ConnectInfo ci=new ConnectInfo();
 				//ci.start();
 				Main.threadpool.execute(ci);

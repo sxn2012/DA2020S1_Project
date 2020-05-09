@@ -1,3 +1,4 @@
-Manifest-Version: 1.0
+Manifest-Version: 3.0
 Main-Class: Main
 Class-Path: lib/json-org.jar lib/gson-2.8.6.jar
+Created-By: Xinnan SHEN, Xiguang Li, Chaoxian Zhou, Huidu Lu

@@ -41,7 +41,8 @@ public class TCPThread extends Thread{
 		catch (Exception e) {
 			// TODO: handle exception
 			//e.printStackTrace();
-			//JOptionPane.showMessageDialog(window.frame, "Connection Failed! ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
+			//JOptionPane.showMessageDialog(window.frame, "There might be some problem in the connection: "+e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+			Print.println("There might be some problems in the connection: "+e.getMessage());
 			System.exit(1);
 		}
 	}
