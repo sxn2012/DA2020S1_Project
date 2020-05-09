@@ -24,8 +24,8 @@ public class ConnectInfo extends Thread {
 		}
 		CommandThread.setContent("Server Start");
 		TCPThread thread=new TCPThread(port);
-		thread.start();
-			
+		//thread.start();
+		Main.threadpool.execute(thread);
 			
 		
 	}

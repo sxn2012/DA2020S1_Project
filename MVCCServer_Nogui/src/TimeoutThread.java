@@ -17,13 +17,14 @@ public class TimeoutThread extends Thread {
 		return count;
 	}
 	public void run() {
-		while(true) {
+		while(Main.flag) {
 			count++;
 			try {
 				Thread.sleep(1000);
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
+				//System.out.println(e.getMessage());
 			}
 		}
 	}

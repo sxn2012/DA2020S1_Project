@@ -15,7 +15,7 @@ public class DetectTimeout extends Thread {
 		this.istimeout=false;
 	}
 	public void run() {
-		while(true) {
+		while(Main.flag) {
 			try
 			{
 				long count=thread.getcount();
@@ -29,10 +29,14 @@ public class DetectTimeout extends Thread {
 					c.window.setContent(c.idl+" --- "+c.client.getInetAddress().getHostAddress()+" has timed out.");
 					istimeout=true;
 				}
-				Thread.sleep(100);
+				if(Main.flag)
+					Thread.sleep(100);
 			}
 			catch (Exception e) {
 				// TODO: handle exception
+				//e.printStackTrace();
+				//System.out.println(e.getMessage());
+				return;
 			}
 		}
 	}

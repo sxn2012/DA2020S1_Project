@@ -78,18 +78,18 @@ public class Welcome {
 						return;
 					}
 					Socket client=new Socket(textIP.getText().trim(), Integer.parseInt(textPort.getText().trim()));
-					EventQueue.invokeLater(new Runnable() {
+					Main.threadpool.execute(new Runnable() {
 						public void run() {
 							try {
 								GUI window = new GUI(client,frame);
 								window.frame.setVisible(true);
 							} catch (Exception e) {
-								e.printStackTrace();
+								System.out.println("Error: "+e.getMessage());
 							}
 						}
 					});
 					frame.setVisible(false);
-				} catch (IOException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(frame, "Connection Failed! ("+e1.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
 				}

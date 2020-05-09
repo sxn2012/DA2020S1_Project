@@ -89,7 +89,8 @@ public class TCPThread extends Thread{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(window.frame, "There might be some errors in the connection ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(window.frame, "There might be some errors in the connection","Error", JOptionPane.ERROR_MESSAGE);
+			//e.printStackTrace();
 			if(flag)
 			{
 				//System.exit(1);

@@ -29,18 +29,19 @@ public class TCPThread extends Thread{
 		try {
 			server=new ServerSocket(port);
 			
-			while(true)
+			while(Main.flag)
 			{
 				Socket client=server.accept();
 				long id=new Date().getTime();
 				//System.out.println(id);
-				CommandThread dealthread=new CommandThread(client,id);
-				dealthread.start();
+				CommandThread dealthread=new CommandThread(server,client,id);
+				//dealthread.start();
+				Main.threadpool.execute(dealthread);
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			System.out.println("Connection Failed! "+e.getMessage());
 			//JOptionPane.showMessageDialog(window.frame, "Connection Failed! ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}

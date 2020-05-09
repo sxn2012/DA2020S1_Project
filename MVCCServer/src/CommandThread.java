@@ -6,6 +6,7 @@
  */
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class CommandThread extends Thread{
+	ServerSocket server;
 	Socket client;
 	boolean login;
 	Transaction t;
@@ -21,12 +23,30 @@ public class CommandThread extends Thread{
 	long idl;
 	DataInputStream is;
 	DataOutputStream os;
-	public CommandThread(Socket client,GUI window,long id) {
+	  
+	public CommandThread(ServerSocket server,Socket client,GUI window,long id) {
 		// TODO Auto-generated constructor stub
+		this.server=server;
 		this.client=client;
 		login=false;
 		this.window=window;
 		this.idl=id;
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+		    public void run() { 
+		    	try{
+		    		
+		    		if(is!=null) is.close();
+		    		if(os!=null) os.close();
+		    		if(CommandThread.this.client!=null) CommandThread.this.client.close();
+		    		if(CommandThread.this.server!=null) CommandThread.this.server.close();
+		    		System.out.println("IOStream and Connection closed.");
+		    		}
+		    	catch (Exception e) {
+					// TODO: handle exception
+		    		System.out.println("IOStream/Connection closing failed: "+e.getMessage());
+				}
+		    }
+		 });
 	}
 	public static synchronized Transaction newTransaction(){
 
@@ -41,10 +61,12 @@ public class CommandThread extends Thread{
 		{
 			TimeoutThread timeoutThread=new TimeoutThread();
 			timeoutThread.renewcount();
-			timeoutThread.start();
+			Main.threadpool.execute(timeoutThread);
+			//timeoutThread.start();
 			DetectTimeout dTimeout=new DetectTimeout(timeoutThread,this);
-			dTimeout.start();
-			while(true) {
+			//dTimeout.start();
+			Main.threadpool.execute(dTimeout);
+			while(Main.flag) {
 				if(client==null) break;
 				is=new DataInputStream(client.getInputStream());
 				os=new DataOutputStream(client.getOutputStream());

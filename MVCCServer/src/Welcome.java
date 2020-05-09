@@ -66,18 +66,19 @@ public class Welcome {
 						JOptionPane.showMessageDialog(frame, "Input Invalid!","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					EventQueue.invokeLater(new Runnable() {
+					Main.threadpool.execute(new Runnable() {
 					public void run() {
 						try {
 							GUI window = new GUI(frame);
 							window.frame.setVisible(true);
 							window.setContent("Server Start");
 					    	TCPThread thread=new TCPThread(Integer.parseInt(textPort.getText().trim()),window);
-					    	thread.start();
+					    	//thread.start();
+					    	Main.threadpool.execute(thread);
 					    	frame.setVisible(false);
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(frame, "Server Starting Failure ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
-							
+							//e.printStackTrace();
 						}
 					}
 				});

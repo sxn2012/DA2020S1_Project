@@ -1,14 +1,19 @@
 import java.awt.EventQueue;
 import java.lang.reflect.Array;
 import java.util.HashSet;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 
 public class Main {
 
     static Integer transaction_id = 1;
-
-
+    static volatile boolean flag = true;
+    static ExecutorService threadpool;
     public static void main(String[] args) throws Exception{
     	/*
         Transaction one = newTransaction();
@@ -56,41 +61,64 @@ public class Main {
         }
         System.out.println();
 		*/
+    	threadpool=Executors.newCachedThreadPool();
     	
  		final long timeInterval = 15*60*1000;
  		Runnable gc = new Runnable() {
 			@Override
 			public void run() {
-				while (true){
+				while (Main.flag){
 
 					try {
 						Records.garbageClean();
-						Thread.sleep(timeInterval);
+						if(Main.flag)
+							Thread.sleep(timeInterval);
 
-					}catch (InterruptedException e){
-						e.printStackTrace();
+					}catch (Exception e){
+						//e.printStackTrace();
+						//System.out.println(e.getMessage());
+						return;
 					}
 				}
 			}
 		};
 
 		Thread thread = new Thread(gc);
-		thread.start();
+		//thread.start();
+		threadpool.execute(thread);
 		
 		Object lock=new Object();
 		
-		EventQueue.invokeLater(new Runnable() {
+		threadpool.execute(new Runnable() {
 			public void run() {
 				try {
 					Welcome window = new Welcome();
 					window.frame.setVisible(true);
 					Backup backupthread=new Backup(window,lock);
-					backupthread.start();
+					threadpool.execute(backupthread);
+					//backupthread.start();
 					ReadBackup rBackup=new ReadBackup(window,lock);
-					rBackup.start();
+					//rBackup.start();
+					threadpool.execute(rBackup);
+					Runtime.getRuntime().addShutdownHook(new Thread() {
+					    public void run() { 
+					    	try{
+					    		Main.flag=false;
+					    		window.frame.setVisible(false);
+					    		threadpool.shutdownNow();
+					    		threadpool.awaitTermination(1, TimeUnit.SECONDS);
+					    		//ThreadPoolExecutor executor = (ThreadPoolExecutor) threadpool;
+					    		System.out.println("Server terminated.");
+					    		}
+					    	catch (Exception e) {
+								// TODO: handle exception
+					    		System.out.println("failed:"+e.getMessage());
+							}
+					    }
+					 });
 					
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 		});

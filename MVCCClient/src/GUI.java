@@ -63,7 +63,8 @@ public class GUI {
 						thread.SetWelcomeframe(welcomeframe);
 						//thread.Setframe(frame);
 						thread.Setcommand("exit");
-						thread.start();
+						//thread.start();
+						Main.threadpool.execute(thread);
 					}
 					else {
 						JOptionPane.showMessageDialog(frame, "Please Log out of the system first!","Warning", JOptionPane.WARNING_MESSAGE); 
@@ -88,7 +89,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("login");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 			}
 		});
@@ -105,7 +107,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("logout");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -133,7 +136,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("add "+insert);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -158,7 +162,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("select "+select);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -186,7 +191,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("update "+update);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -211,7 +217,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("delete "+delete);
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -229,7 +236,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("view");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -247,7 +255,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("commit");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}
@@ -265,7 +274,8 @@ public class GUI {
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
 					thread.Setcommand("rollback");
-					thread.start();
+					//thread.start();
+					Main.threadpool.execute(thread);
 				}
 				
 			}

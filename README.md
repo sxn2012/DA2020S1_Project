@@ -1,4 +1,4 @@
-# DA2020S1_Project
+# MVCC Demo
   This is our group's project of DA in 2020S1,  which implements the MVCC algorithms in Java, allowing different clients to access the data stored in server simultaneously without leading to inconsistent state. The operation of clients is quite similar to the real database system, including:
 
 - Insert data
@@ -19,7 +19,7 @@ The data format is (Student ID, Student Name), where Student ID, primary key, is
 
 1. **Please load the jar libraries first before running the system**
 
-Jar Files are available in:
+   Jar Files are available in:
 
 - [org-json.jar](https://jar-download.com/artifacts/org.json)
 
@@ -43,4 +43,4 @@ Jar Files are available in:
 
 ## CopyRight
 
-Copyright © 2020, Xinnan SHEN, Xiguang Li, Chaoxian Zhou, Huidu Lu, released under the [GPL-3.0 License](https://github.com/sxn2012/DA2020S1_Project/blob/master/LICENSE).
+Copyright © 2020, [Xinnan SHEN](https://github.com/sxn2012), [Xiguang Li](https://github.com/lixiguang), [Chaoxian Zhou](https://github.com/CcAnL), [Huidu Lu](https://github.com/Huidul), released under the [GPL-3.0 License](https://github.com/sxn2012/DA2020S1_Project/blob/master/LICENSE).

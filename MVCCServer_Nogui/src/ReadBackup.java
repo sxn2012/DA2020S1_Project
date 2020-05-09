@@ -35,7 +35,8 @@ public class ReadBackup extends Thread {
 			synchronized (lock) {
 				lock.notifyAll();
 				ConnectInfo ci=new ConnectInfo();
-				ci.start();
+				//ci.start();
+				Main.threadpool.execute(ci);
 			}
 			
 			return;
@@ -49,7 +50,8 @@ public class ReadBackup extends Thread {
 			synchronized (lock) {
 				lock.notifyAll();
 				ConnectInfo ci=new ConnectInfo();
-				ci.start();
+				//ci.start();
+				Main.threadpool.execute(ci);
 			}
 			return;
 		}
@@ -86,7 +88,7 @@ public class ReadBackup extends Thread {
 				reader.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//System.out.println(e.getMessage());
 				//JOptionPane.showMessageDialog(window.frame, "There might be some errors in the initial process ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
 			}
 			finally {
@@ -94,7 +96,8 @@ public class ReadBackup extends Thread {
 				lock.notifyAll();
 				System.out.println("Backup has been read.");
 				ConnectInfo ci=new ConnectInfo();
-				ci.start();
+				//ci.start();
+				Main.threadpool.execute(ci);
 			}
 		}
 		

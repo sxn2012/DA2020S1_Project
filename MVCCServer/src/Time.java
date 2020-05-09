@@ -16,14 +16,18 @@ public class Time implements Runnable{
 	}
 	public void run() {
 		try {
-			while(true) {
+			while(Main.flag) {
 				SimpleDateFormat sdf=new SimpleDateFormat();
 				sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
 				label.setText(sdf.format(new Date()));
-				Thread.sleep(1000);
+				if(Main.flag)
+					Thread.sleep(1000);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			//e.printStackTrace();
+			//System.out.println(e.getMessage());
+			return;
 		}
 	}
 }

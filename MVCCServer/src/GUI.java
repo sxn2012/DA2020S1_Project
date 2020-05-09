@@ -44,7 +44,7 @@ public class GUI {
 	
 	public void setContent(String str) {
 		SimpleDateFormat sdf=new SimpleDateFormat();
-		sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+		sdf.applyPattern("dd-MM-yyyy HH:mm:ss");
 		if(textArea.getText().equals(""))
 			textArea.setText(sdf.format(new Date())+"\t"+str);
 		else
@@ -74,6 +74,7 @@ public class GUI {
 				else if(response==JOptionPane.YES_OPTION)
 				{
 					super.windowClosing(e);
+					frame.setVisible(false);
 					System.exit(0);
 					//frame.setVisible(false);
 					//welcomeframe.setVisible(true);
@@ -105,7 +106,7 @@ public class GUI {
 		JLabel lblTimeLabel = new JLabel();
 		lblTimeLabel.setBounds(285, 0, 142, 18);
 		frame.getContentPane().add(lblTimeLabel);
-		new Thread(new Time(lblTimeLabel)).start();
+		Main.threadpool.execute(new Thread(new Time(lblTimeLabel)));
 		
 	}
 }

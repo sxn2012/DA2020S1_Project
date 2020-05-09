@@ -36,7 +36,7 @@ public class Backup extends Thread {
 				System.out.println("Backup Continue running");
 				window.btnConfirm.setText("Confirm");
 				window.btnConfirm.setEnabled(true);
-				while(true)
+				while(Main.flag)
 				{
 					String filepath=mydir+fileSeperator+"MVCCdata.json";
 					/*while(ReadBackup.lock) {
@@ -63,14 +63,16 @@ public class Backup extends Thread {
 			    	FileWriter fw=new FileWriter(filepath);
 			    	fw.write(json.toString());
 			    	fw.close();
-			    	Thread.sleep(10000);
+			    	if(Main.flag)
+			    		Thread.sleep(10000);
 			    	//if(output.equals("")) 
 				}
 			}
 			catch (Exception e) 
 			{
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					//System.out.println(e.getMessage());
 					return;
 			}
 		}
