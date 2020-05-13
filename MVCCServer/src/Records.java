@@ -29,6 +29,7 @@ public class Records {
     }
 
     public static synchronized int addItemToRecords(Person p,ArrayList<Person> cleanedRecord){
+
         if (p == null){
             instance().records = cleanedRecord;
             return 0;

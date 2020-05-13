@@ -145,6 +145,7 @@ public class Transaction {
     	if(output.equals("")) return "Failure: Database doesn't have any value";
     	else return output;
     }
+
     public boolean visible(Person p){
 
         if (Records.instance().active.contains(p.getcreated_tid())&& !p.getcreated_tid().equals(this.tid)){
