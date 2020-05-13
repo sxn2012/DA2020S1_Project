@@ -64,7 +64,8 @@ public class TCPThread extends Thread{
 		this.window = window;
 	}
 	public static int getTransaction_id() {
-		return transaction_id;
+		long t = new Date().getTime();
+		return Integer.parseInt(String.valueOf(t));
 	}
 	public static void setTransaction_id(int transaction_id) {
 		TCPThread.transaction_id = transaction_id;

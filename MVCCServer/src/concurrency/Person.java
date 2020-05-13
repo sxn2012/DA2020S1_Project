@@ -15,7 +15,13 @@ public class Person {
     private Integer expired_tid;
     private long lastWrite_timestamp;
     private long lastRead_timestamp;
+
+    /*Generate a data item for database
+    * pid: unique identifier of the data item
+    * name: name of the data item
+    * */
     public Person(Integer pid,String name){
+
         this.pid = pid;
         this.name = name;
         this.lastRead_timestamp = new Date().getTime();

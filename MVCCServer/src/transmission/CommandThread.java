@@ -58,10 +58,12 @@ public class CommandThread extends Thread{
 	}
 	public static synchronized Transaction newTransaction(){
 
-        TCPThread.setTransaction_id(TCPThread.getTransaction_id() + 1);
-        Records.instance().getActive().add(TCPThread.getTransaction_id());
+		int t =  TCPThread.getTransaction_id();
+        TCPThread.setTransaction_id(t);
+        Integer tid = Integer.valueOf(t);
+        Records.instance().getActive().add(tid);
 
-        return new Transaction(TCPThread.getTransaction_id());
+        return new Transaction(tid);
     }
 	public void run()
 	{

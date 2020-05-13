@@ -10,7 +10,9 @@ import java.util.Hashtable;
 public class Records {
 
 
+    //a table list to store created data items
     private ArrayList<Person> records;
+    //a transaction pool to store all active transaction currently
     private HashSet<Integer> active;
 
 
@@ -21,6 +23,7 @@ public class Records {
 
     }
 
+
     public static Records instance(){
         return instanceHolder.instance;
     }
@@ -29,6 +32,11 @@ public class Records {
         private static final Records instance = new Records();
     }
 
+    /* Insert a data item into the table list or refresh the table list
+    * Person: the inserted data item
+    * cleanedRecord: a cleaned table list
+    * return: current index of last data item in the table list
+    * */
     public static synchronized int addItemToRecords(Person p,ArrayList<Person> cleanedRecord){
 
         if (p == null){
@@ -43,6 +51,8 @@ public class Records {
     }
 
 
+    /*Clean up invalid data in the table list
+    * */
     public static void garbageClean(){
 
         if(!instance().active.isEmpty()){

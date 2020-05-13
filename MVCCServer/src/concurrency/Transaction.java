@@ -8,12 +8,15 @@ import java.util.*;
 public class Transaction {
 
 
+
     private Integer tid;
 
+    //Transaction log
     private ArrayList<HashMap<String,String>> rollback;
 
 
     public Transaction(Integer tid){
+
 
         this.tid = tid;
         this.rollback = new ArrayList<>();
@@ -22,7 +25,9 @@ public class Transaction {
 
 
 
-
+    /*Add a data item into table list
+    * Person: data item
+    * Return: String status*/
     public String add(Person p){
         ArrayList<Person> records = new ArrayList<>(Records.instance().getRecords());
 
@@ -38,8 +43,10 @@ public class Transaction {
 
         int order = Records.addItemToRecords(p,null);
 
+        //bind transaction id with this data item
         p.setcreated_tid(this.tid);
         p.setexpired_tid(0);
+        //insert reverse operation into log
         HashMap<String,String> map = new HashMap<>(){
             {
                 put("action","delete");
@@ -54,6 +61,9 @@ public class Transaction {
     }
 
 
+    /* "Delete" data item from table list
+    * Pid: unique identifier of the data item
+    * Return: String status*/
     public String delete(Integer pid) {
 
         ArrayList<Person> records = new ArrayList<>(Records.instance().getRecords());
@@ -69,7 +79,9 @@ public class Transaction {
                 }else{
 
                     p.setLastWrite_timestamp();
+                    //bind transaction id with this potential "invalid" data item
                     p.setexpired_tid(this.tid);
+                    //insert reverse operation into log
                     HashMap<String,String> map = new HashMap<>();
                     map.put("action","add");
                     map.put("order",String.valueOf(i));
@@ -85,6 +97,10 @@ public class Transaction {
     }
 
 
+    /*Update a data item
+    * Pid: unique identifier of the data item
+    * Name: related attribute
+    * Return: String status*/
     public String update(Integer pid,String name){
          
     	String delres=delete(pid);
@@ -98,6 +114,7 @@ public class Transaction {
 
 
 
+    /*Quick search for the select data item*/
     public String binarySearch(Integer pid,int start,int end,ArrayList<Person> dataSource){
         if(dataSource.isEmpty()){
 
@@ -128,6 +145,9 @@ public class Transaction {
 
     }
 
+    /*View the information for a particular data item
+    * Pid: unique identifier of the data item
+    * Return: String status*/
     public String select(Integer pid){
 
         ArrayList<Person> dataSource = this.fetch();
@@ -135,6 +155,8 @@ public class Transaction {
         return binarySearch(pid,0,dataSource.size()-1,dataSource);
     }
 
+    /*View all visible data items in the table list
+    * Return: String data information*/
     public String view() {
 
 
@@ -146,12 +168,21 @@ public class Transaction {
     	if(output.equals("")) return "Failure: Database doesn't have any value";
     	else return output;
     }
+
+    /*whether the particular data item is visible to current transaction
+    * Return: boolean*/
     public boolean visible(Person p){
 
+        //this item is created by an uncommitted transaction, so this item should only visible
+        // to its creator
         if (Records.instance().getActive().contains(p.getcreated_tid())&& !p.getcreated_tid().equals(this.tid)){
             return false;
         }
 
+        //1. this item is "deleted" by a successful committed transaction,
+        // so this item should not visible for all transactions
+        //2. this item is "deleted" an uncommitted transaction, so this item
+        // should only not visible for the transaction which "delete" it.
         if (p.getexpired_tid().intValue() !=0 && (!Records.instance().getActive().contains(p.getexpired_tid())||p.getexpired_tid()==this.tid)){
             return false;
         }
@@ -160,6 +191,7 @@ public class Transaction {
 
     }
 
+    /*Whether these is a transaction "write" to this item*/
     public boolean rowLocked(Person p){
 
         return p.getexpired_tid().intValue() !=0 && Records.instance().getActive().contains(p.getexpired_tid());
@@ -167,6 +199,7 @@ public class Transaction {
     }
 
 
+    /*Sort the table list, so can apply binary search*/
     public ArrayList<Person> sortTable(ArrayList<Person> table){
 
         Comparator<Person> c = new Comparator<Person>() {
@@ -183,6 +216,7 @@ public class Transaction {
 
         return table;
     }
+
 
 
     public ArrayList<Person> fetch(){
@@ -208,6 +242,7 @@ public class Transaction {
 
 
 
+    /*Commit a transaction*/
     public String commit(){
 
     	if(this.rollback.isEmpty()) return "Failure: Nothing to commit";
@@ -218,6 +253,8 @@ public class Transaction {
             if (action.get("action") == "add"){
 
 
+                //if this is a "read" operation in transaction A after the "write" operation
+                // in transaction B, then transaction B should be failed when B commit.
                 if (p.getLastRead_timestamp()>=p.getLastWrite_timestamp()){
                     rollback();
                     return "Failure: Commit fails, rollback automatically";
@@ -247,6 +284,7 @@ public class Transaction {
     }
 
 
+    /*Abort the transaction*/
     public String rollback(){
 
     	if(this.rollback.isEmpty()) return "Failure: Nothing to rollback";
