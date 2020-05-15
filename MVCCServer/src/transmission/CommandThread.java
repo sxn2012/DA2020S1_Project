@@ -23,6 +23,7 @@ import gui.GUI;
 import gui.Server;
 
 public class CommandThread extends Thread{
+
 	private ServerSocket server;
 	private Socket client;
 	private boolean login;
@@ -58,12 +59,11 @@ public class CommandThread extends Thread{
 	}
 	public static synchronized Transaction newTransaction(){
 
-		int t =  TCPThread.getTransaction_id();
-        TCPThread.setTransaction_id(t);
-        Integer tid = Integer.valueOf(t);
-        Records.instance().getActive().add(tid);
-
-        return new Transaction(tid);
+		Long t =  TCPThread.getTransaction_id();
+//        TCPThread.setTransaction_id(t);
+//        Integer tid = Integer.valueOf(t);
+        Records.instance().getActive().add(t);
+        return new Transaction(t);
     }
 	public void run()
 	{
@@ -260,6 +260,7 @@ public class CommandThread extends Thread{
 								if(!status.contains("Failure"))
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
 								else
+
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 							}
 						}
@@ -280,6 +281,9 @@ public class CommandThread extends Thread{
 							if(!status.contains("Failure:"))
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully viewed data.");
 							else
+								if(status.contains("rollback")){
+									this.t = newTransaction();
+								}
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 					}

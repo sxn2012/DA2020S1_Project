@@ -9,13 +9,13 @@ public class Transaction {
 
 
 
-    private Integer tid;
+    private Long tid;
 
     //Transaction log
     private ArrayList<HashMap<String,String>> rollback;
 
 
-    public Transaction(Integer tid){
+    public Transaction(Long tid){
 
 
         this.tid = tid;
@@ -45,7 +45,7 @@ public class Transaction {
 
         //bind transaction id with this data item
         p.setcreated_tid(this.tid);
-        p.setexpired_tid(0);
+        p.setexpired_tid(Long.valueOf(0));
         //insert reverse operation into log
         HashMap<String,String> map = new HashMap<>(){
             {
@@ -75,7 +75,9 @@ public class Transaction {
 
                 if (rowLocked(p)){
 
-                    return "Failure: Row is locked by another transaction";
+                    rollback();
+
+                    return "Failure: Row is locked by another transaction, rollback automatically";
                 }else{
 
                     p.setLastWrite_timestamp();
@@ -85,7 +87,6 @@ public class Transaction {
                     HashMap<String,String> map = new HashMap<>();
                     map.put("action","add");
                     map.put("order",String.valueOf(i));
-
                     this.rollback.add(map);
                     return "Success";
                 }
@@ -175,7 +176,7 @@ public class Transaction {
 
         //this item is created by an uncommitted transaction, so this item should only visible
         // to its creator
-        if (Records.instance().getActive().contains(p.getcreated_tid())&& !p.getcreated_tid().equals(this.tid)){
+        if (Records.instance().getActive().contains(p.getcreated_tid())&& !p.getcreated_tid().equals(this.tid) ){
             return false;
         }
 
@@ -183,7 +184,7 @@ public class Transaction {
         // so this item should not visible for all transactions
         //2. this item is "deleted" an uncommitted transaction, so this item
         // should only not visible for the transaction which "delete" it.
-        if (p.getexpired_tid().intValue() !=0 && (!Records.instance().getActive().contains(p.getexpired_tid())||p.getexpired_tid()==this.tid)){
+        if (!p.getexpired_tid().equals(Long.valueOf(0)) && (!Records.instance().getActive().contains(p.getexpired_tid())||p.getexpired_tid().equals(this.tid))){
             return false;
         }
 
@@ -194,7 +195,7 @@ public class Transaction {
     /*Whether these is a transaction "write" to this item*/
     public boolean rowLocked(Person p){
 
-        return p.getexpired_tid().intValue() !=0 && Records.instance().getActive().contains(p.getexpired_tid());
+        return !p.getexpired_tid().equals(Long.valueOf(0)) && Records.instance().getActive().contains(p.getexpired_tid());
 
     }
 
@@ -294,7 +295,7 @@ public class Transaction {
             if (action.get("action") == "add"){
 
                 int index = Integer.parseInt(action.get("order"));
-                records.get(index).setexpired_tid(0);
+                records.get(index).setexpired_tid(Long.valueOf(0));
             }else if(action.get("action") == "delete"){
                 int index = Integer.parseInt(action.get("order"));
                 records.get(index).setexpired_tid(this.tid);
@@ -308,14 +309,14 @@ public class Transaction {
 
 
 
-	public Integer getTid() {
+	public Long getTid() {
 		return tid;
 	}
 
 
 
 
-	public void setTid(Integer tid) {
+	public void setTid(Long tid) {
 		this.tid = tid;
 	}
 

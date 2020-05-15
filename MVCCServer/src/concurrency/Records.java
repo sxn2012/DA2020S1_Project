@@ -13,8 +13,8 @@ public class Records {
     //a table list to store created data items
     private ArrayList<Person> records;
     //a transaction pool to store all active transaction currently
-    private HashSet<Integer> active;
-
+    //private HashSet<long> active;
+    private HashSet<Long> active;
 
     private Records(){
 
@@ -64,7 +64,7 @@ public class Records {
         ArrayList<Person> cleanedRecord = new ArrayList<>();
 
         for (Person p : t) {
-            if (p.getexpired_tid() == 0 || (p.getexpired_tid() != 0 && instance().active.contains(p.getexpired_tid()))) {
+            if (p.getexpired_tid().equals(Long.valueOf(0))|| (!p.getexpired_tid().equals(Long.valueOf(0)) && instance().active.contains(p.getexpired_tid()))) {
                 cleanedRecord.add(p);
             }
 
@@ -85,11 +85,11 @@ public class Records {
 		this.records = records;
 	}
 
-	public HashSet<Integer> getActive() {
+	public HashSet<Long> getActive() {
 		return active;
 	}
 
-	public void setActive(HashSet<Integer> active) {
+	public void setActive(HashSet<Long> active) {
 		this.active = active;
 	}
 

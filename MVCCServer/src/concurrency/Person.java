@@ -11,8 +11,8 @@ public class Person {
     
     private Integer pid;
     private String name;
-    private Integer created_tid;
-    private Integer expired_tid;
+    private Long created_tid;
+    private Long expired_tid;
     private long lastWrite_timestamp;
     private long lastRead_timestamp;
 
@@ -28,7 +28,7 @@ public class Person {
         this.lastWrite_timestamp = this.lastRead_timestamp+1;
 
     }
-    public Person(Integer pid,String name,Integer created_tid,Integer expired_tid,long lastWrite_timestamp,long lastRead_timestamp){
+    public Person(Integer pid,String name,Long created_tid,Long expired_tid,long lastWrite_timestamp,long lastRead_timestamp){
         this.pid = pid;
         this.name = name;
         this.created_tid=created_tid;
@@ -46,10 +46,10 @@ public class Person {
     public void setname(String name) {
     	this.name=name;
     }
-    public void setcreated_tid(Integer created_tid) {
+    public void setcreated_tid(Long created_tid) {
     	this.created_tid=created_tid;
     }
-    public void setexpired_tid(Integer expired_tid) {
+    public void setexpired_tid(Long expired_tid) {
     	this.expired_tid=expired_tid;
     }
     public Integer getpid() {
@@ -58,10 +58,10 @@ public class Person {
     public String getname() {
     	return this.name;
     }
-    public Integer getcreated_tid() {
+    public Long getcreated_tid() {
     	return this.created_tid;
     }
-    public Integer getexpired_tid() {
+    public Long getexpired_tid() {
     	return this.expired_tid;
     }
     public String getstr() {

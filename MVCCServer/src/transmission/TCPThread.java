@@ -20,7 +20,7 @@ import gui.Server;
 
 public class TCPThread extends Thread{
 	private int port;
-	private static int transaction_id=0;
+	private static Long transaction_id;
 	private GUI window;
 	
 	public TCPThread(int port,GUI window) {
@@ -63,11 +63,12 @@ public class TCPThread extends Thread{
 	public void setWindow(GUI window) {
 		this.window = window;
 	}
-	public static int getTransaction_id() {
+	public static Long getTransaction_id() {
 		long t = new Date().getTime();
-		return Integer.parseInt(String.valueOf(t));
+//		return TCPThread.transaction_id++;
+		return Long.valueOf(t);
 	}
-	public static void setTransaction_id(int transaction_id) {
+	public static void setTransaction_id(Long transaction_id) {
 		TCPThread.transaction_id = transaction_id;
 	}
 }

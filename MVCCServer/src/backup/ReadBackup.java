@@ -80,8 +80,8 @@ public class ReadBackup extends Thread {
 					Map<String, Object> submap=(Map<String, Object>) map.get(key);
 					Integer pid=((Double) submap.get("ID")).intValue();
 				    String name=(String) submap.get("Name");
-				    Integer created_tid=((Double) submap.get("CreatedTid")).intValue();
-				    Integer expired_tid=((Double) submap.get("ExpiredTid")).intValue();
+				    Long created_tid=((Double) submap.get("CreatedTid")).longValue();
+				    Long expired_tid=((Double) submap.get("ExpiredTid")).longValue();
 				    long lastWrite_timestamp=((Double) submap.get("LastWrite")).longValue();
 				    long lastRead_timestamp=((Double) submap.get("LastRead")).longValue();
 				    Person person=new Person(pid, name,created_tid,expired_tid,lastWrite_timestamp,lastRead_timestamp);
