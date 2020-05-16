@@ -1,7 +1,6 @@
 package gui;
 /*
- * Author: Xinnan SHEN,Chaoxian Zhou
- * Email: xinnan.shen@student.unimelb.edu.au
+ * Author: Chaoxian Zhou, Xinnan SHEN
  * Date: 16/05/2020
  * 
  */
@@ -81,13 +80,14 @@ public class GUI {
 				
 			}
 		});
-		frame.setBounds(100, 100, 500, 300);
+		frame.setBounds(100, 100, 500, 350);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
-		
+		//login button
 		btnLogin = new JButton("Login");
+		//press button to send login message to server
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -102,10 +102,11 @@ public class GUI {
 				}
 			}
 		});
-		btnLogin.setBounds(30, 42, 105, 28);
+		btnLogin.setBounds(30, 254, 105, 28);
 		frame.getContentPane().add(btnLogin);
-		
+		//logout button
 		btnLogout = new JButton("Logout");
+		//send logout message to server
 		btnLogout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -121,18 +122,20 @@ public class GUI {
 				
 			}
 		});
-		btnLogout.setBounds(30, 116, 105, 28);
+		btnLogout.setBounds(193, 254, 105, 28);
 		frame.getContentPane().add(btnLogout);
-		
+		//insert button
 		btnInsert = new JButton("Insert");
 		btnInsert.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(btnInsert.isEnabled())
 				{
+					//input id and name
 					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert,it should be a number(eg:1000)");
 					String insert_name=JOptionPane.showInputDialog("Please input the name you want to insert");
 					Pattern pattern =Pattern.compile("[0-9]*");
+					//check input validity
 					if(insert_id==null||insert_name==null||insert_id.equals("")||insert_name.equals("")||!pattern.matcher(insert_id).matches())
 					{
 						JOptionPane.showMessageDialog(frame, "Input is not valid","Error", JOptionPane.ERROR_MESSAGE);
@@ -140,6 +143,7 @@ public class GUI {
 					}
 					String insert = insert_id+" "+insert_name;
 					//JOptionPane.showInputDialog("Please input a value you want to insert (id name)");
+					//send input message to server
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
@@ -150,22 +154,25 @@ public class GUI {
 				
 			}
 		});
-		btnInsert.setBounds(193, 42, 105, 28);
+		btnInsert.setBounds(193, 116, 105, 28);
 		frame.getContentPane().add(btnInsert);
-		
+		//select button
 		btnSelect = new JButton("Select");
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(btnSelect.isEnabled())
 				{
+					//input id
 					String select = JOptionPane.showInputDialog("Please input the id you want to select,it should be a number(eg:1000)");
 					Pattern pattern =Pattern.compile("[0-9]*");
+					//check input validity
 					if(select==null||select.equals("")||!pattern.matcher(select).matches())
 					{
 						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					//send select message to server
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
@@ -176,23 +183,26 @@ public class GUI {
 				
 			}
 		});
-		btnSelect.setBounds(193, 116, 105, 28);
+		btnSelect.setBounds(30, 116, 105, 28);
 		frame.getContentPane().add(btnSelect);
-		
+		//update button
 		btnUpdate = new JButton("Update");
 		btnUpdate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(btnUpdate.isEnabled())
 				{
+					//input id and name
 					String update_id=JOptionPane.showInputDialog("Please input the id you want to update,it should be a number(eg:1000)");
 					String update_name=JOptionPane.showInputDialog("Please input the name you want to update");
 					Pattern pattern =Pattern.compile("[0-9]*");
+					//check input validity
 					if(update_id==null||update_name==null||update_id.equals("")||update_name.equals("")||!pattern.matcher(update_id).matches())
 					{
 						JOptionPane.showMessageDialog(frame, "Input is not valid","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					//send update message to server
 					String update = update_id+" "+update_name;
 					//JOptionPane.showInputDialog("Please input a value you want to update (id name)");
 					TCPThread thread=new TCPThread(client,temp);
@@ -207,20 +217,23 @@ public class GUI {
 		});
 		btnUpdate.setBounds(333, 42, 105, 28);
 		frame.getContentPane().add(btnUpdate);
-		
+		//delete button
 		btnDelete = new JButton("Delete");
 		btnDelete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(btnDelete.isEnabled())
 				{
+					//input id
 					String delete = JOptionPane.showInputDialog("Please input the id you want to delete,it should be a number(eg:1000)");
 					Pattern pattern =Pattern.compile("[0-9]*");
+					//check input validity
 					if(delete==null||delete.equals("")||!pattern.matcher(delete).matches())
 					{
 						JOptionPane.showMessageDialog(frame, "ID is not valid","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					//send delete message to server
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
 					//thread.Setframe(frame);
@@ -233,7 +246,8 @@ public class GUI {
 		});
 		btnDelete.setBounds(333, 116, 105, 28);
 		frame.getContentPane().add(btnDelete);
-		
+		//view button
+		//send view message to server
 		btnView = new JButton("View");
 		btnView.addMouseListener(new MouseAdapter() {
 			@Override
@@ -250,9 +264,10 @@ public class GUI {
 				
 			}
 		});
-		btnView.setBounds(30, 189, 105, 28);
+		btnView.setBounds(30, 42, 105, 28);
 		frame.getContentPane().add(btnView);
-		
+		//commit button
+		//send commit message to server
 		btnCommit = new JButton("Commit");
 		btnCommit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -269,9 +284,10 @@ public class GUI {
 				
 			}
 		});
-		btnCommit.setBounds(193, 189, 105, 28);
+		btnCommit.setBounds(30, 189, 105, 28);
 		frame.getContentPane().add(btnCommit);
-		
+		//rollback button
+		//send rollback message to server
 		btnRollback = new JButton("Rollback");
 		btnRollback.addMouseListener(new MouseAdapter() {
 			@Override
@@ -296,11 +312,11 @@ public class GUI {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-					System.exit(0);
+					System.exit(1);//abnormal exit
 				
 			}
 		});
-		btnCrash.setBounds(30, 225, 105, 28);
+		btnCrash.setBounds(333, 254, 105, 28);
 		frame.getContentPane().add(btnCrash);
 		this.SetDisableBtn();
 	}
@@ -316,7 +332,7 @@ public class GUI {
 		btnView.setEnabled(false);
 		btnCommit.setEnabled(false);
 		btnRollback.setEnabled(false);
-		btnCrash.setEnabled(false);
+		//btnCrash.setEnabled(false);
 	}
 	
 	public void SetEnableBtn() 
@@ -330,7 +346,7 @@ public class GUI {
 		btnView.setEnabled(true);
 		btnCommit.setEnabled(true);
 		btnRollback.setEnabled(true);
-		btnCrash.setEnabled(true);
+		//btnCrash.setEnabled(true);
 	}
 
 	public JFrame getFrame() {

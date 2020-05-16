@@ -34,6 +34,7 @@ public class TCPThread extends Thread{
 		this.client=client;
 		this.command="";
 		this.window=window;
+		//close is,os,socket when client shuts down
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 		    public void run() { 
 		    	try{

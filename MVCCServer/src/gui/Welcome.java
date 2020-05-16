@@ -57,12 +57,13 @@ public class Welcome {
 		lblServerPort.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblServerPort.setBounds(12, 54, 87, 18);
 		frame.getContentPane().add(lblServerPort);
-		
+		//confirm button
 		btnConfirm = new JButton("Waiting...");
 		btnConfirm.setEnabled(false);
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				//bind the port
 				if(btnConfirm.isEnabled())
 				{
 					Pattern pattern=Pattern.compile("[0-9]*");

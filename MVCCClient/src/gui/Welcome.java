@@ -71,18 +71,20 @@ public class Welcome {
 		lblServerPort.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblServerPort.setBounds(12, 104, 107, 18);
 		frame.getContentPane().add(lblServerPort);
-		
+		//confirm button
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(btnConfirm.isEnabled()) {
-					
+					//connect to server
 					Object isconnected=new Object();
 					BtnTextChange bc=new BtnTextChange(isconnected, btnConfirm);
 					Client.getThreadpool().execute(bc);
 					ConnectThread ct=new ConnectThread(isconnected, frame,textIP,textPort);
 					Client.getThreadpool().execute(ct);
+					textIP.setEnabled(false);
+					textPort.setEnabled(false);
 				}
 					
 				
