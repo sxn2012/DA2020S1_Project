@@ -24,7 +24,8 @@ import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-
+//Main GUI of the system
+//shows the status of system
 public class GUI {
 
 	private JFrame frame;
@@ -42,7 +43,7 @@ public class GUI {
 		this.welcomeframe=welcomeframe;
 		
 	}
-	
+	//add content into the GUI
 	public synchronized void setContent(String str) {
 		SimpleDateFormat sdf=new SimpleDateFormat();
 		sdf.applyPattern("dd-MM-yyyy HH:mm:ss");

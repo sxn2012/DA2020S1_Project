@@ -71,8 +71,9 @@ public class TCPThread extends Thread{
 			//String command=s.nextLine();
 			if(command.equals("exit")||command.equals("logout"))
 				flag=true;
-			os.writeUTF(command);
-			String str=is.readUTF();
+			os.writeUTF(command);//send instructions to server
+			String str=is.readUTF();//receive feedback from server
+			//deal with feedbacks received
 			if(str.equals("Failure: Operation Timeout"))
 			{
 				is.close();

@@ -37,11 +37,13 @@ public class ReadBackup extends Thread {
 		this.lock=lock;
 	}
 	public void run() {
+		//read backup file and load data into memory
 		//lock=true;
 		String current_dir=System.getProperty("user.dir");
 		String fileSeperator=File.separator;
 		String mydir=current_dir+fileSeperator+"data";
 		File path=new File(mydir);
+		//if path not exists or file not exists, no need to load
 		if(!path.exists())
 		{
 			//lock=false;
@@ -68,6 +70,7 @@ public class ReadBackup extends Thread {
 			}
 			return;
 		}
+		//if file exists, load data in the synchronized way
 		synchronized (lock) {
 			Print.println("Backup Reading...");
 			try {
@@ -75,10 +78,12 @@ public class ReadBackup extends Thread {
 				InputStream is = new FileInputStream(filepath);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 				String line=reader.readLine();
+				//transfer string from JSON format
 				//JSONObject jsonObject = new JSONObject(line);
 				Map<String, Object> map = new Gson().fromJson(
 					    line, new TypeToken<HashMap<String, Object>>() {}.getType()
 					);
+				//store data into memory
 				//System.out.println(map);
 				for(String key:map.keySet()) {
 					Map<String, Object> submap=(Map<String, Object>) map.get(key);

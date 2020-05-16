@@ -21,7 +21,9 @@ import java.net.Socket;
 import java.util.regex.Pattern;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+//Main frame of client
+//have buttons on it
+//press button means sending instructions to server
 public class GUI {
 
 	private JFrame frame;

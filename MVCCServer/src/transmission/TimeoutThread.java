@@ -7,6 +7,8 @@ import gui.Server;
  * Date: 07/05/2020
  * 
  */
+
+//define a counter to show how long the client has not responding
 public class TimeoutThread extends Thread {
 	private int count;
 	public TimeoutThread() {

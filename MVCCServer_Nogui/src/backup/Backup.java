@@ -34,10 +34,13 @@ public class Backup extends Thread {
 	
 	
 	public void run() {
+		//back up data in the server
 		String mydir=current_dir+fileSeperator+"data";
 		File path=new File(mydir);
+		//generate a new file to store the data, if not exists
 		if(!path.exists())
 			path.mkdir();
+		//reading and writing file must be synchronized
 		synchronized (lock) 
 		{
 			try {
@@ -55,12 +58,14 @@ public class Backup extends Thread {
 						Thread.sleep(5000);
 					}
 					*/
+					//generate a new transaction and view the data
 					Transaction t=CommandThread.newTransaction();
+					
 					int i=0;
 					JSONObject json=new JSONObject();
 			    	for (Person p:t.fetch())
 			        {
-			    		
+			    		//view data and transform into JSON format
 			    		//json.put("RecordNum", i);
 			    		Map <String,Object> map=new HashMap<String, Object>();
 			        	map.put("ID",p.getpid());
@@ -72,12 +77,14 @@ public class Backup extends Thread {
 			    		json.put("Record-"+i, map);
 			    		i++;
 			        }
+			    	//write JSON string into file
 			    	//Print.println(json.toString());
 			    	FileWriter fw=new FileWriter(filepath);
 			    	fw.write(json.toString());
 			    	fw.close();
 			    	if(Server.isFlag())
 			    		Thread.sleep(10000);
+			    	//backup data every 10 seconds
 			    	//if(output.equals("")) 
 				}
 			}

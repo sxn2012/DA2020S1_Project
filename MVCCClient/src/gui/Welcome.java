@@ -24,7 +24,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.regex.Pattern;
-
+//This file is to show a welcome frame
+//needs to input the server ip and port to connect
 public class Welcome {
 
 	private JFrame frame;

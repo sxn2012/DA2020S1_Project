@@ -7,6 +7,8 @@ import gui.Server;
  * Date: 07/05/2020
  * 
  */
+
+//detect whether the client has timed out
 public class DetectTimeout extends Thread {
 	private TimeoutThread thread;
 	private CommandThread c;

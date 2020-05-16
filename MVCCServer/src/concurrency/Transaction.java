@@ -47,7 +47,7 @@ public class Transaction {
         p.setcreated_tid(this.tid);
         p.setexpired_tid(Long.valueOf(0));
         //insert reverse operation into log
-        HashMap<String,String> map = new HashMap<>(){
+        HashMap<String,String> map = new HashMap<String,String>(){
             {
                 put("action","delete");
                 put("order",String.valueOf(order));

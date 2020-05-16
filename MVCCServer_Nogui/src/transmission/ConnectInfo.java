@@ -22,14 +22,16 @@ public class ConnectInfo extends Thread {
 		Print.println("\n\r\n\r\n\r-----------Initializing completed.-----------");
 		Scanner sc=new Scanner(System.in);
 		Print.print("Please input the port number:");
+		//input port number
 		//ipaddr=sc.nextLine();
 		port=sc.nextInt();
-		while(port<0||port>65535)
+		while(port<0||port>65535)//port number not valid
 		{
 			Print.println("Invalid Input!");
 			Print.print("Please input the port number:");
 			port=sc.nextInt();
 		}
+		//start server
 		CommandThread.setContent("Server Start");
 		TCPThread thread=new TCPThread(port);
 		//thread.start();

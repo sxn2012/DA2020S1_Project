@@ -22,7 +22,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.regex.Pattern;
-
+//This file is to show a welcome frame
+//needs to input a port to bind
 public class Welcome {
 
 	private JFrame frame;

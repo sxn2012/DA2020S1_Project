@@ -12,18 +12,12 @@ import backup.Backup;
 import backup.ReadBackup;
 import concurrency.Print;
 import concurrency.Records;
-/*
- * Author: Xinnan SHEN
- * Email: xinnan.shen@student.unimelb.edu.au
- * Date: 10/05/2020
- * 
- */
+
 
 
 public class Server {
 
     private static Integer transaction_id = 1;
-
     private static volatile boolean flag = true;
     private static ExecutorService threadpool;
     public static Integer gettransaction_id() {

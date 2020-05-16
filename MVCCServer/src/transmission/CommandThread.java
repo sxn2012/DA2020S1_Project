@@ -80,7 +80,7 @@ public class CommandThread extends Thread{
 				if(client==null) break;
 				is=new DataInputStream(client.getInputStream());
 				os=new DataOutputStream(client.getOutputStream());
-				String command=is.readUTF();
+				String command=is.readUTF();//receive data from client
 				
 				if(timeoutThread.getcount()>15*60) {
 					login=false;
@@ -93,6 +93,7 @@ public class CommandThread extends Thread{
 				timeoutThread.renewcount();
 				//window.setContent("command:'"+command+"' from "+client.getInetAddress().getHostAddress()+" received on port "+client.getLocalPort());
 				//System.out.println("command:'"+command+"' from "+client.getInetAddress().getHostAddress()+" received on port "+client.getLocalPort());
+				//deal with instructions from clients
 				if(command.equals("exit"))
 				{
 					if(login) {
@@ -260,9 +261,7 @@ public class CommandThread extends Thread{
 								if(!status.contains("Failure"))
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
 								else
-									if(status.contains("rollback")){
-										this.t = newTransaction();
-									}
+
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 							}
 						}
@@ -283,7 +282,9 @@ public class CommandThread extends Thread{
 							if(!status.contains("Failure:"))
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully viewed data.");
 							else
-
+								if(status.contains("rollback")){
+									this.t = newTransaction();
+								}
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 					}

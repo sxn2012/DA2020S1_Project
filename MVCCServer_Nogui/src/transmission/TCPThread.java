@@ -30,11 +30,11 @@ public class TCPThread extends Thread{
 	public void run() {
 		ServerSocket server;
 		try {
-			server=new ServerSocket(port);
+			server=new ServerSocket(port);//bind port
 			
 			while(Server.isFlag())
 			{
-				Socket client=server.accept();
+				Socket client=server.accept();//accept connection from client
 				long id=new Date().getTime();
 				//System.out.println(id);
 				CommandThread dealthread=new CommandThread(server,client,id);
