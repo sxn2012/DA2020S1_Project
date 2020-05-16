@@ -8,12 +8,12 @@ import java.util.*;
 public class Transaction {
 
 
-	private Integer tid;
+	private Long tid;
 
 	private ArrayList<HashMap<String,String>> rollback;
 
 
-    public Transaction(Integer tid){
+    public Transaction(Long tid){
 
         this.tid = tid;
         this.rollback = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Transaction {
         int order = Records.addItemToRecords(p,null);
 
         p.setcreated_tid(this.tid);
-        p.setexpired_tid(0);
+        p.setexpired_tid(Long.valueOf(0));
         HashMap<String,String> map = new HashMap<>(){
             {
                 put("action","delete");
@@ -64,8 +64,9 @@ public class Transaction {
             if(visible(p)&&p.getpid().equals(pid)){
 
                 if (rowLocked(p)){
+                    rollback();
 
-                    return "Failure: Row is locked by another transaction";
+                    return "Failure: Row is locked by another transaction, rollback automatically";
                 }else{
 
                     p.setLastWrite_timestamp();
@@ -153,7 +154,7 @@ public class Transaction {
             return false;
         }
 
-        if (p.getexpired_tid().intValue() !=0 && (!Records.instance().getActive().contains(p.getexpired_tid())||p.getexpired_tid()==this.tid)){
+        if (!p.getexpired_tid().equals(Long.valueOf(0)) && (!Records.instance().getActive().contains(p.getexpired_tid())|| p.getexpired_tid().equals(this.tid))){
             return false;
         }
 
@@ -163,7 +164,7 @@ public class Transaction {
 
     public boolean rowLocked(Person p){
 
-        return p.getexpired_tid().intValue() !=0 && Records.instance().getActive().contains(p.getexpired_tid());
+        return !p.getexpired_tid().equals(Long.valueOf(0)) && Records.instance().getActive().contains(p.getexpired_tid());
 
     }
 
@@ -257,12 +258,13 @@ public class Transaction {
             if (action.get("action") == "add"){
 
                 int index = Integer.parseInt(action.get("order"));
-                records.get(index).setexpired_tid(0);
+                records.get(index).setexpired_tid(Long.valueOf(0));
             }else if(action.get("action") == "delete"){
                 int index = Integer.parseInt(action.get("order"));
                 records.get(index).setexpired_tid(this.tid);
             }
         }
+
         Records.instance().getActive().remove(this.tid);
         return "Success";
 
@@ -271,14 +273,14 @@ public class Transaction {
 
 
 
-	public Integer getTid() {
+	public Long getTid() {
 		return tid;
 	}
 
 
 
 
-	public void setTid(Integer tid) {
+	public void setTid(Long tid) {
 		this.tid = tid;
 	}
 

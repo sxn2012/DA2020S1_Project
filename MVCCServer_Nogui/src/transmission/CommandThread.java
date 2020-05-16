@@ -62,10 +62,13 @@ public class CommandThread extends Thread{
 	}
 	public static synchronized Transaction newTransaction(){
 
-        TCPThread.setTransaction_id(TCPThread.getTransaction_id() + 1);
-        Records.instance().getActive().add(TCPThread.getTransaction_id());
+		Long t =  TCPThread.getTransaction_id();
+//        TCPThread.setTransaction_id(t);
+//        Integer tid = Integer.valueOf(t);
+		Records.instance().getActive().add(t);
+		return new Transaction(t);
 
-        return new Transaction(TCPThread.getTransaction_id());
+
     }
 	public void run()
 	{
@@ -262,6 +265,9 @@ public class CommandThread extends Thread{
 								if(!status.contains("Failure"))
 									setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
 								else
+									if(status.contains("rollback")) {
+										this.t = newTransaction();
+									}
 									setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 							}
 						}

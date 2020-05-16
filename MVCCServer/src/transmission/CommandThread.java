@@ -260,7 +260,9 @@ public class CommandThread extends Thread{
 								if(!status.contains("Failure"))
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
 								else
-
+									if(status.contains("rollback")){
+										this.t = newTransaction();
+									}
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 							}
 						}
@@ -281,9 +283,7 @@ public class CommandThread extends Thread{
 							if(!status.contains("Failure:"))
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully viewed data.");
 							else
-								if(status.contains("rollback")){
-									this.t = newTransaction();
-								}
+
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 					}

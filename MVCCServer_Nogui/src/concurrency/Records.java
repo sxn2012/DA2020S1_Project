@@ -11,7 +11,7 @@ public class Records {
 
 
 	private ArrayList<Person> records;
-	private HashSet<Integer> active;
+	private HashSet<Long> active;
 
 
     private Records(){
@@ -74,11 +74,11 @@ public class Records {
 		this.records = records;
 	}
 
-	public HashSet<Integer> getActive() {
+	public HashSet<Long> getActive() {
 		return active;
 	}
 
-	public void setActive(HashSet<Integer> active) {
+	public void setActive(HashSet<Long> active) {
 		this.active = active;
 	}
 

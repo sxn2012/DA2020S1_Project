@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mvcc.iml" filepath="$PROJECT_DIR$/mvcc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MVCCClient/MVCCClient.iml" filepath="$PROJECT_DIR$/MVCCClient/MVCCClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MVCCServer/MVCCServer.iml" filepath="$PROJECT_DIR$/MVCCServer/MVCCServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MVCCServer_Nogui/MVCCServer_Nogui.iml" filepath="$PROJECT_DIR$/MVCCServer_Nogui/MVCCServer_Nogui.iml" />
     </modules>
   </component>
 </project>
