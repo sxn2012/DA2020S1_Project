@@ -21,7 +21,6 @@ import concurrency.Records;
 
 public class Server {
 
-	private static Integer transaction_id = 1;
 	private static volatile boolean flag = true;
 	private static ExecutorService threadpool;
 
@@ -139,13 +138,7 @@ public class Server {
 
     }
 
-	public static Integer getTransaction_id() {
-		return transaction_id;
-	}
 
-	public static void setTransaction_id(Integer transaction_id) {
-		Server.transaction_id = transaction_id;
-	}
 
 	public static boolean isFlag() {
 		return flag;
