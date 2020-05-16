@@ -1,4 +1,4 @@
-# MVCC Demo
+# MVCC Implementation
   This is our group's project of DA in 2020S1,  which implements the MVCC algorithms in Java, allowing different clients to access the data stored in server simultaneously without leading to inconsistent state. The operation of clients is quite similar to the real database system, including:
 
 - Insert data
