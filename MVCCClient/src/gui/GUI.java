@@ -1,8 +1,8 @@
 package gui;
 /*
- * Author: Xinnan SHEN
+ * Author: Xinnan SHEN,Chaoxian Zhou
  * Email: xinnan.shen@student.unimelb.edu.au
- * Date: 05/05/2020
+ * Date: 16/05/2020
  * 
  */
 import java.awt.EventQueue;
@@ -39,6 +39,7 @@ public class GUI {
 	private JButton btnView;
 	private JButton btnCommit;
 	private JButton btnRollback;
+	private JButton btnCrash;
 	/**
 	 * Create the application.
 	 */
@@ -129,7 +130,7 @@ public class GUI {
 			public void mouseClicked(MouseEvent e) {
 				if(btnInsert.isEnabled())
 				{
-					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert");
+					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert,it should be a number(eg:1000)");
 					String insert_name=JOptionPane.showInputDialog("Please input the name you want to insert");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					if(insert_id==null||insert_name==null||insert_id.equals("")||insert_name.equals("")||!pattern.matcher(insert_id).matches())
@@ -158,7 +159,7 @@ public class GUI {
 			public void mouseClicked(MouseEvent e) {
 				if(btnSelect.isEnabled())
 				{
-					String select = JOptionPane.showInputDialog("Please input the id you want to select");
+					String select = JOptionPane.showInputDialog("Please input the id you want to select,it should be a number(eg:1000)");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					if(select==null||select.equals("")||!pattern.matcher(select).matches())
 					{
@@ -184,7 +185,7 @@ public class GUI {
 			public void mouseClicked(MouseEvent e) {
 				if(btnUpdate.isEnabled())
 				{
-					String update_id=JOptionPane.showInputDialog("Please input the id you want to update");
+					String update_id=JOptionPane.showInputDialog("Please input the id you want to update,it should be a number(eg:1000)");
 					String update_name=JOptionPane.showInputDialog("Please input the name you want to update");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					if(update_id==null||update_name==null||update_id.equals("")||update_name.equals("")||!pattern.matcher(update_id).matches())
@@ -213,7 +214,7 @@ public class GUI {
 			public void mouseClicked(MouseEvent e) {
 				if(btnDelete.isEnabled())
 				{
-					String delete = JOptionPane.showInputDialog("Please input the id you want to delete");
+					String delete = JOptionPane.showInputDialog("Please input the id you want to delete,it should be a number(eg:1000)");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					if(delete==null||delete.equals("")||!pattern.matcher(delete).matches())
 					{
@@ -289,6 +290,18 @@ public class GUI {
 		});
 		btnRollback.setBounds(333, 189, 105, 28);
 		frame.getContentPane().add(btnRollback);
+		
+		btnCrash = new JButton("Crash");
+		btnCrash.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+					System.exit(0);
+				
+			}
+		});
+		btnCrash.setBounds(30, 225, 105, 28);
+		frame.getContentPane().add(btnCrash);
 		this.SetDisableBtn();
 	}
 	
@@ -303,6 +316,7 @@ public class GUI {
 		btnView.setEnabled(false);
 		btnCommit.setEnabled(false);
 		btnRollback.setEnabled(false);
+		btnCrash.setEnabled(false);
 	}
 	
 	public void SetEnableBtn() 
@@ -316,6 +330,7 @@ public class GUI {
 		btnView.setEnabled(true);
 		btnCommit.setEnabled(true);
 		btnRollback.setEnabled(true);
+		btnCrash.setEnabled(true);
 	}
 
 	public JFrame getFrame() {
@@ -420,5 +435,12 @@ public class GUI {
 
 	public void setBtnRollback(JButton btnRollback) {
 		this.btnRollback = btnRollback;
+	}
+	public JButton getBtnCrash() {
+		return btnCrash;
+	}
+
+	public void setBtnCrash(JButton btnCrash) {
+		this.btnCrash = btnCrash;
 	}
 }
