@@ -22,7 +22,7 @@ import gui.Welcome;
 import transmission.CommandThread;
 /*
  * Author: Xinnan SHEN
- * Email: xinnan.shen@student.unimelb.edu.au
+ * 
  * Date: 10/05/2020
  * 
  */

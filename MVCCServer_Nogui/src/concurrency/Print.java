@@ -1,7 +1,7 @@
 package concurrency;
 /*
  * Author: Xinnan SHEN
- * Email: xinnan.shen@student.unimelb.edu.au
+ * 
  * Date: 09/05/2020
  * 
  */

@@ -11,7 +11,7 @@ import gui.Welcome;
 
 /*
  * Author: Xinnan SHEN
- * Email: xinnan.shen@student.unimelb.edu.au
+ * 
  * Date: 23/04/2020
  * 
  */

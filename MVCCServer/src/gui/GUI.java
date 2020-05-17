@@ -1,7 +1,7 @@
 package gui;
 /*
  * Author: Xinnan SHEN
- * Email: xinnan.shen@student.unimelb.edu.au
+ * 
  * Date: 05/05/2020
  * 
  */
