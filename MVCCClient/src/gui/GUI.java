@@ -132,7 +132,7 @@ public class GUI {
 				if(btnInsert.isEnabled())
 				{
 					//input id and name
-					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert,it should be a number(eg:1000)");
+					String insert_id=JOptionPane.showInputDialog("Please input the id you want to insert,\r\nit should be a number(eg:1000)");
 					String insert_name=JOptionPane.showInputDialog("Please input the name you want to insert");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					//check input validity
@@ -164,7 +164,7 @@ public class GUI {
 				if(btnSelect.isEnabled())
 				{
 					//input id
-					String select = JOptionPane.showInputDialog("Please input the id you want to select,it should be a number(eg:1000)");
+					String select = JOptionPane.showInputDialog("Please input the id you want to select,\r\nit should be a number(eg:1000)");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					//check input validity
 					if(select==null||select.equals("")||!pattern.matcher(select).matches())
@@ -193,7 +193,7 @@ public class GUI {
 				if(btnUpdate.isEnabled())
 				{
 					//input id and name
-					String update_id=JOptionPane.showInputDialog("Please input the id you want to update,it should be a number(eg:1000)");
+					String update_id=JOptionPane.showInputDialog("Please input the id you want to update,\r\nit should be a number(eg:1000)");
 					String update_name=JOptionPane.showInputDialog("Please input the name you want to update");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					//check input validity
@@ -225,7 +225,7 @@ public class GUI {
 				if(btnDelete.isEnabled())
 				{
 					//input id
-					String delete = JOptionPane.showInputDialog("Please input the id you want to delete,it should be a number(eg:1000)");
+					String delete = JOptionPane.showInputDialog("Please input the id you want to delete,\r\nit should be a number(eg:1000)");
 					Pattern pattern =Pattern.compile("[0-9]*");
 					//check input validity
 					if(delete==null||delete.equals("")||!pattern.matcher(delete).matches())
