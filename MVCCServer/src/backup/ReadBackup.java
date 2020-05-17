@@ -71,7 +71,7 @@ public class ReadBackup extends Thread {
 			Print.println("Read Starting running...");
 			try {
 				//read data from file
-				Thread.sleep(500);
+				//Thread.sleep(500);
 				InputStream is = new FileInputStream(filepath);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 				String line=reader.readLine();

@@ -48,7 +48,7 @@ public class Backup extends Thread {
 		{
 			try {
 				Print.println("Backup waiting...");
-				lock.wait();
+				lock.wait(500);
 				Print.println("Backup Continue running");
 				window.getBtnConfirm().setText("Confirm");
 				window.getBtnConfirm().setEnabled(true);

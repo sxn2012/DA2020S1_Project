@@ -45,7 +45,7 @@ public class Backup extends Thread {
 		{
 			try {
 				Print.println("Backup Writer waiting...");
-				lock.wait();
+				lock.wait(500);
 				Print.println("Backup Writer Continue running");
 				//window.btnConfirm.setText("Confirm");
 				//window.btnConfirm.setEnabled(true);
