@@ -62,7 +62,7 @@ public class Welcome {
 		btnConfirm.setEnabled(false);
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				//bind the port
 				if(btnConfirm.isEnabled())
 				{
