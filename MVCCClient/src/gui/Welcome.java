@@ -74,8 +74,11 @@ public class Welcome {
 		//confirm button
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addMouseListener(new MouseAdapter() {
+			
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnConfirm.isEnabled()) {
 					//connect to server
 					Object isconnected=new Object();
@@ -86,10 +89,6 @@ public class Welcome {
 					textIP.setEnabled(false);
 					textPort.setEnabled(false);
 				}
-					
-				
-				
-				
 			}
 		});
 		btnConfirm.setBounds(119, 159, 105, 28);
