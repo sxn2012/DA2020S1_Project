@@ -21,8 +21,7 @@ public class Client {
 	private static ExecutorService threadpool;
 	
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		//System.out.println("Login first");
+		
 		threadpool=Executors.newCachedThreadPool();
 		
 		threadpool.execute(new Runnable() {
@@ -36,11 +35,10 @@ public class Client {
 					    		window.getFrame().setVisible(false);
 					    		threadpool.shutdownNow();
 					    		threadpool.awaitTermination(1, TimeUnit.SECONDS);
-					    		//ThreadPoolExecutor executor = (ThreadPoolExecutor) threadpool;
 					    		Print.println("Client terminated.");
 					    		}
 					    	catch (Exception e) {
-								// TODO: handle exception
+								
 					    		Print.println("failed:"+e.getMessage());
 							}
 					    }

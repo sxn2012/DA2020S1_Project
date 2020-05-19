@@ -20,7 +20,7 @@ public class ConnectThread extends Thread {
 	private JTextField textIP;
 	private JTextField textPort;
 	public ConnectThread(Object isconnected,JFrame frame,JTextField textIP,JTextField textPort) {
-		// TODO Auto-generated constructor stub
+		
 		this.isconnected=isconnected;
 		this.frame=frame;
 		this.textIP=textIP;
@@ -41,7 +41,6 @@ public class ConnectThread extends Thread {
 				return;
 			}
 		try {	
-				//Socket client=new Socket(textIP.getText().trim(), Integer.parseInt(textPort.getText().trim()));
 				//connect to server
 				Socket client=new Socket();
 				client.connect(new InetSocketAddress(textIP.getText().trim(), Integer.parseInt(textPort.getText().trim())), 5000);
@@ -51,7 +50,7 @@ public class ConnectThread extends Thread {
 				frame.setVisible(false);
 			} 
 		catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				//connection failed
 				JOptionPane.showMessageDialog(frame, "Connection Failed! ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
 			}

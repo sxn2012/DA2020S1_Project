@@ -32,13 +32,12 @@ public class ReadBackup extends Thread {
 	//private Welcome window;
 	private Object lock;
 	public ReadBackup(Object lock) {
-		// TODO Auto-generated constructor stub
-		//this.window=window;
+		
 		this.lock=lock;
 	}
 	public void run() {
 		//read backup file and load data into memory
-		//lock=true;
+		
 		String current_dir=System.getProperty("user.dir");
 		String fileSeperator=File.separator;
 		String mydir=current_dir+fileSeperator+"data";
@@ -46,11 +45,11 @@ public class ReadBackup extends Thread {
 		//if path not exists or file not exists, no need to load
 		if(!path.exists())
 		{
-			//lock=false;
+			
 			synchronized (lock) {
 				lock.notifyAll();
 				ConnectInfo ci=new ConnectInfo();
-				//ci.start();
+				
 				Server.getThreadpool().execute(ci);
 			}
 			
@@ -60,12 +59,11 @@ public class ReadBackup extends Thread {
 		File backupfile=new File(filepath);
 		if(!backupfile.exists())
 		{
-			//lock=false;
-			//notifyAll();
+			
 			synchronized (lock) {
 				lock.notifyAll();
 				ConnectInfo ci=new ConnectInfo();
-				//ci.start();
+				
 				Server.getThreadpool().execute(ci);
 			}
 			return;
@@ -74,17 +72,17 @@ public class ReadBackup extends Thread {
 		synchronized (lock) {
 			Print.println("Backup Reading...");
 			try {
-				//Thread.sleep(500);
+				
 				InputStream is = new FileInputStream(filepath);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 				String line=reader.readLine();
 				//transfer string from JSON format
-				//JSONObject jsonObject = new JSONObject(line);
+			
 				Map<String, Object> map = new Gson().fromJson(
 					    line, new TypeToken<HashMap<String, Object>>() {}.getType()
 					);
 				//store data into memory
-				//System.out.println(map);
+				
 				for(String key:map.keySet()) {
 					Map<String, Object> submap=(Map<String, Object>) map.get(key);
 					Integer pid=((Double) submap.get("ID")).intValue();
@@ -94,7 +92,7 @@ public class ReadBackup extends Thread {
 				    long lastWrite_timestamp=((Double) submap.get("LastWrite")).longValue();
 				    long lastRead_timestamp=((Double) submap.get("LastRead")).longValue();
 				    Person person=new Person(pid, name,created_tid,expired_tid,lastWrite_timestamp,lastRead_timestamp);
-				    //System.out.println(person.getstr());
+				    
 				    Transaction t=CommandThread.newTransaction();
 				    String status=t.add(person);
 				    if(status.contains("Failure:"))
@@ -105,16 +103,14 @@ public class ReadBackup extends Thread {
 				}
 				reader.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				//System.out.println(e.getMessage());
-				//JOptionPane.showMessageDialog(window.frame, "There might be some errors in the initial process ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
+				
 			}
 			finally {
-				//lock=false;
+				
 				lock.notifyAll();
 				Print.println("Backup has been read.");
 				ConnectInfo ci=new ConnectInfo();
-				//ci.start();
+				
 				Server.getThreadpool().execute(ci);
 			}
 		}

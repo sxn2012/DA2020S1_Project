@@ -63,19 +63,15 @@ public class GUI {
 					return;
 				else if(response==JOptionPane.YES_OPTION)
 				{
-//					if(btnLogin.isEnabled())
-//					{
-						super.windowClosing(e);
-						TCPThread thread=new TCPThread(client,temp);
-						thread.SetWelcomeframe(welcomeframe);
-						//thread.Setframe(frame);
-						thread.Setcommand("exit");
-						//thread.start();
-						Client.getThreadpool().execute(thread);
-//					}
-//					else {
-//						JOptionPane.showMessageDialog(frame, "Please Log out of the system first!","Warning", JOptionPane.WARNING_MESSAGE); 
-//					}
+
+					super.windowClosing(e);
+					TCPThread thread=new TCPThread(client,temp);
+					thread.SetWelcomeframe(welcomeframe);
+						
+					thread.Setcommand("exit");
+						
+					Client.getThreadpool().execute(thread);
+
 				}
 				
 			}
@@ -97,9 +93,9 @@ public class GUI {
 				{
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("login");
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 
@@ -119,9 +115,9 @@ public class GUI {
 				{
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("logout");
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -149,13 +145,12 @@ public class GUI {
 						return;
 					}
 					String insert = insert_id+" "+insert_name;
-					//JOptionPane.showInputDialog("Please input a value you want to insert (id name)");
 					//send input message to server
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("add "+insert);
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -183,9 +178,9 @@ public class GUI {
 					//send select message to server
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("select "+select);
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -213,12 +208,11 @@ public class GUI {
 					}
 					//send update message to server
 					String update = update_id+" "+update_name;
-					//JOptionPane.showInputDialog("Please input a value you want to update (id name)");
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("update "+update);
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -247,9 +241,9 @@ public class GUI {
 					//send delete message to server
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("delete "+delete);
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -268,9 +262,9 @@ public class GUI {
 				{
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("view");
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -289,9 +283,9 @@ public class GUI {
 				{
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("commit");
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -311,9 +305,9 @@ public class GUI {
 				{
 					TCPThread thread=new TCPThread(client,temp);
 					thread.SetWelcomeframe(welcomeframe);
-					//thread.Setframe(frame);
+					
 					thread.Setcommand("rollback");
-					//thread.start();
+					
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -347,7 +341,7 @@ public class GUI {
 		btnView.setEnabled(false);
 		btnCommit.setEnabled(false);
 		btnRollback.setEnabled(false);
-		//btnCrash.setEnabled(false);
+
 	}
 	
 	public void SetEnableBtn() 
@@ -361,7 +355,7 @@ public class GUI {
 		btnView.setEnabled(true);
 		btnCommit.setEnabled(true);
 		btnRollback.setEnabled(true);
-		//btnCrash.setEnabled(true);
+
 	}
 
 	public JFrame getFrame() {

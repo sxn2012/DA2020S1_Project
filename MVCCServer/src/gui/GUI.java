@@ -78,8 +78,7 @@ public class GUI {
 					super.windowClosing(e);
 					frame.setVisible(false);
 					System.exit(0);
-					//frame.setVisible(false);
-					//welcomeframe.setVisible(true);
+					
 					
 				}
 				
@@ -92,8 +91,7 @@ public class GUI {
 		
 		textArea = new JTextArea();
 		textArea.setEditable(false);
-		//textArea.setBounds(12, 24, 476, 238);
-		//frame.getContentPane().add(textArea);
+		
 		
 		JScrollPane scrollPane=new JScrollPane(textArea);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  

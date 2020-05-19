@@ -1,6 +1,6 @@
 package gui;
 /*
- * Author: Xinnan SHEN
+ * Author: Xiguang Li, Xinnan SHEN
  * 
  * Date: 07/05/2020
  * 

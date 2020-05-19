@@ -13,7 +13,12 @@ import backup.ReadBackup;
 import concurrency.Print;
 import concurrency.Records;
 
-
+/*
+ * Author: Xiguang Li, Xinnan SHEN
+ * 
+ * Date: 09/05/2020
+ * 
+ */
 
 public class Server {
 
@@ -33,52 +38,7 @@ public class Server {
 		threadpool=pool;
 	}
     public static void main(String[] args) throws Exception{
-    	/*
-        Transaction one = newTransaction();
-        one.add(new Person(1,"name1"));
-        one.add(new Person(2,"name2"));
-//        one.commit();
-
-//        Transaction three = newTransaction();
-        Transaction two = newTransaction();
-
-
-
-        System.out.println("Before:");
-        //System.out.println("transaction one:"+one.fetch());
-        //System.out.println("transaction two:"+two.fetch());
-        System.out.print("transaction one:");
-        for (Person p:one.fetch())
-        {
-        	System.out.print(p.getstr()+"\t");
-        }
-        System.out.println();
-        System.out.print("transaction two:");
-        for (Person p:two.fetch())
-        {
-        	System.out.print(p.getstr()+"\t");
-        }
-        System.out.println();
-//        three.update(1,"name3");
-
-//       one.rollback();
-        one.commit();
-        System.out.println("After:");
-        //System.out.println("transaction one:"+one.fetch());
-        //System.out.println("transaction two:"+two.fetch());
-        System.out.print("transaction one:");
-        for (Person p:one.fetch())
-        {
-        	System.out.print(p.getstr()+"\t");
-        }
-        System.out.println();
-        System.out.print("transaction two:");
-        for (Person p:two.fetch())
-        {
-        	System.out.print(p.getstr()+"\t");
-        }
-        System.out.println();
-		*/
+    	
     	Server.setthreadpool(Executors.newCachedThreadPool());
     	
  		final long timeInterval = 15*60*1000;
@@ -93,8 +53,7 @@ public class Server {
 							Thread.sleep(timeInterval);
 
 					}catch (Exception e){
-						//e.printStackTrace();
-						//System.out.println(e.getMessage());
+						
 						return;
 					}
 				}
@@ -102,7 +61,6 @@ public class Server {
 		};
 
 		Thread thread = new Thread(gc);
-		//thread.start();
 		Server.getthreadpool().execute(thread);
 		
 		Object lock=new Object();
@@ -114,9 +72,9 @@ public class Server {
 					window.getFrame().setVisible(true);
 					Backup backupthread=new Backup(window,lock);
 					Server.getthreadpool().execute(backupthread);
-					//backupthread.start();
+					
 					ReadBackup rBackup=new ReadBackup(window,lock);
-					//rBackup.start();
+					
 					Server.getthreadpool().execute(rBackup);
 					Runtime.getRuntime().addShutdownHook(new Thread() {
 					    public void run() { 
@@ -125,11 +83,11 @@ public class Server {
 					    		window.getFrame().setVisible(false);
 					    		Server.getthreadpool().shutdownNow();
 					    		Server.getthreadpool().awaitTermination(1, TimeUnit.SECONDS);
-					    		//ThreadPoolExecutor executor = (ThreadPoolExecutor) threadpool;
+					    		
 					    		Print.println("Server terminated.");
 					    		}
 					    	catch (Exception e) {
-								// TODO: handle exception
+								
 					    		Print.println("failed:"+e.getMessage());
 							}
 					    }

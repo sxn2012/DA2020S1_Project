@@ -63,7 +63,7 @@ public class Backup extends Thread {
 			        {
 			    		//view data and transform into JSON format
 			    		
-			    		//json.put("RecordNum", i);
+			    		
 			    		Map <String,Object> map=new HashMap<String, Object>();
 			        	map.put("ID",p.getpid());
 			    		map.put("Name",p.getname());
@@ -81,14 +81,12 @@ public class Backup extends Thread {
 			    	if(Server.getflag())
 			    		Thread.sleep(10000);
 			    	//backup data every 10 seconds
-			    	//if(output.equals("")) 
+			    	
 				}
 			}
 			catch (Exception e) 
 			{
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					//System.out.println(e.getMessage());
+					
 					return;
 			}
 		}

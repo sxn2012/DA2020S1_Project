@@ -21,9 +21,9 @@ public class Backup extends Thread {
 	private String current_dir;
 	private String fileSeperator;
 	private Object lock;
-	//private Welcome window;
+
 	public Backup(Object lock) {
-		// TODO Auto-generated constructor stub
+		
 		this.current_dir=System.getProperty("user.dir");
 		this.fileSeperator=File.separator;
 		this.lock=lock;
@@ -47,17 +47,13 @@ public class Backup extends Thread {
 				Print.println("Backup Writer waiting...");
 				lock.wait(500);
 				Print.println("Backup Writer Continue running");
-				//window.btnConfirm.setText("Confirm");
-				//window.btnConfirm.setEnabled(true);
+				
 				String filepath=mydir+fileSeperator+"MVCCdata.json";
 				Print.println("The backup is stored in:"+filepath);
 				while(Server.isFlag())
 				{
 					
-					/*while(ReadBackup.lock) {
-						Thread.sleep(5000);
-					}
-					*/
+					
 					//generate a new transaction and view the data
 					Transaction t=CommandThread.newTransaction();
 					
@@ -66,7 +62,7 @@ public class Backup extends Thread {
 			    	for (Person p:t.fetch())
 			        {
 			    		//view data and transform into JSON format
-			    		//json.put("RecordNum", i);
+			    		
 			    		Map <String,Object> map=new HashMap<String, Object>();
 			        	map.put("ID",p.getpid());
 			    		map.put("Name",p.getname());
@@ -78,20 +74,19 @@ public class Backup extends Thread {
 			    		i++;
 			        }
 			    	//write JSON string into file
-			    	//Print.println(json.toString());
+			    	
 			    	FileWriter fw=new FileWriter(filepath);
 			    	fw.write(json.toString());
 			    	fw.close();
 			    	if(Server.isFlag())
 			    		Thread.sleep(10000);
 			    	//backup data every 10 seconds
-			    	//if(output.equals("")) 
+			    
 				}
 			}
 			catch (Exception e) 
 			{
-					// TODO Auto-generated catch block
-					//System.out.println(e.getMessage());
+				
 					return;
 			}
 		}

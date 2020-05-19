@@ -13,7 +13,7 @@ public class Records {
     //a table list to store created data items
     private ArrayList<Person> records;
     //a transaction pool to store all active transaction currently
-    //private HashSet<long> active;
+    
     private HashSet<Long> active;
 
     private Records(){

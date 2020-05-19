@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import concurrency.Print;
 /*
- * Author: Xinnan SHEN
+ * Author: Huidu Lu, Xinnan SHEN
  * 
  * Date: 07/05/2020
  * 
@@ -12,7 +12,6 @@ import concurrency.Print;
 public class ConnectInfo extends Thread {
 	private int port;
 	public ConnectInfo() {
-		// TODO Auto-generated constructor stub
 		
 	}
 	public int getPort() {
@@ -37,7 +36,7 @@ public class ConnectInfo extends Thread {
 		int port = Integer.parseInt(portInput.trim());
 		CommandThread.setContent("Server Start");
 		TCPThread thread=new TCPThread(port);
-		//thread.start();
+		
 		Server.getThreadpool().execute(thread);
 			
 		

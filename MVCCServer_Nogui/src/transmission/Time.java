@@ -25,7 +25,7 @@ public class Time implements Runnable{
 					Thread.sleep(1000);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package transmission;
 /*
- * Author: Xinnan SHEN
+ * Author: Xinnan SHEN, Xiguang Li
  * 
  * Date: 07/05/2020
  * 
@@ -24,7 +24,7 @@ public class TCPThread extends Thread{
 	private GUI window;
 	
 	public TCPThread(int port,GUI window) {
-		// TODO Auto-generated constructor stub
+		
 		this.port=port;
 		this.window=window;
 		
@@ -37,16 +37,13 @@ public class TCPThread extends Thread{
 			{
 				Socket client=server.accept();//accept connection from client
 				long id=new Date().getTime();
-				//System.out.println(id);
+				
 				CommandThread dealthread=new CommandThread(server,client,window,id);
-				//dealthread.start();
+
 				Server.getthreadpool().execute(dealthread);
 			}
 		}
 		catch (Exception e) {
-			// TODO: handle exception
-			//e.printStackTrace();
-			//JOptionPane.showMessageDialog(window.frame, "There might be some problem in the connection: "+e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 			Print.println("There might be some problems in the connection: "+e.getMessage());
 			System.exit(1);
 		}
@@ -65,7 +62,7 @@ public class TCPThread extends Thread{
 	}
 	public static Long getTransaction_id() {
 		long t = new Date().getTime();
-//		return TCPThread.transaction_id++;
+
 		return Long.valueOf(t);
 	}
 	public static void setTransaction_id(Long transaction_id) {

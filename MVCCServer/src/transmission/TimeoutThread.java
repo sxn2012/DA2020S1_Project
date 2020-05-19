@@ -12,7 +12,7 @@ import gui.Server;
 public class TimeoutThread extends Thread {
 	private int count;
 	public TimeoutThread() {
-		// TODO Auto-generated constructor stub
+		
 		count=0;
 	}
 	public void renewcount() {
@@ -28,9 +28,7 @@ public class TimeoutThread extends Thread {
 				if(Server.getflag())
 					Thread.sleep(1000);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				//System.out.println(e.getMessage());
+				
 				return;
 			}
 		}

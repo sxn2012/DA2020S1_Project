@@ -1,6 +1,6 @@
 package transmission;
 /*
- * Author: Xinnan SHEN
+ * Author: Xinnan SHEN, Xiguang Li
  * 
  * Date: 23/04/2020
  * 
@@ -31,11 +31,11 @@ public class CommandThread extends Thread{
 	private DataInputStream is;
 	private DataOutputStream os;
 	public CommandThread(ServerSocket server,Socket client,long id) {
-		// TODO Auto-generated constructor stub
+		
 		this.server=server;
 		this.client=client;
 		login=false;
-		//this.window=window;
+		
 		this.idl=id;
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 		    public void run() { 
@@ -48,7 +48,7 @@ public class CommandThread extends Thread{
 		    		Print.println("IOStream and Connection closed.");
 		    		}
 		    	catch (Exception e) {
-					// TODO: handle exception
+					
 		    		Print.println("IOStream/Connection closing failed: "+e.getMessage());
 				}
 		    }
@@ -63,8 +63,7 @@ public class CommandThread extends Thread{
 	public static synchronized Transaction newTransaction(){
 
 		Long t =  TCPThread.getTransaction_id();
-//        TCPThread.setTransaction_id(t);
-//        Integer tid = Integer.valueOf(t);
+
 		Records.instance().getActive().add(t);
 		return new Transaction(t);
 
@@ -76,10 +75,10 @@ public class CommandThread extends Thread{
 		{
 			TimeoutThread timeoutThread=new TimeoutThread();
 			timeoutThread.renewcount();
-			//timeoutThread.start();
+
 			Server.getThreadpool().execute(timeoutThread);
 			DetectTimeout dTimeout=new DetectTimeout(timeoutThread,this);
-			//dTimeout.start();
+
 			Server.getThreadpool().execute(dTimeout);
 			while(Server.isFlag()) {
 				if(client==null) break;
@@ -89,15 +88,12 @@ public class CommandThread extends Thread{
 				
 				if(timeoutThread.getcount()>15*60) {
 					login=false;
-					//window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has timed out.");
 					is.close();
 					os.close();
 					client.close();
 					break;
 				}
 				timeoutThread.renewcount();
-				//window.setContent("command:'"+command+"' from "+client.getInetAddress().getHostAddress()+" received on port "+client.getLocalPort());
-				//System.out.println("command:'"+command+"' from "+client.getInetAddress().getHostAddress()+" received on port "+client.getLocalPort());
 				if(command.equals("exit"))
 				{
 					if(login) {
@@ -348,16 +344,13 @@ public class CommandThread extends Thread{
 			}
 		}
 		catch (Exception e) {
-			// TODO: handle exception
-			//JOptionPane.showMessageDialog(window.frame, e.getClass().toString(),"Error", JOptionPane.ERROR_MESSAGE);
-			//System.exit(1);
+			
 			if(t!=null)
 			{
 				this.t.rollback();
 				Records.instance().getActive().remove(this.t.getTid());
 			}
 			
-//            setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getMessage()+").");
             if(e.getMessage()!=null&&!e.getMessage().equals(""))
 				setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getMessage()+").");
 			else 

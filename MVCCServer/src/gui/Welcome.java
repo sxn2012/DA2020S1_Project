@@ -80,12 +80,12 @@ public class Welcome {
 							window.getFrame().setVisible(true);
 							window.setContent("Server Start");
 					    	TCPThread thread=new TCPThread(Integer.parseInt(textPort.getText().trim()),window);
-					    	//thread.start();
+					    	
 					    	Server.getthreadpool().execute(thread);
 					    	frame.setVisible(false);
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(frame, "Server Starting Failure ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
-							//e.printStackTrace();
+							
 						}
 					}
 				});

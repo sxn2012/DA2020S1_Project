@@ -1,6 +1,6 @@
 package transmission;
 /*
- * Author: Xinnan SHEN
+ * Author: Xinnan SHEN, Xiguang Li
  * 
  * Date: 07/05/2020
  * 
@@ -19,10 +19,9 @@ import concurrency.Print;
 public class TCPThread extends Thread{
 	private int port;
 	private static Long transaction_id;
-	//private GUI window;
 	
 	public TCPThread(int port) {
-		// TODO Auto-generated constructor stub
+		
 		this.port=port;
 		
 		
@@ -36,16 +35,15 @@ public class TCPThread extends Thread{
 			{
 				Socket client=server.accept();//accept connection from client
 				long id=new Date().getTime();
-				//System.out.println(id);
+				
 				CommandThread dealthread=new CommandThread(server,client,id);
-				//dealthread.start();
+				
 				Server.getThreadpool().execute(dealthread);
 			}
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 			Print.println("There might be some problem in the connection: "+e.getMessage());
-			//JOptionPane.showMessageDialog(window.frame, "Connection Failed! ("+e.getMessage()+").","Error", JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
 	}
@@ -57,7 +55,7 @@ public class TCPThread extends Thread{
 	}
 	public static Long getTransaction_id() {
 		long t = new Date().getTime();
-//		return TCPThread.transaction_id++;
+
 		return Long.valueOf(t);
 
 	}

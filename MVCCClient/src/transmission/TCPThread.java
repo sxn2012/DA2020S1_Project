@@ -1,6 +1,6 @@
 package transmission;
 /*
- * Author: Xinnan SHEN
+ * Author: Xiguang Li, Xinnan SHEN
  * 
  * Date: 23/04/2020
  * 
@@ -26,11 +26,10 @@ public class TCPThread extends Thread{
 	private String command;
 	private DataInputStream is;
 	private DataOutputStream os;
-	//JFrame frame;
 	private GUI window;
 	private JFrame welcomeframe;
 	public TCPThread(Socket client,GUI window) {
-		// TODO Auto-generated constructor stub
+		
 		this.client=client;
 		this.command="";
 		this.window=window;
@@ -41,10 +40,10 @@ public class TCPThread extends Thread{
 		    		if(is!=null) is.close();
 		    		if(os!=null) os.close();
 		    		if(TCPThread.this.client!=null) TCPThread.this.client.close();
-		    		//System.out.println("IOStream and Connection closed.");
+		    		
 		    		}
 		    	catch (Exception e) {
-					// TODO: handle exception
+					
 		    		Print.println("IOStream/Connection closing failed: "+e.getMessage());
 				}
 		    }
@@ -54,9 +53,6 @@ public class TCPThread extends Thread{
 		this.command=command;
 	}
 	
-	/*public void Setframe(JFrame frame) {
-		this.frame=frame;
-	}*/
 	
 	public void SetWelcomeframe(JFrame welcomeframe) {
 		this.welcomeframe=welcomeframe;
@@ -65,11 +61,10 @@ public class TCPThread extends Thread{
 	{
 		boolean flag=false;
 		try {
-			//Scanner s=new Scanner(System.in);
+			
 			is=new DataInputStream(client.getInputStream());
 			os=new DataOutputStream(client.getOutputStream());
-			//System.out.print("$");
-			//String command=s.nextLine();
+
 			if(command.equals("exit")||command.equals("logout"))
 				flag=true;
 			os.writeUTF(command);//send instructions to server
@@ -84,7 +79,7 @@ public class TCPThread extends Thread{
 				window.getFrame().setVisible(false);
 				welcomeframe.setVisible(true);
 			}
-			//System.out.println("\t>>>>"+str);
+			
 			if(str.contains("Failure:"))
 				JOptionPane.showMessageDialog(window.getFrame(), str,"Error", JOptionPane.ERROR_MESSAGE); 
 			else
@@ -106,18 +101,18 @@ public class TCPThread extends Thread{
 				client.close();
 				window.getFrame().setVisible(false);
 				welcomeframe.setVisible(true);
-				//System.exit(0);
+				
 			}
-			//System.out.print("$");
+			
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			JOptionPane.showMessageDialog(window.getFrame(), "There might be some errors in the connection","Error", JOptionPane.ERROR_MESSAGE);
-			//e.printStackTrace();
+			
 			if(flag)
 			{
-				//System.exit(1);
+				
 				window.getFrame().setVisible(false);
 				welcomeframe.setVisible(true);
 			}

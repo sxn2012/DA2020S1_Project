@@ -12,7 +12,7 @@ public class DetectTimeout extends Thread {
 	private CommandThread c;
 	private boolean istimeout;
 	public DetectTimeout(TimeoutThread thread,CommandThread c) {
-		// TODO Auto-generated constructor stub
+		
 		this.thread=thread;
 		this.c=c;
 		this.istimeout=false;
@@ -36,7 +36,7 @@ public class DetectTimeout extends Thread {
 					Thread.sleep(100);
 			}
 			catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 		}
 	}
