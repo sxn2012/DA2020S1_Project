@@ -95,11 +95,13 @@ public class CommandThread extends Thread{
 				//deal with instructions from clients
 				if(command.equals("exit"))//client wants to exit
 				{
-					if(login) {
+					if(login) {//client is still logged in
+						//force client to log out
 						t.rollback();//rollback uncommitted changes
 						t=null;
 						login=false;
 					}
+					//let client to exit the system
 					os.writeUTF("Bye");
 					is.close();
 					os.close();
@@ -109,29 +111,34 @@ public class CommandThread extends Thread{
 				}
 				else if (command.equals("login"))//client wants to login
 				{
+					//client has not logged in
 					if(!login)
 					{
+						//let client log into the system
 						t=newTransaction();
 						login=true;
 						os.writeUTF("Login Success");
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully logged in.");
 					}
-					else {
+					else {//client has already logged in
+						//do nothing
 						os.writeUTF("Failure: Already Logged in. No need to re-login");
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully logged in.");
 					}
 				}
 				else if(command.equals("logout"))//client wants to logout
 				{
-					if(login)
+					if(login)//client has logged in
 					{
+						//let client log out of system
 						t.rollback();//rollback uncommitted changes
 						t=null;
 						login=false;
 						os.writeUTF("Logout Success");
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully logged out.");
 					}
-					else {
+					else {//client has not logged in
+						//do nothing
 						os.writeUTF("Failure: Not Logged in");
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully logged out.");
 					}
@@ -142,15 +149,18 @@ public class CommandThread extends Thread{
 					String str=strarr[0];
 					if(str.equals("add"))//insert data
 					{
-						if(!login) {
+						if(!login) {//client has not logged in
+							//must be logged in to operate
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 						}
-						else if(strarr.length<3) {
+						else if(strarr.length<3) {//parameters are not valid
+							//do nothing
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 						}
 						else{
+							//test id and name
 							String id=strarr[1];
 							String name="";
 							for(int i=2;i<strarr.length;i++)
@@ -160,16 +170,18 @@ public class CommandThread extends Thread{
 									name=name+" ";
 							}
 							Pattern pattern =Pattern.compile("[0-9]*");
-							if(!pattern.matcher(id).matches()) {
+							if(!pattern.matcher(id).matches()) {//id and name are not valid
+								//do nothing
 								os.writeUTF("Failure: Invalid Operation");
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 							}
 							else {
+								//insert data
 								String status=t.add(new Person(Integer.parseInt(id), name));
-								os.writeUTF(status);
-								if(!status.contains("Failure:"))
+								os.writeUTF(status);//send the result
+								if(!status.contains("Failure:"))//success
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully inserted data ("+id+" ,"+name+").");
-								else
+								else//failure
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully inserted data.");
 							}
 						}
@@ -178,27 +190,32 @@ public class CommandThread extends Thread{
 					}
 					else if(str.equals("delete"))//delete data
 					{
-						if(!login) {
+						if(!login) {//client has not logged in
+							//must be logged in to operate
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 						}
-						else if(strarr.length!=2) {
+						else if(strarr.length!=2) {//parameters are not valid
+							//do nothing
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 						}
 						else{
+							//test id
 							String id=strarr[1];
 							Pattern pattern =Pattern.compile("[0-9]*");
-							if(!pattern.matcher(id).matches()) {
+							if(!pattern.matcher(id).matches()) {//id is not valid
+								//do nothing
 								os.writeUTF("Failure: Invalid Operation");
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 							}
 							else {
+								//delete data
 								String status=t.delete(Integer.parseInt(id));
-								os.writeUTF(status);
-								if(!status.contains("Failure:"))
+								os.writeUTF(status);//send the result
+								if(!status.contains("Failure:"))//success
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully deleted data No."+id+".");
-								else
+								else//failure
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully deleted data.");
 							}
 						}
@@ -206,27 +223,31 @@ public class CommandThread extends Thread{
 
 					else if(str.equals("select"))//select data
 					{
-						if(!login) {
+						if(!login) {//client has not logged in
+							//must be logged in to operate
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 						}
-						else if(strarr.length!=2) {
+						else if(strarr.length!=2) {//parameters are not valid
+							//do nothing
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 						}
 						else{
+							//test id
 							String id=strarr[1];
 							Pattern pattern =Pattern.compile("[0-9]*");
-							if(!pattern.matcher(id).matches()) {
+							if(!pattern.matcher(id).matches()) {//id is not valid
 								os.writeUTF("Failure: Invalid Operation");
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 							}
 							else {
+								//select data
 								String status=t.select(Integer.parseInt(id));
-								os.writeUTF(status);
-								if(!status.contains("Failure:"))
+								os.writeUTF(status);//send the result
+								if(!status.contains("Failure:"))//success
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully selected data No."+id+".");
-								else
+								else//failure
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully selected data.");
 							}
 						}
@@ -234,15 +255,17 @@ public class CommandThread extends Thread{
 
 					else if(str.equals("update"))//update data
 					{
-						if(!login) {
+						if(!login) {//client has not logged in
+							//must be logged in to operate
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 						}
-						else if(strarr.length<3) {
+						else if(strarr.length<3) {//parameters are not valid
+							//do nothing
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 						}
-						else{
+						else{//test id and name
 							String id=strarr[1];
 							String name="";
 							for(int i=2;i<strarr.length;i++)
@@ -252,16 +275,18 @@ public class CommandThread extends Thread{
 									name=name+" ";
 							}
 							Pattern pattern =Pattern.compile("[0-9]*");
-							if(!pattern.matcher(id).matches()) {
+							if(!pattern.matcher(id).matches()) {//id and name are not valid
+								//do nothing
 								os.writeUTF("Failure: Invalid Operation");
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
 							}
 							else {
+								//update data
 								String status=t.update(Integer.parseInt(id), name);
-								os.writeUTF(status);
-								if(!status.contains("Failure")) {
+								os.writeUTF(status);//send result
+								if(!status.contains("Failure")) {//success
 									window.setContent(this.idl + " --- " + client.getInetAddress().getHostAddress() + " has successfully updated data No." + id + " as: " + name + ".");
-								}else {
+								}else {//failure
 									if (status.contains("rollback")) {
 										this.t = newTransaction();
 									}
@@ -273,66 +298,75 @@ public class CommandThread extends Thread{
 					}
 					else if(str.equals("view"))//view data
 					{
-						if(!login) {
+						if(!login) {//client has not logged in
+							//must be logged in to operate
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
-						else if(strarr.length!=1) {
+						else if(strarr.length!=1) {//parameters are not valid
+							//do nothing
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
-						else {
+						else {//view data
 							String status=t.view();
-							os.writeUTF(status);
-							if(!status.contains("Failure:"))
+							os.writeUTF(status);//send results
+							if(!status.contains("Failure:"))//success
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully viewed data.");
-							else
+							else//failure
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 					}
 					else if(str.equals("commit"))//commit command
 					{
-						if(!login) {
+						if(!login) {//client has not logged in
+							//must be logged in to operate
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully committed.");
 						}
-						else if(strarr.length!=1) {
+						else if(strarr.length!=1) {//parameters are not valid
+							//do nothing
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully committed.");
 						}
 						else {
+							//commit commands
 							String status=t.commit();
-							os.writeUTF(status);
-							if(!status.contains("Failure:"))
+							os.writeUTF(status);//send results
+							if(!status.contains("Failure:"))//success
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully committed.");
-							else
+							else//failure
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully committed.");
-							this.t = newTransaction();
+							this.t = newTransaction();//generate a new transaction
 							
 						}
 					}
 					else if(str.equals("rollback"))//rollback command
 					{
-						if(!login) {
+						if(!login) {//client has not logged in
+							//must be logged in to operate
 							os.writeUTF("Failure: Not Logged in");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
 						}
-						else if(strarr.length!=1) {
+						else if(strarr.length!=1) {//parameters are not valid
+							//do nothing
 							os.writeUTF("Failure: Invalid Operation");
 							window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
 						}
 						else 
 							{
+								//rollback commands
 								String status=t.rollback();
-								os.writeUTF(status);
-								if(!status.contains("Failure:"))
+								os.writeUTF(status);//send results
+								if(!status.contains("Failure:"))//success
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully rolled back.");
-								else
+								else//failure
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
-								this.t = newTransaction();
+								this.t = newTransaction();//generate a new transaction
 							}
 					}
-					else {//invalid commands
+					else {//operations that cannot be recognized
+						//do nothing
 						os.writeUTF("Failure: Invalid Operation");
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has made an invalid operation.");
 					}
