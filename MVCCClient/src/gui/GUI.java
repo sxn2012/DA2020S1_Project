@@ -89,8 +89,10 @@ public class GUI {
 		btnLogin = new JButton("Login");
 		//press button to send login message to server
 		btnLogin.addMouseListener(new MouseAdapter() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnLogin.isEnabled())
 				{
 					TCPThread thread=new TCPThread(client,temp);
@@ -100,6 +102,7 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
+
 			}
 		});
 		btnLogin.setBounds(30, 254, 105, 28);
@@ -108,8 +111,10 @@ public class GUI {
 		btnLogout = new JButton("Logout");
 		//send logout message to server
 		btnLogout.addMouseListener(new MouseAdapter() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnLogout.isEnabled())
 				{
 					TCPThread thread=new TCPThread(client,temp);
@@ -119,7 +124,6 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnLogout.setBounds(193, 254, 105, 28);
@@ -127,8 +131,11 @@ public class GUI {
 		//insert button
 		btnInsert = new JButton("Insert");
 		btnInsert.addMouseListener(new MouseAdapter() {
+
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnInsert.isEnabled())
 				{
 					//input id and name
@@ -151,7 +158,6 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnInsert.setBounds(193, 116, 105, 28);
@@ -159,8 +165,10 @@ public class GUI {
 		//select button
 		btnSelect = new JButton("Select");
 		btnSelect.addMouseListener(new MouseAdapter() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnSelect.isEnabled())
 				{
 					//input id
@@ -180,7 +188,6 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnSelect.setBounds(30, 116, 105, 28);
@@ -188,8 +195,10 @@ public class GUI {
 		//update button
 		btnUpdate = new JButton("Update");
 		btnUpdate.addMouseListener(new MouseAdapter() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnUpdate.isEnabled())
 				{
 					//input id and name
@@ -212,7 +221,6 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnUpdate.setBounds(333, 42, 105, 28);
@@ -220,8 +228,11 @@ public class GUI {
 		//delete button
 		btnDelete = new JButton("Delete");
 		btnDelete.addMouseListener(new MouseAdapter() {
+
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnDelete.isEnabled())
 				{
 					//input id
@@ -241,7 +252,6 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnDelete.setBounds(333, 116, 105, 28);
@@ -250,8 +260,11 @@ public class GUI {
 		//send view message to server
 		btnView = new JButton("View");
 		btnView.addMouseListener(new MouseAdapter() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
+
 				if(btnView.isEnabled())
 				{
 					TCPThread thread=new TCPThread(client,temp);
@@ -259,9 +272,9 @@ public class GUI {
 					//thread.Setframe(frame);
 					thread.Setcommand("view");
 					//thread.start();
+					System.out.println("Start");
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnView.setBounds(30, 42, 105, 28);
@@ -270,8 +283,10 @@ public class GUI {
 		//send commit message to server
 		btnCommit = new JButton("Commit");
 		btnCommit.addMouseListener(new MouseAdapter() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnCommit.isEnabled())
 				{
 					TCPThread thread=new TCPThread(client,temp);
@@ -281,7 +296,6 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnCommit.setBounds(30, 189, 105, 28);
@@ -290,8 +304,11 @@ public class GUI {
 		//send rollback message to server
 		btnRollback = new JButton("Rollback");
 		btnRollback.addMouseListener(new MouseAdapter() {
+
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
 				if(btnRollback.isEnabled())
 				{
 					TCPThread thread=new TCPThread(client,temp);
@@ -301,7 +318,6 @@ public class GUI {
 					//thread.start();
 					Client.getThreadpool().execute(thread);
 				}
-				
 			}
 		});
 		btnRollback.setBounds(333, 189, 105, 28);
@@ -309,11 +325,12 @@ public class GUI {
 		
 		btnCrash = new JButton("Crash");
 		btnCrash.addMouseListener(new MouseAdapter() {
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-					System.exit(1);//abnormal exit
-				
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
+				System.exit(1);//abnormal exit
+
 			}
 		});
 		btnCrash.setBounds(333, 254, 105, 28);

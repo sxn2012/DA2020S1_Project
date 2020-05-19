@@ -27,6 +27,7 @@ public class ConnectThread extends Thread {
 		this.textPort=textPort;
 	}
 	public void run() {
+
 		synchronized (isconnected) {
 			//check input validity
 			Pattern pattern1=Pattern.compile("([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}");

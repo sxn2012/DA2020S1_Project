@@ -262,13 +262,15 @@ public class CommandThread extends Thread{
 							else {
 								String status=t.update(Integer.parseInt(id), name);
 								os.writeUTF(status);
-								if(!status.contains("Failure"))
-									setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
-								else
-									if(status.contains("rollback")) {
+								if(!status.contains("Failure")) {
+									setContent(this.idl + " --- " + client.getInetAddress().getHostAddress() + " has successfully updated data No." + id + " as: " + name + ".");
+								}else {
+									if (status.contains("rollback")) {
 										this.t = newTransaction();
 									}
-									setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
+									setContent(this.idl + " --- " + client.getInetAddress().getHostAddress() + " has not successfully updated data.");
+
+								}
 							}
 						}
 					}
@@ -339,7 +341,9 @@ public class CommandThread extends Thread{
 						setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has made an invalid operation.");
 					}
 				}
-				
+				os.flush();
+
+
 			}
 		}
 		catch (Exception e) {

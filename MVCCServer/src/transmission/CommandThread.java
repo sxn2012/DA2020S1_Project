@@ -258,11 +258,15 @@ public class CommandThread extends Thread{
 							else {
 								String status=t.update(Integer.parseInt(id), name);
 								os.writeUTF(status);
-								if(!status.contains("Failure"))
-									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully updated data No."+id+" as: "+name+".");
-								else
+								if(!status.contains("Failure")) {
+									window.setContent(this.idl + " --- " + client.getInetAddress().getHostAddress() + " has successfully updated data No." + id + " as: " + name + ".");
+								}else {
+									if (status.contains("rollback")) {
+										this.t = newTransaction();
+									}
+									window.setContent(this.idl + " --- " + client.getInetAddress().getHostAddress() + " has not successfully updated data.");
 
-									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully updated data.");
+								}
 							}
 						}
 					}
@@ -282,9 +286,6 @@ public class CommandThread extends Thread{
 							if(!status.contains("Failure:"))
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has successfully viewed data.");
 							else
-								if(status.contains("rollback")){
-									this.t = newTransaction();
-								}
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 					}
@@ -329,14 +330,16 @@ public class CommandThread extends Thread{
 									window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully rolled back.");
 								this.t = newTransaction();
 							}
-						
 					}
 					else {
 						os.writeUTF("Failure: Invalid Operation");
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has made an invalid operation.");
 					}
 				}
-				
+
+				os.flush();
+
+
 			}
 		}
 		catch (Exception e) {
