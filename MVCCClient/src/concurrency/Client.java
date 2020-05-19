@@ -14,6 +14,7 @@ import gui.Welcome;
  * 
  * Date: 23/04/2020
  * 
+ * Usage: Entry of system
  */
 
 public class Client {

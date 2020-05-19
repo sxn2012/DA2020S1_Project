@@ -1,6 +1,6 @@
 package gui;
 import javax.swing.JButton;
-
+//This file is used for dealing with gui showing when connecting to server
 public class BtnTextChange extends Thread {
 	private Object isconnected;
 	private JButton btnConfirm;

@@ -4,6 +4,7 @@ package transmission;
  * 
  * Date: 23/04/2020
  * 
+ * Usage: Deal with Commands from Client
  */
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -57,6 +58,7 @@ public class CommandThread extends Thread{
 		    }
 		 });
 	}
+	//generate a new transaction
 	public static synchronized Transaction newTransaction(){
 
 		Long t =  TCPThread.getTransaction_id();
@@ -80,7 +82,7 @@ public class CommandThread extends Thread{
 				is=new DataInputStream(client.getInputStream());
 				os=new DataOutputStream(client.getOutputStream());
 				String command=is.readUTF();//receive data from client
-				
+				//judge whether client has been timed out
 				if(timeoutThread.getcount()>15*60) {
 					login=false;
 					
@@ -91,7 +93,7 @@ public class CommandThread extends Thread{
 				}
 				timeoutThread.renewcount();
 				//deal with instructions from clients
-				if(command.equals("exit"))
+				if(command.equals("exit"))//client wants to exit
 				{
 					if(login) {
 						t.rollback();//rollback uncommitted changes
@@ -105,7 +107,7 @@ public class CommandThread extends Thread{
 					window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has exited.");
 					break;
 				}
-				else if (command.equals("login"))
+				else if (command.equals("login"))//client wants to login
 				{
 					if(!login)
 					{
@@ -119,7 +121,7 @@ public class CommandThread extends Thread{
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully logged in.");
 					}
 				}
-				else if(command.equals("logout"))
+				else if(command.equals("logout"))//client wants to logout
 				{
 					if(login)
 					{
@@ -135,9 +137,10 @@ public class CommandThread extends Thread{
 					}
 				}
 				else {
+					//analyse specific commands
 					String[]strarr=command.split(" ");
 					String str=strarr[0];
-					if(str.equals("add"))
+					if(str.equals("add"))//insert data
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
@@ -173,7 +176,7 @@ public class CommandThread extends Thread{
 						
 						
 					}
-					else if(str.equals("delete"))
+					else if(str.equals("delete"))//delete data
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
@@ -201,7 +204,7 @@ public class CommandThread extends Thread{
 						}
 					}
 
-					else if(str.equals("select"))
+					else if(str.equals("select"))//select data
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
@@ -229,7 +232,7 @@ public class CommandThread extends Thread{
 						}
 					}
 
-					else if(str.equals("update"))
+					else if(str.equals("update"))//update data
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
@@ -268,7 +271,7 @@ public class CommandThread extends Thread{
 							}
 						}
 					}
-					else if(str.equals("view"))
+					else if(str.equals("view"))//view data
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
@@ -287,7 +290,7 @@ public class CommandThread extends Thread{
 								window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has not successfully viewed data.");
 						}
 					}
-					else if(str.equals("commit"))
+					else if(str.equals("commit"))//commit command
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
@@ -308,7 +311,7 @@ public class CommandThread extends Thread{
 							
 						}
 					}
-					else if(str.equals("rollback"))
+					else if(str.equals("rollback"))//rollback command
 					{
 						if(!login) {
 							os.writeUTF("Failure: Not Logged in");
@@ -329,7 +332,7 @@ public class CommandThread extends Thread{
 								this.t = newTransaction();
 							}
 					}
-					else {
+					else {//invalid commands
 						os.writeUTF("Failure: Invalid Operation");
 						window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" has made an invalid operation.");
 					}

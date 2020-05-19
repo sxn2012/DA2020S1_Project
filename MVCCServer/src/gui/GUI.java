@@ -4,6 +4,7 @@ package gui;
  * 
  * Date: 05/05/2020
  * 
+ * Usage: show gui frame of server
  */
 import java.awt.EventQueue;
 import java.awt.Frame;

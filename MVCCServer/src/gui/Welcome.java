@@ -4,6 +4,7 @@ package gui;
  * 
  * Date: 07/05/2020
  * 
+ * Usage: show welcome frame and ask user to bind a port
  */
 import java.awt.EventQueue;
 

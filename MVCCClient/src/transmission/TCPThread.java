@@ -4,6 +4,7 @@ package transmission;
  * 
  * Date: 23/04/2020
  * 
+ * Usage: Deal with communication between client and server
  */
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

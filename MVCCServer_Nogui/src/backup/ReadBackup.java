@@ -26,6 +26,7 @@ import transmission.Server;
  * 
  * Date: 07/05/2020
  * 
+ * Usage: Read stored data into memory
  */
 public class ReadBackup extends Thread {
 	//public static boolean lock=false;

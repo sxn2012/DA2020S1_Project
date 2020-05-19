@@ -4,6 +4,7 @@ package concurrency;
  * 
  * Date: 09/05/2020
  * 
+ * Usage: Synchronized print in case of conflict
  */
 public class Print {
 	private Print() {

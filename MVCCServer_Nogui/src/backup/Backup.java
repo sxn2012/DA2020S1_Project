@@ -16,6 +16,7 @@ import transmission.Server;
  * 
  * Date: 07/05/2020
  * 
+ * Usage: Back up data in server in case of failure
  */
 public class Backup extends Thread {
 	private String current_dir;

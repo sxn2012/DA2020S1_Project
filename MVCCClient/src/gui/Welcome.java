@@ -4,6 +4,7 @@ package gui;
  * 
  * Date: 07/05/2020
  * 
+ * Usage: Welcome gui frame and let users input server ip and port to connect to
  */
 import java.awt.EventQueue;
 

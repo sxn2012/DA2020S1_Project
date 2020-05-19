@@ -4,6 +4,7 @@ package transmission;
  * 
  * Date: 23/04/2020
  * 
+ * Usage: Deal with Commands from Client
  */
 import java.awt.Frame;
 import java.io.DataInputStream;

@@ -8,6 +8,7 @@ import concurrency.Print;
  * 
  * Date: 07/05/2020
  * 
+ * Usage: Ask user to input port to bind to the server
  */
 public class ConnectInfo extends Thread {
 	private int port;

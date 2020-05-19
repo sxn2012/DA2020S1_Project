@@ -4,6 +4,7 @@ package gui;
  * 
  * Date: 07/05/2020
  * 
+ * Usage: Show time on gui
  */
 import java.text.SimpleDateFormat;
 import java.util.Date;

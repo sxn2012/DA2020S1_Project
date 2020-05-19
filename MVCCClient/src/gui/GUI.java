@@ -2,7 +2,7 @@ package gui;
 /*
  * Author: Chaoxian Zhou, Xinnan SHEN
  * Date: 16/05/2020
- * 
+ * Usage: Operation GUI frame
  */
 import java.awt.EventQueue;
 
