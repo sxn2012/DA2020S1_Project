@@ -264,7 +264,6 @@ public class GUI {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				super.mouseReleased(e);
-
 				if(btnView.isEnabled())
 				{
 					TCPThread thread=new TCPThread(client,temp);
@@ -272,7 +271,6 @@ public class GUI {
 					//thread.Setframe(frame);
 					thread.Setcommand("view");
 					//thread.start();
-					System.out.println("Start");
 					Client.getThreadpool().execute(thread);
 				}
 			}
@@ -325,7 +323,7 @@ public class GUI {
 		
 		btnCrash = new JButton("Crash");
 		btnCrash.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				super.mouseReleased(e);
