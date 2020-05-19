@@ -63,8 +63,8 @@ public class GUI {
 					return;
 				else if(response==JOptionPane.YES_OPTION)
 				{
-					if(btnLogin.isEnabled())
-					{
+//					if(btnLogin.isEnabled())
+//					{
 						super.windowClosing(e);
 						TCPThread thread=new TCPThread(client,temp);
 						thread.SetWelcomeframe(welcomeframe);
@@ -72,10 +72,10 @@ public class GUI {
 						thread.Setcommand("exit");
 						//thread.start();
 						Client.getThreadpool().execute(thread);
-					}
-					else {
-						JOptionPane.showMessageDialog(frame, "Please Log out of the system first!","Warning", JOptionPane.WARNING_MESSAGE); 
-					}
+//					}
+//					else {
+//						JOptionPane.showMessageDialog(frame, "Please Log out of the system first!","Warning", JOptionPane.WARNING_MESSAGE); 
+//					}
 				}
 				
 			}

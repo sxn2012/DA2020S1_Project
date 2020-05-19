@@ -64,6 +64,7 @@ public class Welcome {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				//bind the port
+				super.mouseReleased(e);
 				if(btnConfirm.isEnabled())
 				{
 					Pattern pattern=Pattern.compile("[0-9]*");

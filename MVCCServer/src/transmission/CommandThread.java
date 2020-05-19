@@ -97,6 +97,7 @@ public class CommandThread extends Thread{
 				if(command.equals("exit"))
 				{
 					if(login) {
+						t.rollback();//rollback uncommitted changes
 						t=null;
 						login=false;
 					}
@@ -351,9 +352,10 @@ public class CommandThread extends Thread{
 				this.t.rollback();
 				Records.instance().getActive().remove(this.t.getTid());
 			}
-			
-            window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getMessage()+").");
-
+			if(e.getMessage()!=null&&!e.getMessage().equals(""))
+				window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getMessage()+").");
+			else 
+				window.setContent(this.idl+" --- "+client.getInetAddress().getHostAddress()+" might have some problems ("+e.getClass()+").");
 		}
 	}
 	public ServerSocket getServer() {
