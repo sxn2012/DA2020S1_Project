@@ -26,7 +26,6 @@ public class DetectTimeout extends Thread {
 				long count=thread.getcount();
 				if(count>15*60&&!istimeout)
 				{
-					c.getOs().writeUTF("Failure: Operation Timeout");
 					if(c.getT()!=null) {
 						c.getT().rollback();
 						c.setT(null);

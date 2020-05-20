@@ -87,8 +87,11 @@ public class CommandThread extends Thread{
 				os=new DataOutputStream(client.getOutputStream());
 				String command=is.readUTF();//receive command from clients
 				//detect client timeout
-				if(timeoutThread.getcount()>15*60) {
+				if(timeoutThread.getcount()>15 * 60) {
 					login=false;
+					// tell client to leave
+					os.writeUTF("Failure: Operation Timeout");
+					os.flush();
 					is.close();
 					os.close();
 					client.close();

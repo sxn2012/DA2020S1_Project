@@ -85,7 +85,10 @@ public class CommandThread extends Thread{
 				//judge whether client has been timed out
 				if(timeoutThread.getcount()>15*60) {
 					login=false;
-					
+					// tell client to leave
+					os.writeUTF("Failure: Operation Timeout");
+					os.flush();
+					// release connection resources
 					is.close();
 					os.close();
 					client.close();
