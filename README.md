@@ -32,13 +32,21 @@ The data format is (Student ID, Student Name), where Student ID, primary key, is
 
 ## Project File Introduction
 
--   MVCCClient: This is the client of MVCC. You should run it on the client PC.
--   MVCCServer: This is the server of MVCC. If your server has a graphical user interface(GUI),  you can run it on your server.
--   MVCCServer_Nogui: This is also the server of MVCC. If your server doesn't have a graphical user interface(GUI),  you should run this version on your server.
+-   *MVCCClient*
+
+    This is the client of MVCC. You should run it on the client PC.
+
+-   *MVCCServer*
+
+    This is the server of MVCC. If your server **has a graphical user interface(GUI)**,  you can run it on your server.
+
+-   *MVCCServer_Nogui*
+
+    This is also the server of MVCC. If your server **doesn't have a graphical user interface(GUI)**,  you should run this version on your server.
 
 ## Running Environment
 
-- Java version: 1.8 or higher
+- Java version: 11 or higher
 
 - System Requirements: Windows, Linux or Mac OS 64 bit
 
