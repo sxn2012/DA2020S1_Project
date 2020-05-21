@@ -1,5 +1,5 @@
 # MVCC Implementation
-  This is our group's project of DA in 2020S1,  which implements the MVCC algorithms in Java, allowing different clients to access the data stored in server simultaneously without leading to inconsistent state. The operation of clients is quite similar to the real database system, including:
+  This is our group's project of DA in 2020S1,  which implements the Multiversion Concurrency Control (MVCC) algorithm in Java, allowing different clients to access the data stored in server simultaneously without leading to inconsistent state. The operation of clients is quite similar to the real database system, including:
 
 - Insert data
 
@@ -26,12 +26,15 @@ The data format is (Student ID, Student Name), where Student ID, primary key, is
 - [com.google.code.gson.jar](https://search.maven.org/artifact/com.google.code.gson/gson/2.8.6/jar)
 
 2. **After starting the server, remember to bind a port number where clients are able to connect.**
-
 3. **After starting the client, remember to set the IP address and port number of the server to which the client will connect.**
-
 4. **When connected to server, the client needs to login first before making any transactions.**
-
 5. **Before leaving the system, the client needs to logout.**
+
+## Project File Introduction
+
+-   MVCCClient: This is the client of MVCC. You should run it on the client PC.
+-   MVCCServer: This is the server of MVCC. If your server has a graphical user interface(GUI),  you can run it on your server.
+-   MVCCServer_Nogui: This is also the server of MVCC. If your server doesn't have a graphical user interface(GUI),  you should run this version on your server.
 
 ## Running Environment
 
