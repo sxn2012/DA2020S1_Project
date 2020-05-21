@@ -1,4 +1,4 @@
-Manifest-Version: 3.1
-Main-Class: Main
+Manifest-Version: 3.4
+Main-Class: gui.Server
 Class-Path: lib/json-org.jar lib/gson-2.8.6.jar
 Created-By: Xinnan SHEN, Xiguang Li, Chaoxian Zhou, Huidu Lu
