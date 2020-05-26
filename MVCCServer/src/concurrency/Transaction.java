@@ -77,7 +77,7 @@ public class Transaction {
 
                     rollback();
 
-                    return "Failure: Row is locked by another transaction, rollback automatically";
+                    return "Failure: This data item is hold by another transaction, rollback automatically";
                 }else{
 
                     p.setLastWrite_timestamp();
@@ -246,7 +246,7 @@ public class Transaction {
     /*Commit a transaction*/
     public String commit(){
 
-    	if(this.rollback.isEmpty()) return "Failure: Nothing to commit";
+//    	if(this.rollback.isEmpty()) return "Failure: Nothing to commit";
         for (HashMap<String,String> action: this.rollback){
 
             int index = Integer.parseInt(action.get("order"));
