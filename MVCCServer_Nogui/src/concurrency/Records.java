@@ -59,7 +59,7 @@ public class Records {
 
         }
 
-        if (initialCount == instance().records.size()){
+        if (initialCount != instance().records.size()){
             return;
         }
         addItemToRecords(null,cleanedRecord);
